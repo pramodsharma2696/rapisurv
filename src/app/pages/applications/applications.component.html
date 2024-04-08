@@ -202,6 +202,22 @@
             </div>
           </div>
         </div>
+
+        <p class="section_header" style="margin-top: 20px">Timesheet</p>
+        <div class="app_cards">
+          <div class="cards" (click)="gotoTimesheet()" *ngIf="
+              valuation?.pageView ||
+              valuation_viewreports?.pageView ||
+              valuation_confrimworks?.pageView
+            ">
+            <img src="assets/images/Valuation.png" style="width: 50px; height: 50px" alt="" />
+            <div class="app_name">
+              <p>Timesheet</p>
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </div>
+          </div>
+
+        </div>
       </div>
       <div class="col-md-4"></div>
     </div>
