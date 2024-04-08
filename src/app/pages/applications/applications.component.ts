@@ -354,5 +354,14 @@ export class ApplicationsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/app/bid-contract/add']);
   }
 
+
+  // timesheet
+  gotoTimesheet(){
+    if (!this.isLicenced) {
+      alert('Please buy a licence to access this module');
+      return;
+    }
+    this.router.navigate(['/app/timesheet']);
+  }
   ngOnDestroy() {}
 }
