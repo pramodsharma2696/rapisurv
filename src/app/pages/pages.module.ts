@@ -52,6 +52,7 @@ import { MaterialModule } from './material.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CreateTimesheetModalComponent } from './timesheet/create-timesheet-modal/create-timesheet-modal.component';
 
 registerAllModules();
 @NgModule({
@@ -98,6 +99,7 @@ registerAllModules();
     EditProjectFinancialComponent,
     EditProjectDateComponent,
     EditProjectParticipantComponent,
+    CreateTimesheetModalComponent
   ],
 })
 export class PagesModule {}
