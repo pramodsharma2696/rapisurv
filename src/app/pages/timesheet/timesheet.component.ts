@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CreateTimesheetModalComponent } from './create-timesheet-modal/create-timesheet-modal.component';
 
 @Component({
   selector: 'app-timesheet',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TimesheetComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private modalService: NgbModal,
+
+  ) { }
+  
 
   ngOnInit(): void {
   }
 
+  createTimeSheet() {
+    const activeModal = this.modalService.open(CreateTimesheetModalComponent, {
+      size: 'lg',
+      container: 'nb-layout',
+      centered: true,
+    });
+    
+  }
 }
