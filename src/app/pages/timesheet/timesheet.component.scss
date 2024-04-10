@@ -1,0 +1,29 @@
+.empty_timesheet {
+    float: left;
+    width: 100%;
+    text-align: center;
+
+    .create_btn{
+        background-color: #12AF9B;
+        color: #fff;
+        width: 29%;
+        padding: 20px 154px 20px 154px;
+        border-radius: 10px;
+
+    }
+}
+.empty_timesheet_img {
+    
+        float: left;
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+   
+
+        img {
+            float: left;
+            width: 35%;
+            margin: 0 auto;
+        }
+        
+}
