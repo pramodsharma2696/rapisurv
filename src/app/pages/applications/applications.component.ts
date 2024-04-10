@@ -353,7 +353,8 @@ export class ApplicationsComponent implements OnInit, OnDestroy {
     }
     this.router.navigate(['/app/bid-contract/add']);
   }
-  
+
+
   // timesheet
   gotoTimesheet(){
     if (!this.isLicenced) {
@@ -362,6 +363,5 @@ export class ApplicationsComponent implements OnInit, OnDestroy {
     }
     this.router.navigate(['/app/timesheet']);
   }
-
   ngOnDestroy() {}
 }
