@@ -7,6 +7,7 @@ import { MainDashboardComponent } from './dashboard/dashboard.component';
 import { ApplicationsComponent } from './applications/applications.component';
 import { TimesheetComponent } from './timesheet/timesheet.component';
 import { CreateTimesheetComponent } from './timesheet/create-timesheet/create-timesheet.component';
+import { ProjectDetailsComponent } from './timesheet/project-details/project-details.component';
 const routes: Routes = [
   {
     path: '',
@@ -41,6 +42,10 @@ const routes: Routes = [
       {
         path: 'timesheet/create',
         component: CreateTimesheetComponent
+      },
+      {
+        path: 'timesheet/project',
+        component: ProjectDetailsComponent
       },
       {
         path: '',
