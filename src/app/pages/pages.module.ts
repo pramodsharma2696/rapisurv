@@ -53,6 +53,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CreateTimesheetModalComponent } from './timesheet/create-timesheet-modal/create-timesheet-modal.component';
+import { TimesheetModule } from './timesheet/timesheet.module';
 
 registerAllModules();
 @NgModule({
@@ -85,6 +86,7 @@ registerAllModules();
     HotTableModule,
     MaterialModule,
     NbCheckboxModule,
+    TimesheetModule
   ],
   declarations: [
     PagesComponent,
@@ -98,8 +100,7 @@ registerAllModules();
     EditProjectInfoComponent,
     EditProjectFinancialComponent,
     EditProjectDateComponent,
-    EditProjectParticipantComponent,
-    CreateTimesheetModalComponent
+    EditProjectParticipantComponent
   ],
 })
-export class PagesModule {}
+export class PagesModule { }
