@@ -1,16 +1,120 @@
-<div class="row">
-    <div class="col-md-12">
-      <div class="mb-3">
-        <div class="empty_timesheet">
-            <div class="empty_timesheet_img">
-                <img src="../../../assets/images/empty_timesheet.png" />
-            </div>
-            
-            <h5>No Timesheet created</h5> 
-            <button class="btn btn-block create_btn" style="margin-top: 13px" outline status="primary" nbButton size="small" (click)="createTimeSheet()">
-                Create Timesheet
-            </button>  
-        </div>     
+  <div class="row">
+    <div class="empty_project" style="display: none;">
+      <div class="col-md-12">
+        <div class="mb-3">
+          <div class="empty_timesheet">
+              <div class="empty_timesheet_img">
+                  <img src="../../../assets/images/empty_timesheet.png" />
+              </div>
+              
+              <h5>No Timesheet created</h5> 
+              <button class="btn btn-block create_btn" style="margin-top: 13px" outline status="primary" nbButton size="small" (click)="createTimeSheet()">
+                  Create Timesheet
+              </button>  
+          </div>     
+        </div>
       </div>
     </div>
-</div>
+  </div> 
+
+
+  <div class="project_card_section">
+    <div class="row">
+      <div class="col-md-7">
+        <div class="mb-3">
+          <h6 class="section_header">Create Timesheet</h6>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="mb-3 header_pr_name">
+          <div class=""> 
+            <span><mat-icon aria-hidden="false" fontIcon="search"></mat-icon></span>
+            <input type="text" class="form-control" placeholder="Search by project name or ID" style="padding: 4px 37px; width: 91%; float: left;" required />
+            <span><mat-icon aria-hidden="false" class="filter mt-1" fontIcon="filter_list"></mat-icon></span>
+          </div>
+          <button class="btn btn-block create_btn" style="margin-top: 13px" outline status="primary" nbButton size="small" (click)="createTimeSheet()">
+            + Create Timesheet
+        </button>  
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="project_card">
+            <div class="pr_time">
+              <h6>Project: 132 – Library of  Historical Arts Building</h6>
+              <div class="pr_time mt-3 mb-3">
+                <p>Duration</p>
+                <span>12th Mar 2023 - 22nd Sept 2023</span>
+              </div>
+              <div class="pr_time ">
+                <p>No of Workers</p>
+                <span>20 Workers</span>
+              </div>
+            </div>
+            <div class="pr_assign">
+              <div class="emp_img mb-3">
+                <img src="../../../assets/images/admin_pic.png" />
+                <img src="../../../assets/images/admin_pic.png" />
+                <img src="../../../assets/images/admin_pic.png" />
+              </div>
+              <p>status</p>
+              <span>Open</span>
+            </div>
+            
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="project_card">
+          <div class="pr_time">
+            <h6>Project: 132 – Library of  Historical Arts Building</h6>
+            <div class="pr_time mt-3 mb-3">
+              <p>Duration</p>
+              <span>12th Mar 2023 - 22nd Sept 2023</span>
+            </div>
+            <div class="pr_time ">
+              <p>No of Workers</p>
+              <span>20 Workers</span>
+            </div>
+          </div>
+          <div class="pr_assign">
+            <div class="emp_img mb-3">
+              <img src="../../../assets/images/admin_pic.png" />
+              <img src="../../../assets/images/admin_pic.png" />
+              <img src="../../../assets/images/admin_pic.png" />
+            </div>
+            <p>status</p>
+            <span>Open</span>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="project_card">
+            <div class="pr_time">
+              <h6>Project: 132 – Library of  Historical Arts Building</h6>
+              <div class="pr_time mt-3 mb-3">
+                <p>Duration</p>
+                <span>12th Mar 2023 - 22nd Sept 2023</span>
+              </div>
+              <div class="pr_time ">
+                <p>No of Workers</p>
+                <span>20 Workers</span>
+              </div>
+            </div>
+            <div class="pr_assign">
+              <div class="emp_img mb-3">
+                <img src="../../../assets/images/admin_pic.png" />
+                <img src="../../../assets/images/admin_pic.png" />
+                <img src="../../../assets/images/admin_pic.png" />
+              </div>
+              <p>status</p>
+              <span>Open</span>
+            </div>
+            
+        </div>
+      </div>
+    </div>
+  </div>

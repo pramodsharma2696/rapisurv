@@ -1,1 +1,210 @@
-<p>create-timesheet works!</p>
+  
+  <div class="row">
+    <div class="col-md-7">
+      <div class="mb-3">
+        <h6 class="section_header">Create Timesheet</h6>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="row-center center ng-star-inserted mb-3 header_pr_name">
+        <div class="pr_name mr-4">
+          <p>Project Name</p>
+          <span>Project: 132 – Library of Historical Arts Building</span>
+        </div>
+        <div class="pr_name">
+          <p>Timesheet ID</p>
+          <span>233</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="create_timesheet">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="inputEmail4" class="form-label"> Start Date</label >
+            <input type="date" name="planned_start" class="form-control" required />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="inputEmail4"  class="form-label"> End Date</label>
+            <input  type="date" name="planned_start" id="planned_start" class="form-control" required />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="table-layout-div">
+            <p>Status</p>
+            <div class="open_close_btn">
+              <label class="form-label close_side"> Close</label >
+              <label class="mr-2 ml-2">
+                  <!-- <input type="checkbox" checked> -->
+                  <mat-slide-toggle checked></mat-slide-toggle>
+              </label>
+              <label class="form-label open_side"> Open</label >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+
+
+  <!-- <mat-radio-button color="primary"></mat-radio-button>
+  <mat-radio-button color="primary"></mat-radio-button>
+  <mat-checkbox color="primary"></mat-checkbox> -->
+
+
+
+  <div class="create_timesheet">
+    <div class="mb-3">
+      <h6 class="section_header">Attendance Settings</h6>
+    </div>
+    <div class="table-layout-div">
+      <p>Enable Local Work</p>
+      <div class="open_close_btn">
+        <label class="form-label close_side"> No</label >
+        <label class="mr-2 ml-2">
+           <mat-slide-toggle checked></mat-slide-toggle>
+        </label>
+        <label class="form-label open_side"> Yes</label >
+      </div>
+    </div>
+    <div class="table-layout-div">
+      <p>Enable Scanning</p>
+      <div class="open_close_btn">
+        <label class="form-label close_side"> No</label >
+        <label class="mr-2 ml-2">
+           <mat-slide-toggle checked></mat-slide-toggle>
+        </label>
+        <label class="form-label open_side"> Yes</label >
+      </div>
+    </div>
+    <div class="table-layout-div">
+      <p>Calculate Hours</p>
+      <div class="open_close_btn">
+        <label class="form-label close_side"> No</label >
+        <label class="mr-2 ml-2">
+           <mat-slide-toggle checked></mat-slide-toggle>
+        </label>
+        <label class="form-label open_side"> Yes</label >
+      </div>
+    </div>
+    <div class="table-layout-div">
+      <p>Enable Break</p>
+      <div class="open_close_btn">
+        <label class="form-label close_side"> No</label >
+        <label class="mr-2 ml-2">
+           <mat-slide-toggle checked></mat-slide-toggle>
+        </label>
+        <label class="form-label open_side"> Yes</label >
+      </div>
+    </div>
+
+    <div class="table-layout-div mb-3">
+      <p>Break Duration</p>
+      <div class="open_close_btn ">
+        <input type="text" class="form-control" placeholder="Enter number" style="width: 10%;" required />
+        <label class="mr-2 ml-2" style="margin-top: 8px;">
+          <mat-radio-button color="primary" checked>Hours</mat-radio-button>
+          <mat-radio-button color="primary" class="ml-4">Minutes</mat-radio-button>
+        </label>
+      </div>
+    </div>
+
+
+    <div class="table-layout-div">
+      <p>Register Scanning Device</p>
+      <div class="open_close_btn mb-3" style="display: revert;margin-top: -19px;"> 
+        <span><mat-icon aria-hidden="false" fontIcon="search"></mat-icon></span>
+        <input type="text" class="form-control" placeholder="Enter Device Identification or Linking Number " style="width: 27%;padding: 4px 37px;" required />
+      </div>
+      <div class="barcode_box mb-3">
+        <div class="barcode_img">
+          <img src="../../../assets/images/barcode.svg" class="mr-4" />
+          <!-- <span><mat-icon aria-hidden="false" class="delete" fontIcon="delete"></mat-icon></span> -->
+          <img src="../../../assets/images/icon.svg" class="mr-4" />
+        </div>
+        <p>ZZZ324HHU889UUJJ334</p> 
+      </div>
+
+      <div class="barcode_box">
+        <div class="barcode_img">
+          <img src="../../../assets/images/barcode.svg" class="mr-4" />
+          <!-- <span><mat-icon aria-hidden="false" class="delete" fontIcon="delete"></mat-icon></span> -->
+          <img src="../../../assets/images/icon.svg" class="mr-4" />
+        </div>
+        <p>ZZZ324HHU889UUJJ334</p> 
+      </div>
+    </div>
+  </div>
+
+  <div class="assign_section">
+    <div class="mb-3">
+      <h6 class="section_header">Assign Admin</h6>
+    </div>  
+    <div class="table-layout-div">
+      <div class="open_close_btn mb-3" style="display: revert;margin-top: -19px;"> 
+        <span><mat-icon aria-hidden="false" fontIcon="search"></mat-icon></span>
+        <input type="text" class="form-control" placeholder="Enter Device Identification or Linking Number " style="width: 27%;padding: 4px 37px;" required />
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <div class="form-group">
+            <label for="inputEmail4" class="form-label mb-3"> Admins</label >
+            <div class="admin_img mb-3">
+              <img src="../../../assets/images/admin_pic.png" />
+              <label class="form-label ml-2 admin_name"> JBIDEN - Joe Biden</label>
+            </div>
+            <div class="admin_img mb-3">
+              <label class="form-label admin_pic_name"> OM </label>
+              <label class="form-label ml-2 admin_name"> EMMCC - Emily McCoy</label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="inputEmail4"  class="form-label mb-3"> Assign Roles</label>
+            <div class="table-layout-div assign_time">
+              <div class="assign_role mr-3">
+                <label class="mr-2">
+                  <mat-checkbox color="primary" checked></mat-checkbox>
+                </label>
+                <label class="form-label ml-2 admin_name"> Manage time</label>
+              </div>
+              <div class="assign_role ml-2">
+                <label class="mr-2">
+                  <mat-checkbox color="primary"></mat-checkbox>
+                </label>
+                <label class="form-label ml-2 admin_name"> Manage time</label>
+                <img src="../../../assets/images/admin_remove.png" class="ml-4" />
+              </div>
+            </div>
+
+            <div class="table-layout-div assign_time">
+              <div class="assign_role mr-3">
+                <label class="mr-2">
+                  <mat-checkbox color="primary" checked></mat-checkbox>
+                </label>
+                <label class="form-label ml-2 admin_name"> Manage time</label>
+              </div>
+              <div class="assign_role ml-2">
+                <label class="mr-2">
+                  <mat-checkbox color="primary"></mat-checkbox>
+                </label>
+                <label class="form-label ml-2 admin_name"> Manage time</label>
+                <img src="../../../assets/images/admin_remove.png" class="ml-4" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-block create_btn" style="margin-top: 13px" outline status="primary" nbButton size="small">
+        Save Timesheet
+      </button>
+    </div> 
+  </div> 
+  
