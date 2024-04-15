@@ -17,6 +17,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
+import { SummaryMonthlyTableComponent } from './summary-monthly-table/summary-monthly-table.component';
+import { SummaryWeeklyTableComponent } from './summary-weekly-table/summary-weekly-table.component';
+import {MatTableModule} from '@angular/material/table';
 
 
 @NgModule({
@@ -30,7 +33,11 @@ import { MatCardModule } from '@angular/material/card';
     ProjectDetailCardComponent,
     ProjectDetailsComponent,
     SummaryComponent,
-    ManageWorkerComponent
+    ManageWorkerComponent,
+    SummaryMonthlyTableComponent,
+    SummaryWeeklyTableComponent,
+    
+
   ],
   imports: [
     MatSlideToggleModule,
@@ -40,7 +47,8 @@ import { MatCardModule } from '@angular/material/card';
     MatIconModule,
     NgSelectModule,
     MatTabsModule,
-    MatCardModule
+    MatCardModule,
+    MatTableModule
   ]
 })
 export class TimesheetModule { }

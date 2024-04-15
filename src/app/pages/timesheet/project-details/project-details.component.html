@@ -1,21 +1,61 @@
-<p>project-details works!</p>
+    <div class="row mb-5">
+        <div class="col-md-7">
+            <div class="mb-3">
+                <h6 class="section_header mb-4">Project: 132 – Library of Historical Arts Building</h6>
+                <div class="Timesheet_prname">
+                    <div class="pr_name mr-5">
+                        <p>Timesheet ID</p>
+                        <span>233</span>
+                    </div>
+                    <div class="pr_name mr-5">
+                    <p>Duration</p>
+                        <span>12th Mar 2023 - 22nd Sept 2023</span>
+                    </div>
+                    <div class="pr_name pr_assign">
+                        <p>status</p>
+                        <span>Open</span>
+                    </div>
+                </div>
+            </div>
+        </div>    
+        <div class="col-md-5">
+        <div class="mb-3 header_pr_name">
+            <div class="pr_assign edit_timesheet">
+                <div class="emp_img mb-3">
+                <img src="../../../../assets/images/admin_pic.png" />
+                <img src="../../../../assets/images/admin_pic.png" />
+                <img src="../../../../assets/images/admin_pic.png" />
+                </div>
+                <div class="edit_qa_btn ml-3">
+                    <button class="btn btn-block create_btn " outline status="primary" nbButton size="small">
+                    <mat-icon aria-hidden="false" class="filter mr-1" fontIcon="create"></mat-icon> Edit Timesheet
+                    </button>
+                    <button class="btn btn-block link ml-3" outline status="primary" nbButton size="small">
+                        <mat-icon aria-hidden="false" class="filter mr-1" fontIcon="qr_code_2"></mat-icon>   View QR Code
+                    </button>
+                </div>
+            </div>
+            
+        </div>
+        </div>
+    </div>
 
-<div>
-    <mat-tab-group class="bg-transparent">
-        <mat-tab label="Summary">
-            <app-summary></app-summary>
-        </mat-tab>
-        <mat-tab label="Attendance">
-            <app-attendance></app-attendance>
-        </mat-tab>
-        <mat-tab label="Enter my Time">
-            <app-enter-my-time></app-enter-my-time>
-        </mat-tab>
-        <mat-tab label="Manage Worker">
-            <app-manage-worker></app-manage-worker>
-        </mat-tab>
-        <mat-tab label="Approve Timesheet">
-            <app-approve-timesheet></app-approve-timesheet>
-        </mat-tab>
-    </mat-tab-group>
-</div>
+    <div>
+        <mat-tab-group class="bg-transparent">
+            <mat-tab label="Summary">
+                <app-attendance></app-attendance>
+            </mat-tab>
+            <mat-tab label=" Attendance">
+                <app-summary></app-summary>
+            </mat-tab>
+            <mat-tab label="Enter my Time">
+                <app-enter-my-time></app-enter-my-time>
+            </mat-tab>
+            <mat-tab label="Manage Worker">
+                <app-manage-worker></app-manage-worker>
+            </mat-tab>
+            <mat-tab label="Approve Timesheet">
+                <app-approve-timesheet></app-approve-timesheet>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
