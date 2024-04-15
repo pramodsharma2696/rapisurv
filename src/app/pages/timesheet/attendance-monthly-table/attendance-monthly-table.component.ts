@@ -8,11 +8,11 @@ export interface FieldWorker {
 }
 
 @Component({
-  selector: 'app-summary-monthly-table',
-  templateUrl: './summary-monthly-table.component.html',
-  styleUrls: ['./summary-monthly-table.component.scss']
+  selector: 'app-attendance-monthly-table',
+  templateUrl: './attendance-monthly-table.component.html',
+  styleUrls: ['./attendance-monthly-table.component.scss']
 })
-export class SummaryMonthlyTableComponent implements OnInit {
+export class AttendanceMonthlyTableComponent implements OnInit {
 
   constructor() { }
 
