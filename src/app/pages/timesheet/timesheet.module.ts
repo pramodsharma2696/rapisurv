@@ -4,11 +4,11 @@ import { TimesheetComponent } from './timesheet.component';
 import { CreateTimesheetComponent } from './create-timesheet/create-timesheet.component';
 import { CreateTimesheetModalComponent } from './create-timesheet-modal/create-timesheet-modal.component';
 import { ApproveTimesheetComponent } from './approve-timesheet/approve-timesheet.component';
-import { AttendanceComponent } from './attendance/attendance.component';
+import { SummaryComponent } from './summary/summary.component';
 import { EnterMyTimeComponent } from './enter-my-time/enter-my-time.component';
 import { ProjectDetailCardComponent } from './project-detail-card/project-detail-card.component';
 import { ProjectDetailsComponent } from './project-details/project-details.component';
-import { SummaryComponent } from './summary/summary.component';
+import { AttendanceComponent } from './attendance/attendance.component';
 import { ManageWorkerComponent } from './manage-worker/manage-worker.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatRadioModule } from '@angular/material/radio';
@@ -17,9 +17,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
-import { SummaryMonthlyTableComponent } from './summary-monthly-table/summary-monthly-table.component';
-import { SummaryWeeklyTableComponent } from './summary-weekly-table/summary-weekly-table.component';
+import { AttendanceWeeklyTableComponent } from './attendance-weekly-table/attendance-weekly-table.component';
 import {MatTableModule} from '@angular/material/table';
+import { AttendanceMonthlyTableComponent } from './attendance-monthly-table/attendance-monthly-table.component';
+import { FormsModule } from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
 
 
 @NgModule({
@@ -28,15 +32,14 @@ import {MatTableModule} from '@angular/material/table';
     CreateTimesheetComponent,
     CreateTimesheetModalComponent,
     ApproveTimesheetComponent,
-    AttendanceComponent,
+    SummaryComponent,
     EnterMyTimeComponent,
     ProjectDetailCardComponent,
     ProjectDetailsComponent,
-    SummaryComponent,
+    AttendanceComponent,
     ManageWorkerComponent,
-    SummaryMonthlyTableComponent,
-    SummaryWeeklyTableComponent,
-    
+    AttendanceWeeklyTableComponent,
+    AttendanceMonthlyTableComponent
 
   ],
   imports: [
@@ -48,7 +51,10 @@ import {MatTableModule} from '@angular/material/table';
     NgSelectModule,
     MatTabsModule,
     MatCardModule,
-    MatTableModule
+    MatTableModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatSelectModule
   ]
 })
 export class TimesheetModule { }
