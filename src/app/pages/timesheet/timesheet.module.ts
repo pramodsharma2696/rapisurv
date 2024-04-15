@@ -24,6 +24,7 @@ import { FormsModule } from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
+import { WeekDaysSelectComponent } from './week-days-select/week-days-select.component';
 
 
 @NgModule({
@@ -39,8 +40,8 @@ import { MatOption } from '@angular/material/core';
     AttendanceComponent,
     ManageWorkerComponent,
     AttendanceWeeklyTableComponent,
-    AttendanceMonthlyTableComponent
-
+    AttendanceMonthlyTableComponent,
+    WeekDaysSelectComponent
   ],
   imports: [
     MatSlideToggleModule,
