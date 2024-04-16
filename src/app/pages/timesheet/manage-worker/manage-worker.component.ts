@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ManageWorkerInviteWorkersModalComponent } from '../manage-worker-invite-workers-modal/manage-worker-invite-workers-modal.component';
 
 // Interface for Worker
 export interface Worker {
@@ -19,7 +21,9 @@ export class ManageWorkerComponent implements OnInit {
   dataSource = new MatTableDataSource<Worker>();
   displayedColumns: string[] = ['workerId', 'firstName', 'lastName', 'status', 'plannedHours'];
 
-  constructor() { }
+  constructor(
+    private modalService: NgbModal,
+  ) { }
 
   ngOnInit(): void {
     this.dataSource.data = [
@@ -31,4 +35,11 @@ export class ManageWorkerComponent implements OnInit {
     ];
   }
 
+  inviteWorker(){
+    const activeModal = this.modalService.open(ManageWorkerInviteWorkersModalComponent, {
+      size: 'sm',
+      container: 'nb-layout',
+      centered: true,
+    });
+  }
 }
