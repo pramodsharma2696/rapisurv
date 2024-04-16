@@ -7,8 +7,9 @@ export { ServicesModule } from './lib/services.module';
 
 export { ProjectService } from './lib/project/project.service';
 export { PortfolioService } from './lib/portfolio/portfolio.service';
+export { TimesheetService } from './lib/timesheet/timesheet.service'
 
-export { ENVIRONMENT_INJECT_TOKEN,STORAGE_KEY_USER_DATA } from './lib/shared/constants';
+export { ENVIRONMENT_INJECT_TOKEN, STORAGE_KEY_USER_DATA } from './lib/shared/constants';
 export { IEnvironment } from './lib/shared/environment.model';
 
 // shared
