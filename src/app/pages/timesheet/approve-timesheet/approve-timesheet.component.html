@@ -1,6 +1,24 @@
 <div>
   <app-week-days-select></app-week-days-select>
 
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="assign_check">
+      <label class="mr-2">Monday 22nd Jan</label>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="invites_pending Accept_btn">
+      <button class="btn btn-block reject" outline status="primary" nbButton size="small">
+          <mat-icon aria-hidden="false" class="filter mr-1" fontIcon="clear"></mat-icon>   Reject
+      </button>
+      <button class="btn btn-block create_btn mr-3" outline status="primary" nbButton size="small">
+        <i class="material-icons">done</i> Accept all
+    </button>
+  </div>
+</div>
   <!-- workers-table.component.html -->
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <!-- Worker ID Column -->
@@ -31,11 +49,15 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Action </th>
       <td mat-cell *matCellDef="let element">
-        <button mat-icon-button (click)="onCrossClick(element)">
+        <label class="mr-2" (click)="onCorrectClick(element)">
+          <mat-checkbox color="primary"></mat-checkbox>
+        </label>
+
+        <!-- <label class="mr-2" (click)="onCrossClick(element)">
           <mat-icon>close</mat-icon>
-        </button>
-        <button mat-icon-button (click)="onCorrectClick(element)">
-          <mat-icon>done</mat-icon>
+        </label> -->
+        <button mat-icon-button class="reject_btn" >
+          <mat-icon>close</mat-icon>
         </button>
       </td>
     </ng-container>

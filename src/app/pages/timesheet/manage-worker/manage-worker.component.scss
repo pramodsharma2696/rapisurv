@@ -1,0 +1,82 @@
+.emp_img{
+    border-right: 1px solid #ccc;
+    padding-right: 12px;
+   }
+   .create_btn {
+     background-color: #12AF9B;
+     color: #fff !important;
+     padding: 7px 14px;
+     border-radius: 10px;
+     height: 43px;
+ }
+ button.btn.btn-block.link {
+     border: 1px solid #12af9b;
+     border-radius: 10px;
+     height: 43px;
+     margin-top: 0;
+     width: 28%;
+ }
+ mat-icon.mat-icon.notranslate.filter.material-icons.mat-ligature-font.mat-icon-no-color {
+     font-size: 18px;
+     display: contents;
+ }
+ .mat-icon.mat-ligature-font[fontIcon]::before {
+     margin-right: 6px;
+ }
+ .year_week {
+    display: flex;
+  }
+.mat-icon.notranslate.material-icons.mat-ligature-font.mat-icon-no-color {
+
+        font-size: 19px;
+        color: #5E5E5E;
+        position: absolute;
+        top: 11px;
+        margin: 0 auto;
+        left: -98px;
+    right: 123px;
+}
+.select_status {
+    background-color: #EDF9F0;
+    padding: 5px 12px;
+    border-radius: 60px;
+    color: #009B15;
+    width: 52%;
+}
+.select_status.inactive_colum {
+    background-color: #585858;
+    padding: 5px 12px;
+    border-radius: 60px;
+    color: #009B15;
+    width: 52%;
+}
+.invites_pending p {
+    font-size: 13px;
+    color: #000000;
+    font-weight: 600;
+    margin-bottom: 0px;
+    margin-top: -23px;
+}
+td.mat-cell.cdk-cell {
+    width: 20%;
+}
+input.planned_hours {
+    width: 40%;
+    padding: 5px;
+    border: 1px solid #D0D5DD;
+}
+.assign_check {
+    color: #12af9b;
+    font-weight: 500;
+}
+
+:host ::ng-deep  .mat-checkbox-checked.mat-primary .mat-checkbox-background{
+    background-color: #12af9b !important;
+    width: 14px;
+    height: 14px;
+  }
+  :host ::ng-deep .mat-checkbox-frame{
+    width: 14px;
+    height: 14px;
+
+  }
