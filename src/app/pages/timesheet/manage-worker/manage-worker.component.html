@@ -1,5 +1,31 @@
+<div class="row mt-5">
+    <div class="col-md-6"> 
+    </div>
+    <div class="col-md-6">
+        <div class="year_week float-right">
+            <div class="mb-3 header_pr_name">
+                <div class=""> 
+                    <span><mat-icon aria-hidden="false" fontIcon="search"></mat-icon></span>
+                    <input type="text" class="form-control" placeholder="Search by worker’s ID or Name" style="padding: 4px 37px; width: 91%; float: left;" required />
+                </div>
+            </div>   
+            <div class="invites_pending">
+                <p>3 pending invites</p>
+                <button class="btn btn-block create_btn " outline status="primary" nbButton size="small">
+                    <i class="material-icons">person_add_alt</i> Invite Workers
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
 <!-- workers-table.component.html -->
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<div class="assign_check">
+    <label class="mr-2">
+        <mat-checkbox class="mr-2" color="primary"></mat-checkbox> Assign Work
+    </label>
+</div>  
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mt-1">
     <!-- Worker ID Column -->
     <ng-container matColumnDef="workerId">
         <th mat-header-cell *matHeaderCellDef> Worker ID </th>
@@ -22,9 +48,9 @@
     <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef> Status </th>
         <td mat-cell *matCellDef="let element">
-            <mat-select [(ngModel)]="element.status">
-                <mat-option value="yes">Yes</mat-option>
-                <mat-option value="no">No</mat-option>
+            <mat-select class="select_status" [(ngModel)]="element.status">
+                <mat-option class="active_colum" value="yes">Active</mat-option>
+                <mat-option class="inactive_colum" value="no">Inactive</mat-option>
             </mat-select>
         </td>
     </ng-container>
@@ -33,7 +59,7 @@
     <ng-container matColumnDef="plannedHours">
         <th mat-header-cell *matHeaderCellDef> Planned Hours </th>
         <td mat-cell *matCellDef="let element">
-            <input matInput type="number" [(ngModel)]="element.plannedHours">
+            <input matInput type="number" class="planned_hours" [(ngModel)]="element.plannedHours">
         </td>
     </ng-container>
 
