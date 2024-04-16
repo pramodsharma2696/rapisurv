@@ -1,0 +1,33 @@
+button.reject_btn {
+    background-color: red;
+    padding: 0 !important;
+    border: 0;
+    color: #fff;
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+
+}
+
+button.reject_btn mat-icon {
+    font-size: 14px;
+    display: flex;
+    padding: 2px 1px;
+}
+.invites_pending.Accept_btn button {
+    width: 29%;
+    float: right;
+    padding: 10px;
+    margin-top: 0;
+}
+button.btn.btn-block.reject {
+    border: 1px solid #FD1A1A;
+    border-radius: 10px;
+    height: 43px;
+    margin-top: 0;
+    color: #FD1A1A;
+}
+.assign_check label {
+    font-size: 14px;
+    font-weight: 600;
+}

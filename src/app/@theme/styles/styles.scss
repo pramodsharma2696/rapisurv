@@ -243,3 +243,49 @@ button.btn.btn-block {
   border-radius: 10px !important;
   margin-top: 21px;
 }
+.mat-tab-label-active {
+  background-color: #ffffff !important;
+  color: #010203 !important;
+  border-radius: 5px 5px 0 0;
+  border-bottom: 2px solid #010203;
+}
+.mat-tab-label:not(.mat-tab-label-active) {
+  background: #fff !important;
+  color: #5E5E5E !important;
+  border-radius: 5px 5px 0 0;
+}
+
+.table_div {
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  padding: 0px 20px 20px 0px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #DEDEDE;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background:  #FFFFFF;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: red;
+}
+input.planned_hours {
+  width: 40%;
+  padding: 5px;
+  border: 1px solid #D0D5DD;
+}
