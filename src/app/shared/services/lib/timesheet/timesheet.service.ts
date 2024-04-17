@@ -16,4 +16,14 @@ export class TimesheetService {
     this.apiBase = this.env.backend.baseUrl;
   }
 
+  
+  public getAllProject() {
+    const url = this.apiBase + `api/project?sort=updated_at&order=desc`;
+    return this.http.get<any>(url);
+  }
+
+  public getProjectById(projectId) {
+    const url = this.apiBase + `api/project/${projectId}`;
+    return this.http.get<any>(url);
+  }
 }

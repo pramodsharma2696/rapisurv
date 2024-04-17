@@ -40,7 +40,7 @@ const routes: Routes = [
       },
       
       {
-        path: 'timesheet/create',
+        path: 'timesheet/create/:id',
         component: CreateTimesheetComponent
       },
       {

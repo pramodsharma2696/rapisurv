@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { TimesheetService } from 'src/app/shared/services/public-api';
 
 @Component({
   selector: 'app-create-timesheet-modal',
@@ -8,23 +9,35 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./create-timesheet-modal.component.scss']
 })
 export class CreateTimesheetModalComponent implements OnInit {
-
+  projects;
+  selectedProject;
   constructor(
     private activeModal: NgbActiveModal,
-    private router: Router
+    private router: Router,
+    private timesheetService: TimesheetService
   ) { }
 
   ngOnInit(): void {
+    this.timesheetService.getAllProject().subscribe(res => {
+      console.log("Projects ----->")
+      console.log(res.data)
+      this.projects = res.data
+    })
   }
 
-  
+  onSelectProject(selectedValue: any) {
+    this.selectedProject = selectedValue;
+    console.log('Selected Project:', this.selectedProject);
+  }
+
   closeModal(status) {
     this.activeModal.close({ data: null, status: 206 });
   }
 
-  gotoTimesheet(){
-    this.router.navigate(['/app/timesheet/create']);
+  gotoTimesheet() {
+    console.log("Inside go to timsheet")
+    this.router.navigate([`/app/timesheet/create`, this.selectedProject.id]);
     // this.closeModal()
-    this.activeModal.close({ data:  {}, status: 200 });
+    this.activeModal.close({ data: {}, status: 200 });
   }
 }
