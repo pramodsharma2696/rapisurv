@@ -1,16 +1,62 @@
 <div class="modal-body">
-    <button class="btn" status="primary" nbButton size="small" (click)="inviteWorker()">
-        <i class="material-icons mr-2">keyboard_arrow_left</i>
-    </button>
-    <p>manage-worker-add-local-worker-modal works!</p>
+    <div class="add_loacal_worker">
+        <button class="btn" status="primary" nbButton size="small" (click)="inviteWorker()">
+            <i class="material-icons mr-2">keyboard_arrow_left</i>
+        </button>
+        <div class="invite_workers">
+            <h6>Invite Workers</h6>
+            <p>Add Local Workers</p>
+        </div> 
+    </div>
 
     <div>
         <mat-tab-group class="bg-transparent">
             <mat-tab label="Single upload">
-                <p>Single Upload</p>
+                <div class="add_loacal_worker_name">
+                    <div class="fn_div mb-2">
+                        <p >First Name</p>
+                        <div class="open_close_btn mt-1" style="display: revert;margin-top: -19px;">
+                            <input type="text" class="form-control" style="padding: 4px 37px;" required />
+                        </div> 
+                    </div> 
+                    <div class="fn_div">
+                        <p>Last Name</p>
+                        <div class="open_close_btn mt-1" style="display: revert;margin-top: -19px;">
+                            <input type="text" class="form-control" style="padding: 4px 37px;" required />
+                        </div> 
+                    </div> 
+                    <div class="fn_div mt-3">
+                        <h6><mat-icon aria-hidden="false" class="add_icon" fontIcon="add"></mat-icon> Add another</h6>
+                    </div> 
+
+                    <div class="invite_workers mt-3">
+                        <button class="btn btn-block create_btn " outline status="primary" nbButton size="small">
+                            Add Worker
+                        </button>
+                    </div>
+                </div>          
             </mat-tab>
             <mat-tab label=" Multiple uploads">
-                <p>multiple Upload</p>
+                <div class="upload_div">
+                    <div class="cloud_icon mt-3">
+                        <mat-icon>cloud_upload</mat-icon>
+                        <p><span>Click to upload</span> or drag and drop</p>
+                        <p>only CSV supported (max. 800x400px)</p>
+                        <div class="or">
+                            <p>OR</p>
+                        </div>
+                        <div class="file_btn mt-3">
+                            <button class="btn btn-block browse_btn " outline status="primary" nbButton size="small">
+                                Browse Files
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="invite_workers mt-3">
+                    <button class="btn btn-block create_btn " outline status="primary" nbButton size="small">
+                        Add Worker
+                    </button>
+                </div>
             </mat-tab>
         </mat-tab-group>
     </div>

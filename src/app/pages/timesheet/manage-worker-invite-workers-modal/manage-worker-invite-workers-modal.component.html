@@ -1,6 +1,29 @@
 <div class="modal-body">
-    <p>manage-worker-invite-workers-modal works!</p>
-    <button class="btn btn-block create_btn " outline status="primary" nbButton size="small" (click)="addLocalWorker()">
-        <i class="material-icons mr-2">person_add_alt</i> Add Local Worker
-    </button>
+    <div class="invite_workers">
+        <h6>Invite Workers</h6>
+        <button class="btn btn-block create_btn " outline status="primary" nbButton size="small" (click)="addLocalWorker()">
+            <i class="material-icons mr-2">person_add_alt</i> Add Local Worker
+        </button>
+    </div>
+    <div class="mt-3 mb-3" style="float: left; width: 100%;"> 
+        <span><mat-icon aria-hidden="false" fontIcon="search"></mat-icon></span>
+        <input type="text" class="form-control" placeholder="Enter Worker’s ID" style="padding: 4px 37px; width: 100%; float: left;" required />
+    </div>
+   <div class="invites_pending">
+        <p>Pending Invites</p>
+   </div>
+
+   <div class="row">
+    <div class="col-md-12 mb-3">
+      <div class="form-group">
+        <div class="admin_img mb-3">
+          <img src="../../../assets/images/admin_pic.png" />
+          <label class="form-label ml-3 admin_name"> JBIDEN - Joe Biden</label>
+          <img src="../../../assets/images/admin_remove.png" class="ml-4 remove_image" />
+        </div>
+      </div>
+    </div>
+    
+  </div>
+    
 </div>
