@@ -37,7 +37,6 @@ export class CreateTimesheetModalComponent implements OnInit {
   gotoTimesheet() {
     console.log("Inside go to timsheet")
     this.router.navigate([`/app/timesheet/create`, this.selectedProject.id]);
-    // this.closeModal()
     this.activeModal.close({ data: {}, status: 200 });
   }
 }

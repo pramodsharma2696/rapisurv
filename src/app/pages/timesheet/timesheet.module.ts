@@ -30,6 +30,7 @@ import { ManageWorkerAssignWorkerModalComponent } from './manage-worker-assign-w
 import { ManageWorkerInviteWorkersModalComponent } from './manage-worker-invite-workers-modal/manage-worker-invite-workers-modal.component';
 import { ViewQrCodeModalComponent } from './view-qr-code-modal/view-qr-code-modal.component';
 
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { ViewQrCodeModalComponent } from './view-qr-code-modal/view-qr-code-moda
     ViewQrCodeModalComponent
   ],
   imports: [
+    CommonModule,
     MatSlideToggleModule,
     MatRadioModule,
     MatCheckboxModule,
@@ -63,7 +65,8 @@ import { ViewQrCodeModalComponent } from './view-qr-code-modal/view-qr-code-moda
     MatTableModule,
     FormsModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    ReactiveFormsModule
   ]
 })
 export class TimesheetModule { }

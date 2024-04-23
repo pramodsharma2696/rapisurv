@@ -20,9 +20,9 @@
   </div>
 
 
+  <!--  -->
 
-
-  <button class="btn btn-block create_btn" style="margin-top: 13px" nbButton size="small" (click)="gotoTimesheet()">
+  <button class="btn btn-block create_btn" style="margin-top: 13px" nbButton size="small" [disabled]="!selectedProject" (click)="gotoTimesheet()">
     Create Timesheet
   </button>
 
