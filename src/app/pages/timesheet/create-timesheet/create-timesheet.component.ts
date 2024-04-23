@@ -12,7 +12,9 @@ import { ProjectService, TimesheetService } from 'src/app/shared/services/public
 })
 export class CreateTimesheetComponent implements OnInit {
 
+  users;
   timesheetform: FormGroup
+  selectedAdmin = []
 
   projectId;
   projectDetails = null;
@@ -41,7 +43,6 @@ export class CreateTimesheetComponent implements OnInit {
     console.log(
       "Timesheet"
     )
-    let id;
     this.route.params.subscribe(params => {
       this.projectId = params['id'];
     });
@@ -52,9 +53,15 @@ export class CreateTimesheetComponent implements OnInit {
       console.log(res.data)
     })
 
-    this.projectService.loadAllTeams().subscribe(res => {
+    this.timesheetService.getUsers().subscribe(res => {
       console.log("ress team>>")
       console.log(res.data)
+      for (let user of res.data) {
+        user.fullname = `${user.finm} ${user.lamn}`;
+        user.manage_time = false;
+        user.manage_worker = false
+      }
+      this.users = res.data
     })
 
     this.timesheetform = this.fb.group({
@@ -71,9 +78,21 @@ export class CreateTimesheetComponent implements OnInit {
     })
   }
 
+  onSelectWorker(selectedValue) {
+    console.log(selectedValue);
+    this.selectedAdmin = selectedValue
+  }
 
   onFormSubmit() {
     console.log(this.timesheetform.value)
+
+    let assign_admin = this.selectedAdmin.map((admin) => {
+      return {
+        manage_time: admin.manage_time ? "1" : "0",
+        manage_worker: admin.manage_worker ? "1" : "0",
+        admin_id: admin.id
+      }
+    })
 
     let timesheetData = {
       projectid: this.projectId,
@@ -86,8 +105,8 @@ export class CreateTimesheetComponent implements OnInit {
       break: this.timesheetform.value.break ? '1' : '0',
       break_duration: this.timesheetform.value.break_duration,
       break_duration_type: this.timesheetform.value.break_duration_type,
-      assign_admin: '1,2,3',
-      project: this.projectDetails
+      assign_admin: assign_admin
+      // project: this.projectDetails
     }
     this.timesheetService.createTimesheet(timesheetData).subscribe(res => {
       console.log(res)
@@ -96,6 +115,15 @@ export class CreateTimesheetComponent implements OnInit {
 
       }
     })
+    console.log(this.selectedAdmin)
     console.log(timesheetData)
+  }
+
+  toggleManageTime(user: any) {
+    user.manage_time = !user.manage_time;
+  }
+
+  toggleManageWorkers(user: any) {
+    user.manage_worker = !user.manage_worker;
   }
 }

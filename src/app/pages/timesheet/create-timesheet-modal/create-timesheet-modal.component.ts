@@ -39,4 +39,11 @@ export class CreateTimesheetModalComponent implements OnInit {
     this.router.navigate([`/app/timesheet/create`, this.selectedProject.id]);
     this.activeModal.close({ data: {}, status: 200 });
   }
+
+  getProjectLabel(project) {
+    console.log("label>>>>>")
+    console.log(project)
+    return `${project.id} - ${project.Description}`;
+  }
+
 }

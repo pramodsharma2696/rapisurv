@@ -8,7 +8,7 @@
       </div>
       <div class="pr_time ">
         <p>No of Workers</p>
-        <span>20 Workers</span>
+        <span>0 Workers</span>
       </div>
     </div>
     <div class="pr_assign">
@@ -18,7 +18,7 @@
         <img src="../../../../assets/images/admin_pic.png" />
       </div>
       <p>status</p>
-      <span>Open</span>
+      <span [style.background-color]="timesheetdata.status == '1' ? '#F56630' : '#D0D5DD'" >{{timesheetdata.status == '1' ? 'Open' : 'Closed'}}</span>
     </div>
 
   </div>
