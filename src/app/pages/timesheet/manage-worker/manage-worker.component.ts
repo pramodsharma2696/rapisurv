@@ -37,7 +37,7 @@ export class ManageWorkerComponent implements OnInit {
 
   inviteWorker(){
     const activeModal = this.modalService.open(ManageWorkerInviteWorkersModalComponent, {
-      size: 'sm',
+      size: 'md',
       container: 'nb-layout',
       centered: true,
     });

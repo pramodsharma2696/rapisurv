@@ -1,0 +1,95 @@
+.add_loacal_worker {
+    display: flex;
+}
+.invite_workers {
+    margin: 0 auto;
+}
+:host ::ng-deep .mat-tab-labels {
+    display: flex;
+    justify-content: center !important;
+}
+.invite_workers h6 {
+    font-size: 16px;
+    line-height: 20.08px;
+    font-weight: 600;
+    text-align: center;
+}
+.add_loacal_worker_name {
+    padding: 20px 0px;
+}
+.add_loacal_worker_name p {
+    font-size: 14px;
+    line-height: 16.94px;
+    font-weight: 500;
+    margin: 0;
+}
+.fn_div input {
+    border-radius: 10px;
+}
+
+.fn_div h6 {
+    font-size: 16px;
+    line-height: 19.36px;
+    font-weight: 600;
+}
+mat-icon.mat-icon.notranslate.add_icon {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 38.36px;
+    margin-right: -10px;
+}
+.cloud_icon {
+    border: 1.5px dotted #ccc;
+    border-radius: 16px;
+    padding: 45px;
+}
+.cloud_icon {
+    text-align: center;
+}
+.cloud_icon mat-icon {
+    font-size: 40px;
+    height: 38px;
+    width: 58px;
+}
+.cloud_icon.mt-3 p span {
+    color: #F85C04;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20.5px;
+}
+.cloud_icon p {
+    color: #98A2B3;
+    margin-bottom: 3px;
+}
+.or {
+   width:100%;
+   text-align:center; 
+   position: relative;
+}
+
+.or p {
+   position:relative; 
+   padding:10px; 
+   display: inline-block;
+   z-index: 1;
+   background: #ffffff;
+
+}
+
+.or::after {
+   content:'';
+   position: absolute;
+   left: 0;
+   right: 0;
+   top: 37%;
+   height: 1px;
+   background: #F0F2F5;
+   z-index:0;
+}
+.browse_btn {
+    background-color: #F85C04;
+    border-radius: 6px;
+    color: #fff;
+    width: 30%;
+    text-align: center;
+}

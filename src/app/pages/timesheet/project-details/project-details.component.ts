@@ -19,7 +19,7 @@ export class ProjectDetailsComponent implements OnInit {
 
   showQRCode() {
     const activeModal = this.modalService.open(ViewQrCodeModalComponent, {
-      size: 'sm',
+      size: 'md',
       container: 'nb-layout',
       centered: true,
     });
