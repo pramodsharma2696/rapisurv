@@ -23,13 +23,13 @@
       <div class="row">
         <div class="col-md-6 mb-3">
           <div class="form-group">
-            <label for="inputEmail4" class="form-label">Start Date</label>
+            <label for="start_date" class="form-label">Start Date</label>
             <input type="date" formControlName="start_date" id="start_date" class="form-control" />
           </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <label for="inputEmail4" class="form-label">End Date</label>
+            <label for="end_date" class="form-label">End Date</label>
             <input type="date" formControlName="end_date" id="end_date" class="form-control" />
           </div>
         </div>
@@ -39,7 +39,7 @@
             <div class="open_close_btn">
               <label class="form-label close_side"> Close</label>
               <label class="mr-2 ml-2">
-                <mat-slide-toggle checked formControlName="status"></mat-slide-toggle>
+                <mat-slide-toggle  formControlName="status"></mat-slide-toggle>
               </label>
               <label class="form-label open_side"> Open</label>
             </div>
@@ -65,7 +65,7 @@
       <div class="open_close_btn">
         <label class="form-label close_side"> No</label>
         <label class="mr-2 ml-2">
-          <mat-slide-toggle checked formControlName="localwork"></mat-slide-toggle>
+          <mat-slide-toggle  formControlName="localwork"></mat-slide-toggle>
         </label>
         <label class="form-label open_side"> Yes</label>
       </div>
@@ -75,7 +75,7 @@
       <div class="open_close_btn">
         <label class="form-label close_side"> No</label>
         <label class="mr-2 ml-2">
-          <mat-slide-toggle checked formControlName="scanning"></mat-slide-toggle>
+          <mat-slide-toggle  formControlName="scanning"></mat-slide-toggle>
         </label>
         <label class="form-label open_side"> Yes</label>
       </div>
@@ -85,7 +85,7 @@
       <div class="open_close_btn">
         <label class="form-label close_side"> No</label>
         <label class="mr-2 ml-2">
-          <mat-slide-toggle checked formControlName="hours"></mat-slide-toggle>
+          <mat-slide-toggle  formControlName="hours"></mat-slide-toggle>
         </label>
         <label class="form-label open_side"> Yes</label>
       </div>
@@ -95,7 +95,7 @@
       <div class="open_close_btn">
         <label class="form-label close_side"> No</label>
         <label class="mr-2 ml-2">
-          <mat-slide-toggle checked formControlName="break"></mat-slide-toggle>
+          <mat-slide-toggle  formControlName="break"></mat-slide-toggle>
         </label>
         <label class="form-label open_side"> Yes</label>
       </div>
@@ -153,7 +153,7 @@
         <!-- <input type="text" class="form-control" placeholder="Search by name or worker’s ID"
           style="width: 27%;padding: 4px 37px;" required /> -->
         <ng-select class="ng-select-container" style="width: 30%;" dropdownPosition="auto" [items]="users"
-          placeholder="Search by name or worker’s ID" (change)="onSelectWorker($event)" bindLabel="fullname"
+          placeholder="Search by name or worker’s ID" (change)="onSelectWorker($event)" bindLabel="fullname" 
           [multiple]="true">
           <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
             <p>{{item.finm}} {{item.lamn}}</p>
@@ -167,6 +167,7 @@
       </div>
 
       <div class="row" *ngFor="let user of selectedAdmin">
+        
         <div class="col-md-4 mb-3">
           <div class="form-group">
             <div class="admin_img mb-3">

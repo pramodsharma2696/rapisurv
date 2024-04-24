@@ -11,7 +11,7 @@ export class TimesheetService {
   private userdata;
   private apiBase = '';
   private timesheetapiBase = 'http://timesheet2.test/';
-  
+
   constructor(
     private http: HttpClient,
     @Inject(ENVIRONMENT_INJECT_TOKEN) private env: IEnvironment,
@@ -44,9 +44,18 @@ export class TimesheetService {
     return this.http.post<any>(url, timesheet)
   }
 
+  public updateTimesheet(timesheet) {
+    const url = this.timesheetapiBase + `api/update-timesheet`;
+    return this.http.post<any>(url, timesheet)
+  }
   public getTimesheets() {
     const url = this.timesheetapiBase + `api/all-timesheet`
     return this.http.get<any>(url)
+  }
+
+  public getTimesheetById(timesheetId) {
+    const url = this.timesheetapiBase + `api/timesheet-details/${timesheetId}`;
+    return this.http.get<any>(url);
   }
 
 

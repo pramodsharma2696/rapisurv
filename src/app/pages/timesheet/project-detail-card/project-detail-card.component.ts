@@ -50,6 +50,6 @@ export class ProjectDetailCardComponent implements OnInit {
   }
 
   clickProject() {
-    this.router.navigate(['/app/timesheet/project']);
+    this.router.navigate(['/app/timesheet', this.timesheetdata.id]);
   }
 }

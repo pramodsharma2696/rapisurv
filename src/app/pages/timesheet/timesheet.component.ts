@@ -26,7 +26,7 @@ export class TimesheetComponent implements OnInit {
 
     this.timesheetService.getTimesheets().subscribe(res => {
       console.log(res.data)
-      this.timesheets = res.data.slice().reverse()
+      this.timesheets = res.data
       console.log(res.data.length)
       let len = res.data.length;
       if (len > 0) {

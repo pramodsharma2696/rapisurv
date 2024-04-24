@@ -44,7 +44,11 @@ const routes: Routes = [
         component: CreateTimesheetComponent
       },
       {
-        path: 'timesheet/project',
+        path: 'timesheet/edit/:id',
+        component: CreateTimesheetComponent
+      },
+      {
+        path: 'timesheet/:id',
         component: ProjectDetailsComponent
       },
       {
