@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -8,6 +8,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./view-qr-code-modal.component.scss']
 })
 export class ViewQrCodeModalComponent implements OnInit {
+  @Input() qrlink: any;
 
   constructor(
     private activeModal: NgbActiveModal,
@@ -15,6 +16,7 @@ export class ViewQrCodeModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.qrlink); 
   }
 
   closeModal(status) {

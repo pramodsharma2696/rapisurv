@@ -58,6 +58,15 @@ export class TimesheetService {
     return this.http.get<any>(url);
   }
 
+  public getTimesheetQR(projectId) {
+    const url = this.timesheetapiBase + `api/generate-qr/${projectId}`;
+    return this.http.get<any>(url);
+  }
 
+  public getTimesheetId(){
+    const url = this.timesheetapiBase + `api/generate-timesheet-id`;
+    return this.http.get<any>(url);
+
+  }
 
 }

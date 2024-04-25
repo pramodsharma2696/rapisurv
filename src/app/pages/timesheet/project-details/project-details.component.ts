@@ -14,7 +14,7 @@ export class ProjectDetailsComponent implements OnInit {
   timesheetid;
   timesheetdata;
   project;
-
+  qrlink;
   constructor(
     private modalService: NgbModal,
     private route: ActivatedRoute,
@@ -30,14 +30,17 @@ export class ProjectDetailsComponent implements OnInit {
     console.log(this.timesheetid)
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
-      console.log("ress>>")
-      console.log(res.data)
       let projectId = res.data.project_id
       this.timesheetService.getProjectById(projectId).subscribe(res => {
         console.log("Projects ----->")
         console.log(res.data)
         this.project = res.data
       })
+    })
+
+    this.timesheetService.getTimesheetQR(1146).subscribe(res => {
+      this.qrlink = res?.data.timesheet_qr
+      console.log(res?.data.timesheet_qr)
     })
 
   }
@@ -47,11 +50,12 @@ export class ProjectDetailsComponent implements OnInit {
       size: 'md',
       container: 'nb-layout',
       centered: true,
+      // data: this.qrlink
     });
-
+    activeModal.componentInstance.qrlink = this.qrlink
   }
 
-  editTimesheet(){
+  editTimesheet() {
     this.router.navigate([`/app/timesheet/edit`, this.timesheetid]);
 
   }

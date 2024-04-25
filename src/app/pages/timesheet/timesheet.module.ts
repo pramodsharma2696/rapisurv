@@ -31,6 +31,7 @@ import { ManageWorkerInviteWorkersModalComponent } from './manage-worker-invite-
 import { ViewQrCodeModalComponent } from './view-qr-code-modal/view-qr-code-modal.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { TimesheetRoutingModule } from './timesheet-routing.module';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     MatFormFieldModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TimesheetRoutingModule
   ]
 })
 export class TimesheetModule { }

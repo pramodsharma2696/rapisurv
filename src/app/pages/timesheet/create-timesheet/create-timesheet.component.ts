@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NbToastrService } from '@nebular/theme';
 import { ProjectService, TimesheetService } from 'src/app/shared/services/public-api';
 
 
@@ -18,6 +19,7 @@ export class CreateTimesheetComponent implements OnInit {
   isEdit: boolean = false;
   timesheetid;
   timesheetdata;
+  generated_timesheet_id;
 
   projectId;
   projectDetails = null;
@@ -37,6 +39,7 @@ export class CreateTimesheetComponent implements OnInit {
     private router: Router,
     private timesheetService: TimesheetService,
     private projectService: ProjectService,
+    private toastrService: NbToastrService,
     private fb: FormBuilder
   ) {
     this.checkForEditRoute();
@@ -48,13 +51,13 @@ export class CreateTimesheetComponent implements OnInit {
     this.timesheetform = this.fb.group({
       start_date: [''],
       end_date: [''],
-      status: [''],
+      status: [true],
       localwork: [''],
-      scanning: [''],
-      hours: [''],
-      break: [''],
-      break_duration: [''],
-      break_duration_type: [''],
+      scanning: new FormControl({ value: '', disabled: true }),
+      hours: new FormControl({ value: '', disabled: true }),
+      break: new FormControl({ value: '', disabled: true }),
+      break_duration: new FormControl({ value: '0', disabled: true }),
+      break_duration_type: new FormControl({ value: '', disabled: true }),
       assign_admin: ['']
     })
 
@@ -77,13 +80,12 @@ export class CreateTimesheetComponent implements OnInit {
           adm.role = JSON.parse(adm.role)
           let admin = {
             admin_id: adm.admin_id,
-            manage_time: adm.manage_time == '1' ? true : false,
-            manage_worker: adm.manage_worker == '1' ? true : false
+            manage_time: adm.role.manage_time == '1' ? true : false,
+            manage_worker: adm.role.manage_worker == '1' ? true : false
           }
           assignadminarray.push(admin)
         }
 
-        // console.log(assignadminarray)
         this.assign_admin = assignadminarray
         this.projectId = this.timesheetdata.project_id
         this.start_date = this.timesheetdata.start_date
@@ -95,6 +97,7 @@ export class CreateTimesheetComponent implements OnInit {
         this.break = this.timesheetdata.break == '1' ? true : false
         this.break_duration = this.timesheetdata.break_duration;
         this.break_duration_type = this.timesheetdata.break_duration_type;
+
 
         this.timesheetform.patchValue({
           start_date: this.start_date,
@@ -121,14 +124,11 @@ export class CreateTimesheetComponent implements OnInit {
 
             let isAdmin = this.assign_admin.find(admin => admin.admin_id === user.id)
             if (isAdmin) {
-              console.log(user.id)
-              console.log(user)
-              console.log(isAdmin)
               user.manage_time = isAdmin.manage_time;
               user.manage_worker = isAdmin.manage_worker
               this.selectedAdmin = [...this.selectedAdmin, user]
+
             }
-            console.log(this.selectedAdmin)
           }
           this.users = res.data
         })
@@ -141,11 +141,14 @@ export class CreateTimesheetComponent implements OnInit {
         this.projectId = params['id'];
       });
 
+      this.timesheetService.getTimesheetId().subscribe(res => {
+        console.log(res)
+        this.generated_timesheet_id = res.data.timesheetId
+
+      })
       this.timesheetService.getProjectById(this.projectId).subscribe(res => {
         this.projectDetails = res.data
       })
-
-      // console.log(JSON.stringify(this.assign_admin))
 
       this.timesheetService.getUsers().subscribe(res => {
         for (let user of res.data) {
@@ -164,8 +167,10 @@ export class CreateTimesheetComponent implements OnInit {
   }
 
   onSelectWorker(selectedValue) {
-    console.log(selectedValue);
-    this.selectedAdmin = selectedValue
+    if (selectedValue && !this.selectedAdmin.some(user => user.id === selectedValue.id)) {
+      this.users = this.users.filter(user => user.fullname !== selectedValue.fullname);
+      this.selectedAdmin = [...this.selectedAdmin, selectedValue];
+    }
   }
 
   onFormSubmit() {
@@ -189,28 +194,45 @@ export class CreateTimesheetComponent implements OnInit {
       scanning: this.timesheetform.value.scanning ? '1' : '0',
       hours: this.timesheetform.value.hours ? '1' : '0',
       break: this.timesheetform.value.break ? '1' : '0',
-      break_duration: this.timesheetform.value.break_duration,
+      break_duration: this.timesheetform.value.break_duration ? this.timesheetform.value.break_duration : '0',
       break_duration_type: this.timesheetform.value.break_duration_type,
-      assign_admin: assign_admin
+      assign_admin: assign_admin,
     }
 
+    console.log(timesheetData)
     if (!this.isEdit) {
+      timesheetData['timesheet_id'] = this.generated_timesheet_id
+
       this.timesheetService.createTimesheet(timesheetData).subscribe(res => {
         console.log(res)
         if (res.type == 'success') {
           this.router.navigate([`/app/timesheet`]);
-
         }
-      })
+      },
+        error => {
+          console.error('An error occurred:', error);
+          // Optionally, you can add error handling logic here, such as displaying an error message to the user.
+          this.toastrService.warning('Please complete the timesheet.', 'Error', {
+            duration: 3000,
+          });
+        }
+      )
     } else {
       timesheetData['timesheetid'] = this.timesheetdata.id;
       console.log(timesheetData)
       this.timesheetService.updateTimesheet(timesheetData).subscribe(res => {
         console.log(res)
         if (res.type == 'success') {
-          this.router.navigate([`/app/timesheet`]);
+          this.router.navigate([`/app/timesheet/${this.timesheetid}`]);
         }
-      })
+      },
+        error => {
+          console.error('An error occurred:', error);
+          this.toastrService.warning('Please complete the timesheet.', 'Error', {
+            duration: 3000,
+          });
+        }
+      )
     }
 
     // console.log(this.selectedAdmin)
@@ -224,4 +246,53 @@ export class CreateTimesheetComponent implements OnInit {
   toggleManageWorkers(user: any) {
     user.manage_worker = !user.manage_worker;
   }
+
+  toggleLocalWork(data) {
+    if (data.checked) {
+      this.timesheetform.get('scanning')?.enable()
+    } else {
+      this.timesheetform.get('scanning')?.disable()
+      this.timesheetform.get('hours')?.disable()
+      this.timesheetform.get('break')?.disable()
+      this.timesheetform.get('break_duration')?.disable()
+      this.timesheetform.get('break_duration_type')?.disable()
+    }
+  }
+  // scanning: new FormControl({ value: '', disabled: true }),
+  // hours: new FormControl({ value: '', disabled: true }),
+  // break: new FormControl({ value: '', disabled: true }),
+  // break_duration: new FormControl({ value: '', disabled: true }),
+  // break_duration_type: [''],
+  // assign_admin: ['']
+  toggleScanning(data) {
+    if (data.checked) {
+      this.timesheetform.get('hours')?.enable()
+    } else {
+      this.timesheetform.get('hours')?.disable()
+      this.timesheetform.get('break')?.disable()
+      this.timesheetform.get('break_duration')?.disable()
+      this.timesheetform.get('break_duration_type')?.disable()
+    }
+  }
+
+  toggleHours(data) {
+    if (data.checked) {
+      this.timesheetform.get('break')?.enable()
+    } else {
+      this.timesheetform.get('break')?.disable()
+      this.timesheetform.get('break_duration')?.disable()
+      this.timesheetform.get('break_duration_type')?.disable()
+    }
+  }
+
+  toggleBreak(data) {
+    if (data.checked) {
+      this.timesheetform.get('break_duration')?.enable()
+      this.timesheetform.get('break_duration_type')?.enable()
+    } else {
+      this.timesheetform.get('break_duration')?.disable()
+      this.timesheetform.get('break_duration_type')?.disable()
+    }
+  }
+
 }
