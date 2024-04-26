@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ManageWorkerInviteWorkersModalComponent } from '../manage-worker-invite-workers-modal/manage-worker-invite-workers-modal.component';
 import { TimesheetService } from 'src/app/shared/services/public-api';
+import { ManageWorkerAssignWorkerModalComponent } from '../manage-worker-assign-worker-modal/manage-worker-assign-worker-modal.component';
 
 // Interface for Worker
 export interface Worker {
@@ -23,6 +24,7 @@ export class ManageWorkerComponent implements OnInit {
   @Input() timesheet;
   timesheetdata;
   workers;
+  isAssignwork: boolean;
 
   dataSource = new MatTableDataSource<Worker>();
   displayedColumns: string[] = ['worker_id', 'first_name', 'last_name', 'status', 'planned_hours'];
@@ -34,15 +36,21 @@ export class ManageWorkerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isAssignwork = false
     console.log("this.timesheetid worker" + this.timesheetid)
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
       let id = res?.data.timesheet_id
       console.log("this.timesheetid worker" + JSON.stringify(this.timesheetdata))
       this.timesheetService.getTimesheetLocalWorker(id).subscribe(res => {
-
-        this.workers = res?.data;
-        this.dataSource.data = res?.data
+        this.workers = res?.data;;
+        this.workers = this.workers.map((worker) => {
+          if (worker.work_assignment)
+            worker.work_assignment = JSON.parse(worker.work_assignment)
+          return worker
+        })
+        console.log(this.workers)
+        this.dataSource.data = this.workers
       })
     })
   }
@@ -86,5 +94,45 @@ export class ManageWorkerComponent implements OnInit {
     this.timesheetService.updateLocalWorker(data).subscribe(res => {
       console.log(res)
     })
+  }
+
+  updateAssignWork(worker_id, assignedWork) {
+    console.log(worker_id, assignedWork)
+    let data = {
+      workerId: worker_id,
+      work_assignment: assignedWork
+    }
+    this.timesheetService.updateLocalWorker(data).subscribe(res => {
+      console.log(res)
+      this.timesheetService.getTimesheetLocalWorker(this.timesheetdata.timesheet_id).subscribe(res => {
+        this.workers = res?.data;;
+        this.workers = this.workers.map((worker) => {
+          if (worker.work_assignment)
+            worker.work_assignment = JSON.parse(worker.work_assignment)
+          return worker
+        })
+        console.log(this.workers)
+        this.dataSource.data = this.workers
+      })
+    })
+  }
+
+  onClickAssignWork() {
+    console.log(this.isAssignwork)
+    if (this.isAssignwork) {
+      this.displayedColumns = [...this.displayedColumns, 'work_assignment', 'assign_work']
+    } else {
+      this.displayedColumns = ['worker_id', 'first_name', 'last_name', 'status', 'planned_hours']
+    }
+  }
+
+  assignWork(worker_id) {
+    const activeModal = this.modalService.open(ManageWorkerAssignWorkerModalComponent, {
+      size: 'sm',
+      container: 'nb-layout',
+      centered: true,
+    });
+    activeModal.componentInstance.worker_id = worker_id
+    activeModal.componentInstance.updateAssignWork = this.updateAssignWork.bind(this)
   }
 }

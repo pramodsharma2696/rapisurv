@@ -70,6 +70,15 @@ input.planned_hours {
     font-weight: 500;
 }
 
+.assign_work{
+    background-color: #F56630;
+    border-radius: 5px;
+    padding: 5px;
+    color: #fff;
+    margin-right: 5px;
+}
+
+
 :host ::ng-deep  .mat-checkbox-checked.mat-primary .mat-checkbox-background{
     background-color: #12af9b !important;
     width: 14px;
