@@ -90,10 +90,15 @@ export class TimesheetService {
     const url = this.timesheetapiBase + `api/update-worker`;
     return this.http.post<any>(url, worker)
   }
+
   public getTimesheetLocalWorker(timesheetid) {
     const url = this.timesheetapiBase + `api/worker/${timesheetid}`;
     return this.http.get<any>(url);
+  }
 
+  public getLocalWorkerAttendanceByDate(timesheetid, date) {
+    const url = this.timesheetapiBase + `api/worker/${timesheetid}/${date}`;
+    return this.http.get<any>(url);
   }
 
 }

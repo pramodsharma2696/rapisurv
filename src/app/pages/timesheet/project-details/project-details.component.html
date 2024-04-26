@@ -50,7 +50,7 @@
             <app-attendance></app-attendance>
         </mat-tab>
         <mat-tab label="Enter my Time">
-            <app-enter-my-time></app-enter-my-time>
+            <app-enter-my-time [timesheet]="timesheetdata" [timesheetid]="timesheetid"></app-enter-my-time>
         </mat-tab>
         <mat-tab label="Manage Worker">
             <app-manage-worker [timesheet]="timesheetdata" [timesheetid]="timesheetid"></app-manage-worker>

@@ -32,6 +32,8 @@ import { ViewQrCodeModalComponent } from './view-qr-code-modal/view-qr-code-moda
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { TimesheetRoutingModule } from './timesheet-routing.module';
+import { EnterAttendanceModalComponent } from './enter-attendance-modal/enter-attendance-modal.component';
+import { EnterTimeAssignedTaskModalComponent } from './enter-time-assigned-task-modal/enter-time-assigned-task-modal.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { TimesheetRoutingModule } from './timesheet-routing.module';
     ManageWorkerAddLocalWorkerModalComponent,
     ManageWorkerAssignWorkerModalComponent,
     ManageWorkerInviteWorkersModalComponent,
-    ViewQrCodeModalComponent
+    ViewQrCodeModalComponent,
+    EnterAttendanceModalComponent,
+    EnterTimeAssignedTaskModalComponent
   ],
   imports: [
     CommonModule,

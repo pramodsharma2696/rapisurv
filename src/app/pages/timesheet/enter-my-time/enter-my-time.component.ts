@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TimesheetService } from 'src/app/shared/services/public-api';
+import { EnterAttendanceModalComponent } from '../enter-attendance-modal/enter-attendance-modal.component';
+import { EnterTimeAssignedTaskModalComponent } from '../enter-time-assigned-task-modal/enter-time-assigned-task-modal.component';
 
 export interface Worker {
   workerId: number;
   firstName: string;
   lastName: string;
-  hours: number;
+  total_hours: number;
 }
 
 export interface WeekDay {
@@ -25,19 +29,57 @@ export interface WeekDay {
   styleUrls: ['./enter-my-time.component.scss']
 })
 export class EnterMyTimeComponent implements OnInit {
-  dataSource = new MatTableDataSource<Worker>();
-  
-  displayedColumns: string[] = ['workerId', 'firstName', 'lastName', 'hours'];
 
-  constructor() { }
+  @Input() timesheetid;
+  @Input() timesheet;
+  timesheetdata;
+  workersdata;
+
+  dataSource = new MatTableDataSource<Worker>();
+  displayedColumns: string[] = ['worker_id', 'first_name', 'last_name', 'attendance', 'assigned_task', 'total_hours'];
+  selectedDate;
+  constructor(
+    private timesheetService: TimesheetService,
+    private modalService: NgbModal,
+
+  ) { }
 
   ngOnInit(): void {
-    this.dataSource.data = [
-      { workerId: 1, firstName: 'John', lastName: 'Doe', hours: 40 },
-      { workerId: 1, firstName: 'John', lastName: 'Doe', hours: 40 },
-      { workerId: 1, firstName: 'John', lastName: 'Doe', hours: 40 }
-      // Add more workers as needed
-    ];
+    this.selectedDate = '26-04-2024';
+    this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
+      this.timesheetdata = res.data
+      this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
+        console.log(res.data)
+        this.workersdata = res.data;
+        this.dataSource.data = this.workersdata.map((worker) => {
+          if (worker?.attendance != null) {
+            worker['total_hours'] = worker.attendance.total_hours;
+          } else {
+            worker['total_hours'] = 0
+          }
+          return worker
+        })
+      })
+    })
+  }
+
+  clickAttendance(worker) {
+    const activeModal = this.modalService.open(EnterAttendanceModalComponent, {
+      size: 'md',
+      container: 'nb-layout',
+      centered: true,
+    });
+    activeModal.componentInstance.worker = worker
+  }
+
+  clickAssignedTask(worker) {
+    const activeModal = this.modalService.open(EnterTimeAssignedTaskModalComponent, {
+      size: 'md',
+      container: 'nb-layout',
+      centered: true,
+    });
+    activeModal.componentInstance.worker = worker
+
   }
 
 }
