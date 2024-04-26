@@ -4,6 +4,13 @@ import { IEnvironment } from '../shared/environment.model';
 import { ENVIRONMENT_INJECT_TOKEN } from '../shared/constants';
 import { WebStorageService, EStorageTarget } from '../shared/storage.service';
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  }),
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -63,8 +70,28 @@ export class TimesheetService {
     return this.http.get<any>(url);
   }
 
-  public getTimesheetId(){
+  public getTimesheetId() {
     const url = this.timesheetapiBase + `api/generate-timesheet-id`;
+    return this.http.get<any>(url);
+
+  }
+
+  public getWorkingDays(startDate, endDate) {
+    let url = this.apiBase + 'api/work-days' + '?start_date=' + startDate + "&end_date=" + endDate
+    return this.http.get(url, httpOptions)
+  }
+
+  public createLocalWorker(localworkers) {
+    const url = this.timesheetapiBase + `api/add-local-worker`;
+    return this.http.post<any>(url, localworkers)
+  }
+
+  public updateLocalWorker(worker) {
+    const url = this.timesheetapiBase + `api/update-worker`;
+    return this.http.post<any>(url, worker)
+  }
+  public getTimesheetLocalWorker(timesheetid) {
+    const url = this.timesheetapiBase + `api/worker/${timesheetid}`;
     return this.http.get<any>(url);
 
   }

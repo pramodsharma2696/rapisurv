@@ -24,6 +24,10 @@ export class TimesheetComponent implements OnInit {
   ngOnInit(): void {
     console.log("On init")
 
+    this.timesheetService.getWorkingDays('2024-04-25', '2025-05-02').subscribe(res => {
+      console.log(res)
+    })
+
     this.timesheetService.getTimesheets().subscribe(res => {
       console.log(res.data)
       this.timesheets = res.data

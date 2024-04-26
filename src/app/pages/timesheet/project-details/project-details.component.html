@@ -5,7 +5,7 @@
             <div class="Timesheet_prname">
                 <div class="pr_name mr-5">
                     <p>Timesheet ID</p>
-                    <span>{{timesheetid}}</span>
+                    <span>{{timesheetdata?.timesheet_id}}</span>
                 </div>
                 <div class="pr_name mr-5">
                     <p>Duration</p>
@@ -53,7 +53,7 @@
             <app-enter-my-time></app-enter-my-time>
         </mat-tab>
         <mat-tab label="Manage Worker">
-            <app-manage-worker></app-manage-worker>
+            <app-manage-worker [timesheet]="timesheetdata" [timesheetid]="timesheetid"></app-manage-worker>
         </mat-tab>
         <mat-tab label="Approve Timesheet">
             <app-approve-timesheet></app-approve-timesheet>

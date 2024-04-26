@@ -13,8 +13,8 @@
       </div>
       <div class="pr_name">
         <p>Timesheet ID</p>
-        <span>{{timesheetid}}</span>
-        <span *ngIf="isEdit">{{timesheetid}}</span>
+        <!-- <span>{{timesheetid}}</span> -->
+        <span *ngIf="isEdit">{{timesheetdata?.timesheet_id}}</span>
         <span *ngIf="!isEdit">{{generated_timesheet_id}}</span>
       </div>
     </div>

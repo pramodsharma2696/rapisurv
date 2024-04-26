@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ManageWorkerAddLocalWorkerModalComponent } from '../manage-worker-add-local-worker-modal/manage-worker-add-local-worker-modal.component';
@@ -10,6 +10,8 @@ import { ManageWorkerAddLocalWorkerModalComponent } from '../manage-worker-add-l
 })
 export class ManageWorkerInviteWorkersModalComponent implements OnInit {
 
+  @Input() timesheetid;
+  @Input() fetchWorkerData;
   constructor(
     private modalService: NgbModal,
     private activeModal: NgbActiveModal,
@@ -31,5 +33,9 @@ export class ManageWorkerInviteWorkersModalComponent implements OnInit {
       container: 'nb-layout',
       centered: true,
     });
+
+    activeModal.componentInstance.timesheetid = this.timesheetid
+    activeModal.componentInstance.fetchWorkerData = this.fetchWorkerData
+
   }
 }
