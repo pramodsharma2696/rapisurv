@@ -143,4 +143,10 @@ export class TimesheetService {
     const url = this.timesheetapiBase + `api/approve-all-attendance`;
     return this.http.post<any>(url, data)
   }
+
+  public getTimesheetWorkerSummary(timesheetid) {
+    const url = this.timesheetapiBase + `api/get-summary-data/${timesheetid}`;
+    return this.http.get<any>(url);
+  }
+
 }

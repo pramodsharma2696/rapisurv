@@ -47,7 +47,7 @@
 <div>
     <mat-tab-group class="bg-transparent">
         <mat-tab label="Summary">
-            <app-summary></app-summary>
+            <app-summary [timesheet]="timesheetdata" [timesheetid]="timesheetid"></app-summary>
         </mat-tab>
         <mat-tab label=" Attendance">
             <app-attendance></app-attendance>
