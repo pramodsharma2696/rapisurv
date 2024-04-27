@@ -101,4 +101,46 @@ export class TimesheetService {
     return this.http.get<any>(url);
   }
 
+  public createWorkerAttendance(workerattendance) {
+    const url = this.timesheetapiBase + `api/record-attendance`;
+    return this.http.post<any>(url, workerattendance)
+  }
+
+  public approveWorkerAttendance(attendance_id) {
+    let data = {
+      attendance_id: attendance_id,
+      approve: '1'
+    }
+    const url = this.timesheetapiBase + `api/approve-attendance`;
+    return this.http.post<any>(url, data)
+  }
+
+  public rejectWorkerAttendance(attendance_id) {
+    let data = {
+      attendance_id: attendance_id,
+      approve: '0'
+    }
+    const url = this.timesheetapiBase + `api/approve-attendance`;
+    return this.http.post<any>(url, data)
+  }
+
+  public approveAllWorkerAttendance(timesheet_id, date) {
+    let data = {
+      timesheet_id: timesheet_id,
+      date: date,
+      approve: '1'
+    }
+    const url = this.timesheetapiBase + `api/approve-all-attendance`;
+    return this.http.post<any>(url, data)
+  }
+
+  public rejectAllWorkerAttendance(timesheet_id, date) {
+    let data = {
+      timesheet_id: timesheet_id,
+      date: date,
+      approve: '0'
+    }
+    const url = this.timesheetapiBase + `api/approve-all-attendance`;
+    return this.http.post<any>(url, data)
+  }
 }
