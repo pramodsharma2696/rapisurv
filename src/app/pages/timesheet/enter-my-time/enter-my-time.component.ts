@@ -63,6 +63,21 @@ export class EnterMyTimeComponent implements OnInit {
     })
   }
 
+  fetchData(){
+    this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
+      console.log(res.data)
+      this.workersdata = res.data;
+      this.dataSource.data = this.workersdata.map((worker) => {
+        if (worker?.attendance != null) {
+          worker['total_hours'] = worker.attendance.total_hours;
+        } else {
+          worker['total_hours'] = 0
+        }
+        return worker
+      })
+    })
+  }
+
   clickAttendance(worker) {
     const activeModal = this.modalService.open(EnterAttendanceModalComponent, {
       size: 'md',
@@ -70,6 +85,7 @@ export class EnterMyTimeComponent implements OnInit {
       centered: true,
     });
     activeModal.componentInstance.worker = worker
+    activeModal.componentInstance.fetchData = this.fetchData.bind(this)
   }
 
   clickAssignedTask(worker) {

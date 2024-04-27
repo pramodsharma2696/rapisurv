@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NbToastrService } from '@nebular/theme';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TimesheetService } from 'src/app/shared/services/public-api';
 
 @Component({
@@ -10,7 +11,7 @@ import { TimesheetService } from 'src/app/shared/services/public-api';
 export class EnterAttendanceModalComponent implements OnInit {
 
   @Input() worker;
-
+  @Input() fetchData;
   in_time_1;
   out_time_1;
   in_time_2;
@@ -18,14 +19,39 @@ export class EnterAttendanceModalComponent implements OnInit {
   in_time_3;
   out_time_3;
 
+  attendance_id;
+
   constructor(
     private timesheetService: TimesheetService,
     private modalService: NgbModal,
+    private toastrService: NbToastrService,
+    private activeModal: NgbActiveModal,
 
   ) { }
 
   ngOnInit(): void {
-    console.log(this.worker)
+    console.log(this.worker);
+    if (this.worker.attendance != null) {
+      this.attendance_id = this.worker.attendance.id
+      let attendance = JSON.parse(this.worker.attendance.attendance)
+      attendance.forEach((item, index) => {
+        this[`in_time_${index + 1}`] = this.convertToHHMM(item.in_time);
+        this[`out_time_${index + 1}`] = this.convertToHHMM(item.out_time);
+      });
+    } else {
+      this.attendance_id = null
+    }
+  }
+
+  convertToHHMM(time) {
+    const [hours, minutes, period] = time.split(/[:\s]+/);
+    let hour = parseInt(hours);
+    if (period.toLowerCase() === 'pm' && hour !== 12) {
+      hour += 12;
+    } else if (period.toLowerCase() === 'am' && hour === 12) {
+      hour = 0;
+    }
+    return `${String(hour).padStart(2, '0')}:${minutes}`;
   }
 
   convertTo12HourFormat(time24) {
@@ -45,14 +71,6 @@ export class EnterAttendanceModalComponent implements OnInit {
   }
 
   submitAttendance() {
-    console.log(this.in_time_1)
-    console.log(this.convertTo12HourFormat(this.in_time_1))
-    console.log(this.out_time_1)
-    console.log(this.in_time_2)
-    console.log(this.out_time_2)
-    console.log(this.in_time_3)
-    console.log(this.out_time_3)
-
     let attendanceData = {
       worker_id: this.worker.id,
       timesheet_id: this.worker.timesheet_id,
@@ -63,13 +81,23 @@ export class EnterAttendanceModalComponent implements OnInit {
       out_time2: this.out_time_2 ? this.convertTo12HourFormat(this.out_time_2) : null,
       in_time3: this.in_time_3 ? this.convertTo12HourFormat(this.in_time_3) : null,
       out_time3: this.out_time_3 ? this.convertTo12HourFormat(this.out_time_3) : null
-      //attendance_id:2
     }
 
     console.log(attendanceData)
-
+    console.log(this.worker)
+    if (this.attendance_id != null) {
+      attendanceData['attendance_id'] = this.attendance_id
+    }
     this.timesheetService.createWorkerAttendance(attendanceData).subscribe(res => {
       console.log(res.data)
+      if (res.type == 'success') {
+        this.fetchData()
+        this.toastrService.success('Worker attendance updated!', 'Success', {
+          duration: 3000,
+        });
+      }
+      this.activeModal.close({});
+
     })
   }
 }
