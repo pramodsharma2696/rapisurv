@@ -63,6 +63,11 @@ export class ManageWorkerComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
+  applyFilter(event: any) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   fetchWorkerData() {
     this.timesheetService.getTimesheetLocalWorker(this.timesheetdata.timesheet_id).subscribe(res => {
       console.log("Worker")

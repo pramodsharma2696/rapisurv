@@ -69,6 +69,11 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
     })
   }
 
+  applyFilter(event: any) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   fetchData(){
     this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
       console.log(res.data)

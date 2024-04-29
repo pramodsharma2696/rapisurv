@@ -7,7 +7,7 @@
                 <div class="">
                     <span><mat-icon aria-hidden="false" fontIcon="search"></mat-icon></span>
                     <input type="text" class="form-control" placeholder="Search by worker’s ID or Name"
-                        style="padding: 4px 37px; width: 91%; float: left;" required />
+                        style="padding: 4px 37px; width: 91%; float: left;" (keyup)="applyFilter($event)" />
                 </div>
             </div>
             <div class="invites_pending">
