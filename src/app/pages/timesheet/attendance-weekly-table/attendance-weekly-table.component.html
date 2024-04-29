@@ -1,0 +1,22 @@
+<div class="table-responsive table_div">
+    <table class="table table">
+      <thead class="thead">
+        <tr>
+          <th class="mr-2" *ngFor="let column of displayedColumns">
+            {{ column }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let worker of workers">
+          <td>{{ worker.id }}</td>
+          <td>{{ worker.first_name }}</td>
+          <td>{{ worker.last_name }}</td>
+          <td *ngFor="let att of worker.attendance">
+            {{ att.id == null ? '-' : att.first_in_time + ' - ' + att.last_out_time }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

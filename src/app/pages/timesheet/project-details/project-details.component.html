@@ -51,7 +51,7 @@
             <app-summary [timesheet]="timesheetdata" [timesheetid]="timesheetid"></app-summary>
         </mat-tab>
         <mat-tab label=" Attendance">
-            <app-attendance></app-attendance>
+            <app-attendance [timesheet]="timesheetdata" [timesheetid]="timesheetid"></app-attendance>
         </mat-tab>
         <mat-tab label="Enter my Time">
             <app-enter-my-time [timesheet]="timesheetdata" [timesheetid]="timesheetid"></app-enter-my-time>

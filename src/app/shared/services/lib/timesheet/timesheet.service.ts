@@ -3,6 +3,8 @@ import { Inject, Injectable } from '@angular/core';
 import { IEnvironment } from '../shared/environment.model';
 import { ENVIRONMENT_INJECT_TOKEN } from '../shared/constants';
 import { WebStorageService, EStorageTarget } from '../shared/storage.service';
+import { forkJoin, Observable } from 'rxjs';
+import { map,switchMap } from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -152,6 +154,30 @@ export class TimesheetService {
   public getNumberOfWorkerByTimesheetId(timesheetid) {
     const url = this.timesheetapiBase + `api/get-total-worker/${timesheetid}`;
     return this.http.get<any>(url);
+  }
+
+  public getAttendaceById(timesheetid, worker_id, start_date, end_date) {
+    const url = this.timesheetapiBase + `api/get-in-out-attendance-data/${timesheetid}/${worker_id}/${start_date}/${end_date}`;
+    return this.http.get<any>(url);
+  }
+
+  public getAllWorkerAttendance(timesheetid, start_date, end_date): Observable<any> {
+    // Fetch all workers
+    return this.getTimesheetLocalWorker(timesheetid).pipe(
+      // After getting workers, fetch attendance for each worker
+      switchMap(workers => {
+        // Create an array of observables to fetch attendance for each worker
+        const attendanceRequests = workers.data.map(worker => {
+          console.log('worker servie')
+          console.log(worker)
+          return this.getAttendaceById(timesheetid, worker.id, start_date, end_date).pipe(
+            map(attendance => ({ worker, attendance }))
+          );
+        });
+        // Combine all observables into a single observable
+        return forkJoin(attendanceRequests);
+      })
+    );
   }
 
 }

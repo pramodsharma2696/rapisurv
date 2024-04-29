@@ -1,0 +1,79 @@
+/* attendance-monthly-table.component.scss */
+.table-container {
+    overflow-x: auto;
+    max-width: 100%;
+    /* Adjust as needed */
+}
+
+.table_div {
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    padding: 0px 20px 20px 0px;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #DEDEDE;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #FFFFFF;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: red;
+}
+
+
+.mat-table-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.mat-table-row {
+    display: flex;
+}
+
+.mat-table-header {
+    font-weight: bold;
+}
+
+.mat-table-cell {
+    flex: 1;
+    padding: 8px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.mat-table-cell:first-child {
+    flex: 0 0 100px;
+    /* Adjust width for Worker ID column */
+}
+
+.mat-table-cell:last-child {
+    flex: 2;
+    /* Adjust width for Attendance column */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}

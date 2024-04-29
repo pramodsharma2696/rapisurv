@@ -43,10 +43,10 @@
         <div>
             <mat-tab-group class="bg-transparent">
                 <mat-tab label="Monthly">
-                    <app-attendance-monthly-table></app-attendance-monthly-table>
+                    <app-attendance-monthly-table [timesheetid]="timesheetid"></app-attendance-monthly-table>
                 </mat-tab>
                 <mat-tab label="Weekly">
-                    <app-attendance-weekly-table></app-attendance-weekly-table>
+                    <app-attendance-weekly-table [timesheetid]="timesheetid"></app-attendance-weekly-table>
                 </mat-tab>
             </mat-tab-group>
         </div>

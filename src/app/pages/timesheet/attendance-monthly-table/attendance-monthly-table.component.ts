@@ -1,11 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { TimesheetService } from 'src/app/shared/services/public-api';
 
-export interface FieldWorker {
-  id: number;
-  firstName: string;
-  lastName: string;
-  date: string;
-}
+
 
 @Component({
   selector: 'app-attendance-monthly-table',
@@ -13,25 +10,65 @@ export interface FieldWorker {
   styleUrls: ['./attendance-monthly-table.component.scss']
 })
 export class AttendanceMonthlyTableComponent implements OnInit {
+  @Input() timesheetid;
+  timesheetdata;
+  workers;
+  start_date = '01-04-2024'
+  end_date = '30-04-2024'
+  // dataSource = new MatTableDataSource<any>();
+  displayedColumns: string[] = ['Id', 'First Name', 'Last Name',];
 
-  constructor() { }
+  constructor(
+    private timesheetService: TimesheetService
+
+  ) { }
 
   ngOnInit(): void {
+
+    this.displayedColumns = [...this.displayedColumns, ...this.getDatesInRange(this.start_date, this.end_date)]
+
+    this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
+      this.timesheetdata = res.data
+      let id = res?.data.timesheet_id
+      this.timesheetService.getAllWorkerAttendance(id, this.start_date, this.end_date).subscribe(res => {
+        // this.workers = res?.data;
+        // this.dataSource.data = this.workers
+        let data = res.map((item) => {
+          return {
+            ...item.worker, attendance: item.attendance.data.attendances
+          }
+        })
+        console.log("Attendance ")
+        console.log(data)
+        // this.dataSource.data = data
+        this.workers = data
+      })
+
+    })
   }
 
-  fieldWorkers: FieldWorker[] = [
-    { id: 1, firstName: 'John', lastName: 'Doe', date: '9PM - 3AM' },
-    { id: 2, firstName: 'Alice', lastName: 'Johnson', date: '9PM - 3AM' },
-    { id: 3, firstName: 'Michael', lastName: 'Smith', date: '9PM - 3AM' },
-    { id: 4, firstName: 'Emily', lastName: 'Brown', date: '9PM - 3AM' },
-    { id: 5, firstName: 'David', lastName: 'Jones', date: '9PM - 3AM' },
-    { id: 6, firstName: 'Sarah', lastName: 'Davis', date: '9PM - 3AM' },
-    { id: 7, firstName: 'James', lastName: 'Wilson', date: '9PM - 3AM' },
-    { id: 8, firstName: 'Olivia', lastName: 'Taylor', date: '9PM - 3AM' },
-    { id: 9, firstName: 'Ethan', lastName: 'Anderson', date: '9PM - 3AM' },
-    { id: 10, firstName: 'Emma', lastName: 'Martinez', date: '9PM - 3AM' }
-  ];
+  getDatesInRange(startDateStr, endDateStr) {
+    let startDateParts = startDateStr.split('-');
+    let endDateParts = endDateStr.split('-');
 
-  displayedColumns: string[] = ['id', 'firstName', 'lastName', 'date', 'date1', 'date2', 'date3','date4' ];
+    let startDate = new Date(startDateParts[2], startDateParts[1] - 1, startDateParts[0]); // Month is 0-indexed
+    let endDate = new Date(endDateParts[2], endDateParts[1] - 1, endDateParts[0]); // Month is 0-indexed
+
+    let datesArray = [];
+    let currentDate = startDate;
+    while (currentDate <= endDate) {
+      // Format the date as needed
+      let formattedDate = currentDate.toLocaleDateString('en-GB'); // Format as DD-MM-YYYY
+      datesArray.push(formattedDate);
+
+      // Move to the next day
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return datesArray;
+  }
+
+
+
 
 }
