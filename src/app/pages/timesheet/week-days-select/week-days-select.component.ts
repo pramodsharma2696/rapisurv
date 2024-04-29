@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { TimesheetService } from 'src/app/shared/services/public-api';
 
 @Component({
@@ -12,6 +12,9 @@ export class WeekDaysSelectComponent implements OnInit {
     private timesheetService: TimesheetService
   ) { }
 
+  @Output() updateDate = new EventEmitter<any>();
+
+
   selectedWeek;
   selectedDay;
   ngOnInit(): void {
@@ -23,6 +26,7 @@ export class WeekDaysSelectComponent implements OnInit {
     this.selectedWeek = this.getCurrentWeek();
 
     this.selectedDay = this.getTodayDate();
+    // this.updateParentDate(this.selectedDay)
     console.log(">>>>>>>>" + this.selectedDay)
   }
 
@@ -87,6 +91,11 @@ export class WeekDaysSelectComponent implements OnInit {
 
   selectDate(date) {
     this.selectedDay = date;
+    this.updateParentDate(date)
     console.log(this.selectedDay)
+  }
+
+  updateParentDate(date: Date) {
+    this.updateDate.emit(date);
   }
 }
