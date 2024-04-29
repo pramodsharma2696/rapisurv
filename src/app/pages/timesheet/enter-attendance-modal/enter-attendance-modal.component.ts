@@ -12,6 +12,7 @@ export class EnterAttendanceModalComponent implements OnInit {
 
   @Input() worker;
   @Input() fetchData;
+  @Input() date;
   in_time_1;
   out_time_1;
   in_time_2;
@@ -74,7 +75,7 @@ export class EnterAttendanceModalComponent implements OnInit {
     let attendanceData = {
       worker_id: this.worker.id,
       timesheet_id: this.worker.timesheet_id,
-      date: '29-04-2024',
+      date: this.date,
       in_time1: this.in_time_1 ? this.convertTo12HourFormat(this.in_time_1) : null,
       out_time1: this.out_time_1 ? this.convertTo12HourFormat(this.out_time_1) : null,
       in_time2: this.in_time_2 ? this.convertTo12HourFormat(this.in_time_2) : null,

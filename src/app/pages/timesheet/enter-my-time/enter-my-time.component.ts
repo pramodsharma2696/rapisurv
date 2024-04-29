@@ -111,13 +111,14 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
     })
   }
 
-  clickAttendance(worker) {
+  clickAttendance(worker, date) {
     const activeModal = this.modalService.open(EnterAttendanceModalComponent, {
       size: 'md',
       container: 'nb-layout',
       centered: true,
     });
     activeModal.componentInstance.worker = worker
+    activeModal.componentInstance.date = date
     activeModal.componentInstance.fetchData = this.fetchData.bind(this)
   }
 

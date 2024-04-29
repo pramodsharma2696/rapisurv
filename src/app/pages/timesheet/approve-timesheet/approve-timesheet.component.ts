@@ -61,6 +61,23 @@ export class ApproveTimesheetComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
+  handleUpdateDate(date: Date) {
+    this.selectedDate = date;
+    this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
+      console.log(res.data)
+      this.workersdata = res.data;
+      this.dataSource.data = this.workersdata.map((worker) => {
+        if (worker?.attendance != null) {
+          worker['total_hours'] = worker.attendance.total_hours;
+          worker['approve'] = worker.attendance.approve
+        } else {
+          worker['total_hours'] = 0
+        }
+        return worker
+      })
+    })
+  }
+
   applyFilter(event: any) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
