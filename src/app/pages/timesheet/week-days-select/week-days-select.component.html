@@ -19,24 +19,18 @@
             <table class=" date_table" style="width:100%">
                 <tr>
                     <th colspan="1"></th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                    <th>Saturday</th>
-                    <th>Sunday</th>
-
+                    <th *ngFor="let weekday of selectedWeek"
+                        [style.background-color]="weekday.date == selectedDay ? '#F85C04' : '#fff'"
+                        [style.color]="weekday.date == selectedDay ? '#fff' : '#000'" (click)="selectDate(weekday.date)">{{ weekday.day }}
+                    </th>
                 </tr>
                 <tr>
                     <td>Date</td>
-                    <td>22nd Jan</td>
-                    <td>23nd Jan</td>
-                    <td>24nd Jan</td>
-                    <td>25nd Jan</td>
-                    <td>26nd Jan</td>
-                    <td>27nd Jan</td>
-                    <td>28nd Jan</td>
+                    <td *ngFor="let weekday of selectedWeek"
+                        [style.background-color]="weekday.date == selectedDay ? '#F85C04' : '#fff'"
+                        [style.color]="weekday.date == selectedDay ? '#fff' : '#000'" (click)="selectDate(weekday.date)">{{
+                        formatDateToDayMonth(weekday.date) }}</td>
+
                 </tr>
             </table>
         </div>

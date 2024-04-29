@@ -10,6 +10,7 @@ import { TimesheetService } from 'src/app/shared/services/public-api';
 export class ProjectDetailCardComponent implements OnInit {
   @Input() timesheetdata;
   project;
+  total_workers
 
   constructor(
     private router: Router,
@@ -25,6 +26,13 @@ export class ProjectDetailCardComponent implements OnInit {
       console.log(res.data)
       this.project = res.data
     })
+
+    this.timesheetService.getNumberOfWorkerByTimesheetId(this.timesheetdata.timesheet_id).subscribe(res => {
+      console.log("no of workers ----->")
+      console.log(res.data)
+      this.total_workers = res.data.total_workers
+    })
+    
   }
   formatDate(dateA: string): string {
     let date = new Date(dateA)

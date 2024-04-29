@@ -149,4 +149,9 @@ export class TimesheetService {
     return this.http.get<any>(url);
   }
 
+  public getNumberOfWorkerByTimesheetId(timesheetid) {
+    const url = this.timesheetapiBase + `api/get-total-worker/${timesheetid}`;
+    return this.http.get<any>(url);
+  }
+
 }

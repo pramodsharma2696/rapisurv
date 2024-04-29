@@ -31,17 +31,19 @@ export class ProjectDetailsComponent implements OnInit {
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
       let projectId = res.data.project_id
+      this.qrlink = res.data.timesheet_qr
+
       this.timesheetService.getProjectById(projectId).subscribe(res => {
         console.log("Projects ----->")
         console.log(res.data)
-        this.project = res.data
+        this.project = res.data;
       })
     })
 
-    this.timesheetService.getTimesheetQR(1146).subscribe(res => {
-      this.qrlink = res?.data.timesheet_qr
-      console.log(res?.data.timesheet_qr)
-    })
+    // this.timesheetService.getTimesheetQR(1146).subscribe(res => {
+    //   this.qrlink = res?.data.timesheet_qr
+    //   console.log(res?.data.timesheet_qr)
+    // })
 
   }
 
