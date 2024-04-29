@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TimesheetService } from 'src/app/shared/services/public-api';
 import { EnterAttendanceModalComponent } from '../enter-attendance-modal/enter-attendance-modal.component';
 import { EnterTimeAssignedTaskModalComponent } from '../enter-time-assigned-task-modal/enter-time-assigned-task-modal.component';
+import { MatPaginator } from '@angular/material/paginator';
 
 export interface Worker {
   workerId: number;
@@ -28,7 +29,7 @@ export interface WeekDay {
   templateUrl: './enter-my-time.component.html',
   styleUrls: ['./enter-my-time.component.scss']
 })
-export class EnterMyTimeComponent implements OnInit {
+export class EnterMyTimeComponent implements OnInit, AfterViewInit {
 
   @Input() timesheetid;
   @Input() timesheet;
@@ -36,6 +37,8 @@ export class EnterMyTimeComponent implements OnInit {
   workersdata;
 
   dataSource = new MatTableDataSource<Worker>();
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   displayedColumns: string[] = ['worker_id', 'first_name', 'last_name', 'attendance', 'assigned_task', 'total_hours'];
   selectedDate;
   constructor(
@@ -43,6 +46,9 @@ export class EnterMyTimeComponent implements OnInit {
     private modalService: NgbModal,
 
   ) { }
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
 
   ngOnInit(): void {
     this.selectedDate = '27-04-2024';

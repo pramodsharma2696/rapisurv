@@ -34,6 +34,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TimesheetRoutingModule } from './timesheet-routing.module';
 import { EnterAttendanceModalComponent } from './enter-attendance-modal/enter-attendance-modal.component';
 import { EnterTimeAssignedTaskModalComponent } from './enter-time-assigned-task-modal/enter-time-assigned-task-modal.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { EnterTimeAssignedTaskModalComponent } from './enter-time-assigned-task-
     MatFormFieldModule,
     MatSelectModule,
     ReactiveFormsModule,
-    TimesheetRoutingModule
+    TimesheetRoutingModule,
+    MatPaginatorModule
   ]
 })
 export class TimesheetModule { }

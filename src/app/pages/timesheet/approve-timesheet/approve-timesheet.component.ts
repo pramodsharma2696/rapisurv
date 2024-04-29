@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NbToastrService } from '@nebular/theme';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -22,6 +23,7 @@ export class ApproveTimesheetComponent implements OnInit {
   timesheetdata;
   workersdata;
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource = new MatTableDataSource<Worker>();
   displayedColumns: string[] = ['worker_id', 'first_name', 'last_name', 'total_hours', 'action'];
   selectedDate;
@@ -52,18 +54,12 @@ export class ApproveTimesheetComponent implements OnInit {
         })
       })
     })
-    // Initialize your dataSource with actual data here
-    // this.dataSource.data = [
-    //   { workerId: 1, firstName: 'John', lastName: 'Doe', hours: 40 },
-    //   { workerId: 1, firstName: 'John', lastName: 'Doe', hours: 40 },
-    //   { workerId: 1, firstName: 'John', lastName: 'Doe', hours: 40 },
-    //   { workerId: 1, firstName: 'John', lastName: 'Doe', hours: 40 },
-    //   // Add more workers as needed
-    // ];
-
 
   }
 
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
   approveWorkerAttendance(worker) {
     console.log(worker)
     let attendance_id = worker?.attendance.id

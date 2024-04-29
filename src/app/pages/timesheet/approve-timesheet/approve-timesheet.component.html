@@ -11,10 +11,12 @@
   </div>
   <div class="col-md-6">
     <div class="invites_pending Accept_btn">
-      <button class="btn btn-block reject" outline status="primary" nbButton size="small" (click)="rejectAllWorkerAttendance()">
+      <button class="btn btn-block reject" outline status="primary" nbButton size="small"
+        (click)="rejectAllWorkerAttendance()">
         <mat-icon aria-hidden="false" class="filter mr-1" fontIcon="clear"></mat-icon> Reject
       </button>
-      <button class="btn btn-block create_btn mr-3" outline status="primary" nbButton size="small" (click)="approveAllWorkerAttendance()">
+      <button class="btn btn-block create_btn mr-3" outline status="primary" nbButton size="small"
+        (click)="approveAllWorkerAttendance()">
         <i class="material-icons">done</i> Accept all
       </button>
     </div>
@@ -68,5 +70,7 @@
     <!-- Define the table rows -->
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
   </table>
 </div>
+<mat-paginator [pageSize]="10"></mat-paginator>

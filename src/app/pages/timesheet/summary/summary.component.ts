@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TimesheetService } from 'src/app/shared/services/public-api';
 
@@ -18,7 +19,7 @@ export interface Worker {
   templateUrl: './summary.component.html',
   styleUrls: ['./summary.component.scss']
 })
-export class SummaryComponent implements OnInit {
+export class SummaryComponent implements OnInit, AfterViewInit {
   @Input() timesheetid;
   @Input() timesheet;
   timesheetdata;
@@ -27,10 +28,15 @@ export class SummaryComponent implements OnInit {
   dataSource = new MatTableDataSource<Worker>();
   displayedColumns: string[] = ['worker_id', 'first_name', 'last_name', 'status', 'planned_hours', 'total_hours', 'approved_hours', 'rejected_hours'];
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   constructor(
     private timesheetService: TimesheetService
 
   ) { }
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
 
   ngOnInit(): void {
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
@@ -43,8 +49,8 @@ export class SummaryComponent implements OnInit {
           console.log(worker.attendance)
           if (worker?.attendance != null) {
             worker.total_hours = worker?.attendance.total_hours
-            worker.approved_hours =worker?.attendance.total_hours_approve
-            worker.rejected_hours = worker?.attendance .total_hours_disapprove
+            worker.approved_hours = worker?.attendance.total_hours_approve
+            worker.rejected_hours = worker?.attendance.total_hours_disapprove
           } else {
             worker.total_hours = 0
             worker.approved_hours = 0
@@ -53,9 +59,11 @@ export class SummaryComponent implements OnInit {
           return worker
         })
         console.log(this.workers)
-        this.dataSource.data = this.workers
+        this.dataSource.data = this.workers;
+
       })
     })
+
   }
 
 }

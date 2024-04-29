@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ManageWorkerInviteWorkersModalComponent } from '../manage-worker-invite-workers-modal/manage-worker-invite-workers-modal.component';
 import { TimesheetService } from 'src/app/shared/services/public-api';
 import { ManageWorkerAssignWorkerModalComponent } from '../manage-worker-assign-worker-modal/manage-worker-assign-worker-modal.component';
+import { MatPaginator } from '@angular/material/paginator';
 
 // Interface for Worker
 export interface Worker {
@@ -19,12 +20,14 @@ export interface Worker {
   templateUrl: './manage-worker.component.html',
   styleUrls: ['./manage-worker.component.scss']
 })
-export class ManageWorkerComponent implements OnInit {
+export class ManageWorkerComponent implements OnInit, AfterViewInit {
   @Input() timesheetid;
   @Input() timesheet;
   timesheetdata;
   workers;
   isAssignwork: boolean;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   dataSource = new MatTableDataSource<Worker>();
   displayedColumns: string[] = ['worker_id', 'first_name', 'last_name', 'status', 'planned_hours'];
@@ -34,6 +37,7 @@ export class ManageWorkerComponent implements OnInit {
     private timesheetService: TimesheetService
 
   ) { }
+
 
   ngOnInit(): void {
     this.isAssignwork = false
@@ -53,6 +57,10 @@ export class ManageWorkerComponent implements OnInit {
         this.dataSource.data = this.workers
       })
     })
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
   }
 
   fetchWorkerData() {
