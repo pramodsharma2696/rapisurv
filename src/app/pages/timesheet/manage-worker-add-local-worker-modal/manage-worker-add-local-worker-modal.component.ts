@@ -14,6 +14,7 @@ export class ManageWorkerAddLocalWorkerModalComponent implements OnInit {
 
   @Input() timesheetid;
   @Input() fetchWorkerData;
+  file = null;
 
   localworkers;
   first_name: string;
@@ -71,6 +72,41 @@ export class ManageWorkerAddLocalWorkerModalComponent implements OnInit {
   submitLocalWorker() {
     // createLocalWorker
     this.timesheetService.createLocalWorker(this.localworkers).subscribe(res => {
+      console.log(res)
+      if (res.type == 'success') {
+        this.activeModal.close({});
+        this.fetchWorkerData()
+      }
+    },
+      error => {
+        console.error('An error occurred:', error);
+        this.toastrService.warning('Unable to add worker.', 'Error', {
+          duration: 3000,
+        });
+      }
+    )
+  }
+
+  onFileDropped(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    const files = event.dataTransfer.files;
+    if (files.length > 0) {
+      this.file = files[0];
+    }
+    console.log(this.file)
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  addfileworker() {
+    const formData = new FormData();
+    formData.append('file', this.file);
+    // formData.append('timesheet_id', this.timesheetid)
+    this.timesheetService.updateLocalWorkerByFile(this.file,this.timesheetid).subscribe(res => {
       console.log(res)
       if (res.type == 'success') {
         this.activeModal.close({});

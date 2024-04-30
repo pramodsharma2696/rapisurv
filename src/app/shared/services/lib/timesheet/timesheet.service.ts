@@ -4,7 +4,7 @@ import { IEnvironment } from '../shared/environment.model';
 import { ENVIRONMENT_INJECT_TOKEN } from '../shared/constants';
 import { WebStorageService, EStorageTarget } from '../shared/storage.service';
 import { forkJoin, Observable } from 'rxjs';
-import { map,switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -93,6 +93,14 @@ export class TimesheetService {
     return this.http.post<any>(url, worker)
   }
 
+  public updateLocalWorkerByFile(file, timesheetid) {
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('timesheet_id', timesheetid.toString());
+    const url = this.timesheetapiBase + `api/add-local-worker-csv`;
+    return this.http.post<any>(url, formData)
+  }
   public getTimesheetLocalWorker(timesheetid) {
     const url = this.timesheetapiBase + `api/worker/${timesheetid}`;
     return this.http.get<any>(url);
@@ -106,6 +114,11 @@ export class TimesheetService {
   public createWorkerAttendance(workerattendance) {
     const url = this.timesheetapiBase + `api/record-attendance`;
     return this.http.post<any>(url, workerattendance)
+  }
+
+  public createWorkerAssignTaskHour(workerassignedHours) {
+    const url = this.timesheetapiBase + `api/assign-task-hours`;
+    return this.http.post<any>(url, workerassignedHours)
   }
 
   public approveWorkerAttendance(attendance_id) {
