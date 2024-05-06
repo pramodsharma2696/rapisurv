@@ -38,4 +38,9 @@ export class AttendanceComponent implements OnInit {
       this.fetchWeekly()
     }
   }
+
+  applyFilter(event: any) {
+    this.attendanceMonthlyTableComponent.applyFilter(event)
+    this.attendanceWeeklyTableComponent.applyFilter(event)
+  }
 }

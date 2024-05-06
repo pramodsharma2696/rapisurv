@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 import { TimesheetService } from 'src/app/shared/services/public-api';
 
 @Component({
@@ -11,9 +12,11 @@ export class AttendanceWeeklyTableComponent implements OnInit {
   @Input() timesheetid;
   timesheetdata;
   workers;
-  start_date = '06-05-2024'
-  end_date = '08-05-2024'
+  start_date
+  end_date
   dataSource = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   displayedColumns: string[] = [];
   constructor(
     private timesheetService: TimesheetService
@@ -23,9 +26,14 @@ export class AttendanceWeeklyTableComponent implements OnInit {
   ngOnInit(): void {
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
-      
     })
+    this.getCurrentWeekDates()
   }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
+
 
   getDatesInRange(startDateStr, endDateStr) {
     let startDateParts = startDateStr.split('-');
@@ -48,12 +56,44 @@ export class AttendanceWeeklyTableComponent implements OnInit {
     return datesArray;
   }
 
+  getCurrentWeekDates() {
+    const currentDate = new Date();
+    const currentDayOfWeek = currentDate.getDay();
+
+    const diffFromStartOfWeek = currentDayOfWeek === 0 ? 0 : currentDayOfWeek - 1;
+
+    const startDate = new Date(currentDate);
+    startDate.setDate(currentDate.getDate() - diffFromStartOfWeek);
+
+    const endDate = new Date(startDate);
+    endDate.setDate(startDate.getDate() + (6 - diffFromStartOfWeek));
+
+    function formatDate(date) {
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}-${month}-${year}`;
+    }
+
+    const formattedStartDate = formatDate(startDate);
+    const formattedEndDate = formatDate(endDate);
+
+    // Return the start and end dates
+    this.start_date = formattedStartDate
+    this.end_date = formattedEndDate
+    // return {
+    //   startDate: formattedStartDate,
+    //   endDate: formattedEndDate
+    // };
+  }
+
+
   fetchData() {
     this.displayedColumns = ['worker_id', 'first_name', 'last_name', ...this.getDatesInRange(this.start_date, this.end_date)]
     console.log(this.displayedColumns)
 
     this.timesheetService.getAllWorkerAttendance(this.timesheetdata.timesheet_id, this.start_date, this.end_date).subscribe(res => {
-      
+
       let data = res.map((item) => {
         return {
           ...item.worker, attendance: item.attendance.data.attendances
@@ -62,6 +102,11 @@ export class AttendanceWeeklyTableComponent implements OnInit {
       this.dataSource.data = data
       this.workers = data
     })
+  }
+
+  applyFilter(event: any) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 }

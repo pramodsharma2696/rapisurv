@@ -19,7 +19,7 @@
         <div class="year_week float-right">
             <div class="mb-3 header_pr_name">
                 <div class="search_input"> 
-                    <input type="text" class="form-control" placeholder="Search by worker’s ID or Name" style="padding: 4px 37px; width: 91%; float: left;" required />
+                    <input type="text" class="form-control" placeholder="Search by worker’s ID or Name" style="padding: 4px 37px; width: 91%; float: left;"  (keyup)="applyFilter($event)" />
                     <i class="material-icons">search</i>
                 </div>
 
