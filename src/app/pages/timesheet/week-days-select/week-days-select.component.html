@@ -9,8 +9,9 @@
                     </ng-select>
                 </div>
                 <div class="form-group">
-                    <ng-select class="ng-select-container project_list" bindLabel="name" dropdownPosition="auto"
-                        placeholder="Week 3">
+                    <ng-select class="ng-select-container project_list"  dropdownPosition="auto" [(ngModel)]="selectedWeekInput" [clearable]="false"
+                        placeholder="Select..." (change)="onSelectWeek()">
+                        <ng-option *ngFor="let week of weeksoption" [value]="week">{{ 'Week ' + week }}</ng-option>
                     </ng-select>
                 </div>
             </div>
@@ -21,14 +22,16 @@
                     <th colspan="1"></th>
                     <th *ngFor="let weekday of selectedWeek"
                         [style.background-color]="weekday.date == selectedDay ? '#F85C04' : '#fff'"
-                        [style.color]="weekday.date == selectedDay ? '#fff' : '#000'" (click)="selectDate(weekday.date)">{{ weekday.day }}
+                        [style.color]="weekday.date == selectedDay ? '#fff' : '#000'"
+                        (click)="selectDate(weekday.date)">{{ weekday.day }}
                     </th>
                 </tr>
                 <tr>
                     <td>Date</td>
                     <td *ngFor="let weekday of selectedWeek"
                         [style.background-color]="weekday.date == selectedDay ? '#F85C04' : '#fff'"
-                        [style.color]="weekday.date == selectedDay ? '#fff' : '#000'" (click)="selectDate(weekday.date)">{{
+                        [style.color]="weekday.date == selectedDay ? '#fff' : '#000'"
+                        (click)="selectDate(weekday.date)">{{
                         formatDateToDayMonth(weekday.date) }}</td>
 
                 </tr>
