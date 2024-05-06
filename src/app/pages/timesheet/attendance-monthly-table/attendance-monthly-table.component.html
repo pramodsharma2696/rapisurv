@@ -1,21 +1,30 @@
-<div class="table-responsive table_div">
-  <table class="table table">
-    <thead class="thead">
-      <tr>
-        <th class="mr-2" *ngFor="let column of displayedColumns">
-          {{ column }}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let worker of workers">
-        <td>{{ worker.id }}</td>
-        <td>{{ worker.first_name }}</td>
-        <td>{{ worker.last_name }}</td>
-        <td *ngFor="let att of worker.attendance">
-          {{ att.id == null ? '-' : att.first_in_time + ' - ' + att.last_out_time }}
-        </td>
-      </tr>
-    </tbody>
+<div class="mat-elevation-z8 table_div">
+  <table mat-table [dataSource]="dataSource">
+    <!-- ID Column -->
+    <ng-container matColumnDef="worker_id">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let worker">{{ worker.worker_id }}</td>
+    </ng-container>
+
+    <!-- First Name Column -->
+    <ng-container matColumnDef="first_name">
+      <th mat-header-cell *matHeaderCellDef>First Name</th>
+      <td mat-cell *matCellDef="let worker">{{ worker.first_name }}</td>
+    </ng-container>
+
+    <!-- Last Name Column -->
+    <ng-container matColumnDef="last_name">
+      <th mat-header-cell *matHeaderCellDef>Last Name</th>
+      <td mat-cell *matCellDef="let worker">{{ worker.last_name }}</td>
+    </ng-container>
+
+    <!-- Attendance Columns -->
+    <ng-container *ngFor="let column of displayedColumns.slice(3); let i = index" [matColumnDef]="column">
+      <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+      <td mat-cell *matCellDef="let worker">{{ worker.attendance[i]?.first_in_time }} - {{ worker.attendance[i]?.last_out_time }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 </div>

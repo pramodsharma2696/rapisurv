@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { TimesheetService } from 'src/app/shared/services/public-api';
 
 @Component({
@@ -10,37 +11,19 @@ export class AttendanceWeeklyTableComponent implements OnInit {
   @Input() timesheetid;
   timesheetdata;
   workers;
-  start_date = '25-04-2024'
-  end_date = '30-04-2024'
-  // dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['Id', 'First Name', 'Last Name',];
-
+  start_date = '06-05-2024'
+  end_date = '08-05-2024'
+  dataSource = new MatTableDataSource<any>();
+  displayedColumns: string[] = [];
   constructor(
     private timesheetService: TimesheetService
 
   ) { }
 
   ngOnInit(): void {
-
-    this.displayedColumns = [...this.displayedColumns, ...this.getDatesInRange(this.start_date, this.end_date)]
-
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
-      // let id = res?.data.timesheet_id
-      // this.timesheetService.getAllWorkerAttendance(id, this.start_date, this.end_date).subscribe(res => {
-      //   // this.workers = res?.data;
-      //   // this.dataSource.data = this.workers
-      //   let data = res.map((item) => {
-      //     return {
-      //       ...item.worker, attendance: item.attendance.data.attendances
-      //     }
-      //   })
-      //   console.log("Attendance ")
-      //   console.log(data)
-      //   // this.dataSource.data = data
-      //   this.workers = data
-      // })
-
+      
     })
   }
 
@@ -66,17 +49,17 @@ export class AttendanceWeeklyTableComponent implements OnInit {
   }
 
   fetchData() {
+    this.displayedColumns = ['worker_id', 'first_name', 'last_name', ...this.getDatesInRange(this.start_date, this.end_date)]
+    console.log(this.displayedColumns)
+
     this.timesheetService.getAllWorkerAttendance(this.timesheetdata.timesheet_id, this.start_date, this.end_date).subscribe(res => {
-      // this.workers = res?.data;
-      // this.dataSource.data = this.workers
+      
       let data = res.map((item) => {
         return {
           ...item.worker, attendance: item.attendance.data.attendances
         }
       })
-      console.log("Attendance ")
-      console.log(data)
-      // this.dataSource.data = data
+      this.dataSource.data = data
       this.workers = data
     })
   }
