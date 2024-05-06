@@ -11,13 +11,14 @@ import { AttendanceMonthlyTableComponent } from '../attendance-monthly-table/att
 export class AttendanceComponent implements OnInit {
   @Input() timesheetid;
   @Input() timesheet;
-
+  selectedTab
   @ViewChild(AttendanceWeeklyTableComponent) attendanceWeeklyTableComponent: AttendanceWeeklyTableComponent;
   @ViewChild(AttendanceMonthlyTableComponent) attendanceMonthlyTableComponent: AttendanceMonthlyTableComponent;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.selectedTab = 'Month'
   }
 
   fetchMonthly() {
@@ -33,14 +34,26 @@ export class AttendanceComponent implements OnInit {
     if (tabChangeEvent.index === 0) {
       // Code to fetch monthly data
       this.fetchMonthly()
+      this.selectedTab = 'Month'
+
     } else if (tabChangeEvent.index === 1) {
       // Code to fetch weekly data
       this.fetchWeekly()
+      this.selectedTab = 'Week'
+
     }
   }
 
   applyFilter(event: any) {
     this.attendanceMonthlyTableComponent.applyFilter(event)
     this.attendanceWeeklyTableComponent.applyFilter(event)
+  }
+
+  onClickExportCSV() {
+    if (this.selectedTab == 'Month') {
+      this.attendanceMonthlyTableComponent.exportEsv()
+    } else {
+      this.attendanceWeeklyTableComponent.exportEsv()
+    }
   }
 }

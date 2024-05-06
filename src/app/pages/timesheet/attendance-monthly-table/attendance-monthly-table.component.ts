@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { TimesheetService } from 'src/app/shared/services/public-api';
+import { AngularCsv } from 'angular-csv-ext/dist/Angular-csv';
 
 
 
@@ -105,4 +106,24 @@ export class AttendanceMonthlyTableComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  exportEsv() {
+    let headers = ['Worker id', 'First Name', 'Last Name', ...this.displayedColumns.slice(3)]
+    let requiredData = this.dataSource.data.map((worker) => {
+      let data = {
+        worker_id: worker['worker_id'],
+        first_name: worker['first_name'],
+        last_name: worker['last_name'],
+      }
+      for (let ind in worker['attendance']) {
+        if (worker['attendance'][ind]['id'] != null) {
+          data[this.displayedColumns[parseInt(ind) + 3]] = `${worker['attendance'][ind]?.first_in_time} - ${worker['attendance'][ind]?.last_out_time}`
+        } else {
+          data[this.displayedColumns[parseInt(ind) + 3]] = '-'
+        }
+      }
+      return data
+    })
+   
+    new AngularCsv(requiredData, 'Attendance', { headers: headers })
+  }
 }
