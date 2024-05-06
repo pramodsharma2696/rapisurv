@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { AngularCsv } from 'angular-csv-ext/dist/Angular-csv';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TimesheetService } from 'src/app/shared/services/public-api';
@@ -69,6 +70,26 @@ export class SummaryComponent implements OnInit, AfterViewInit {
   applyFilter(event: any) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  exportEsv() {
+    console.log(this.dataSource.data)
+    let requiredData = this.dataSource.data.map((worker) => {
+      let data = {
+        worker_id: worker['worker_id'],
+        first_name: worker['first_name'],
+        last_name: worker['last_name'],
+        status: worker['status'],
+        planned_hours: worker['planned_hours'] == null ? 0 : worker['planned_hours'],
+        total_hours: worker['total_hours'],
+        approved_hours: worker['approved_hours'],
+        rejected_hours: worker['rejected_hours'],
+
+      }
+      return data
+    })
+    
+    new AngularCsv(requiredData, 'Summary', {headers : ['Worker Id', 'First Name', 'Last Name', 'Status', 'Planned Hours', 'Total Hours', 'Approved Hours', 'Rejected Hours']})
   }
 }
 

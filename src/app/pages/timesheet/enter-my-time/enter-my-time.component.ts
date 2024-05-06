@@ -55,6 +55,7 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
       this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
+        console.log('res.data attendance')
         console.log(res.data)
         this.workersdata = res.data;
         this.dataSource.data = this.workersdata.map((worker) => {
@@ -122,14 +123,15 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
     activeModal.componentInstance.fetchData = this.fetchData.bind(this)
   }
 
-  clickAssignedTask(worker) {
+  clickAssignedTask(worker, date) {
     const activeModal = this.modalService.open(EnterTimeAssignedTaskModalComponent, {
       size: 'md',
       container: 'nb-layout',
       centered: true,
     });
     activeModal.componentInstance.worker = worker
-
+    activeModal.componentInstance.date = date
+    activeModal.componentInstance.fetchData = this.fetchData.bind(this)
   }
 
 }

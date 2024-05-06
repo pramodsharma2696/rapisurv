@@ -44,6 +44,7 @@
     "@syncfusion/ej2-gantt": "22.2.12",
     "@syncfusion/ej2-inputs": "22.2.12",
     "@types/big.js": "^6.1.6",
+    "angular-csv-ext": "^1.0.5",
     "angular-mentions": "^1.5.0",
     "big.js": "^6.2.1",
     "bootstrap": "^4.3.1",

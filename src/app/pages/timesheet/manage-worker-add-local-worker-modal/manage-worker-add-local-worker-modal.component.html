@@ -54,14 +54,15 @@
                     </div>
 
                     <div class="invite_workers mt-3">
-                        <button class="btn btn-block create_btn " outline status="primary" nbButton size="small" (click)="submitLocalWorker()">
+                        <button class="btn btn-block create_btn " outline status="primary" nbButton size="small"
+                            (click)="submitLocalWorker()">
                             Add Worker
                         </button>
                     </div>
                 </div>
             </mat-tab>
             <mat-tab label=" Multiple uploads">
-                <div class="upload_div">
+                <!-- <div class="upload_div">
                     <div class="cloud_icon mt-3">
                         <mat-icon>cloud_upload</mat-icon>
                         <p><span>Click to upload</span> or drag and drop</p>
@@ -80,7 +81,20 @@
                     <button class="btn btn-block create_btn " outline status="primary" nbButton size="small">
                         Add Worker
                     </button>
+                </div> -->
+                <div class="drop-area" (drop)="onFileDropped($event)" (dragover)="onDragOver($event)">
+                    <!-- <mat-icon>cloud_upload</mat-icon> -->
+                    <p>Drag & Drop a file here</p>
+                    <div *ngIf="file" class="mt-3">
+                        <p>{{ file.name }}</p>
+                    </div>
                 </div>
+                <div class="invite_workers mt-3">
+                    <button class="btn btn-block create_btn " outline status="primary" nbButton size="small" (click)="addfileworker()">
+                        Add Worker
+                    </button>
+                </div>
+
             </mat-tab>
         </mat-tab-group>
     </div>
