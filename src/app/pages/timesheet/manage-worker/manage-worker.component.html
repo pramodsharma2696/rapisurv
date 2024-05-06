@@ -1,13 +1,19 @@
 <div class="row mt-5">
     <div class="col-md-6">
+        <div class="assign_check">
+            <label class="mr-2">
+                <mat-checkbox class="mr-2" style="margin-bottom: 0;" color="primary" [(ngModel)]="isAssignwork"
+                    (change)="onClickAssignWork()"></mat-checkbox> Assign Work
+            </label>
+        </div>
     </div>
     <div class="col-md-6">
         <div class="year_week float-right">
             <div class="mb-3 header_pr_name">
-                <div class="">
-                    <span><mat-icon aria-hidden="false" fontIcon="search"></mat-icon></span>
+                <div class="search_input">
                     <input type="text" class="form-control" placeholder="Search by worker’s ID or Name"
                         style="padding: 4px 37px; width: 91%; float: left;" (keyup)="applyFilter($event)" />
+                        <i class="material-icons">search</i>
                 </div>
             </div>
             <div class="invites_pending">
@@ -22,12 +28,7 @@
 
 </div>
 <!-- workers-table.component.html -->
-<div class="assign_check">
-    <label class="mr-2">
-        <mat-checkbox class="mr-2" color="primary" [(ngModel)]="isAssignwork"
-            (change)="onClickAssignWork()"></mat-checkbox> Assign Work
-    </label>
-</div>
+
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mt-1">
     <!-- Worker ID Column -->
     <ng-container matColumnDef="worker_id">
@@ -84,7 +85,7 @@
     <ng-container matColumnDef="assign_work">
         <th mat-header-cell *matHeaderCellDef> </th>
         <td mat-cell *matCellDef="let element">
-            <button class="btn" status="primary" style="color: #12af9b;outline: none;" nbButton size="small"
+            <button class="btn assign_work_btn" status="primary" nbButton size="small"
                 (click)="assignWork(element.id)">
                 Assign Work </button>
         </td>

@@ -2,43 +2,54 @@
     <div class="add_loacal_worker">
         <div class="invite_workers">
             <p>Enter Attendance</p>
-            <p>{{worker.worker_id}} - {{worker.first_name }}</p>
+            <h6>{{worker.worker_id}} - {{worker.first_name }}</h6>
         </div>
     </div>
     <form>
-        <div class="row mb-3">
-            <div class="time-input col-6">
-                <mat-label>In Time</mat-label>
-                <input class="p-1 ml-2" placeholder="HH:mm AM/PM" type="time" [(ngModel)]="in_time_1" name="in_time_1">
-            </div>
-            <div class="time-input col-6">
-                <mat-label>Out Time</mat-label>
-                <input class="p-1 ml-2" matInput placeholder="HH:mm AM/PM" type="time" [(ngModel)]="out_time_1"
-                    name="out_time_1">
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="time-input col-6">
-                <mat-label>In Time</mat-label>
-                <input class="p-1 ml-2" matInput placeholder="HH:mm AM/PM" type="time" [(ngModel)]="in_time_2"
-                    name="in_time_2">
-            </div>
-            <div class="time-input col-6">
-                <mat-label>Out Time</mat-label>
-                <input class="p-1 ml-2" matInput placeholder="HH:mm AM/PM" type="time" [(ngModel)]="out_time_2"
-                    name="out_time_2">
+        <div class="row mb-4">
+            <div class="time_section d-flex justify-content-center" style="width: 100%;">
+                <div class="time-input col-5 d-flex justify-content-center">
+                    <!-- <mat-label>In Time</mat-label> -->
+                    <input class="form-control p-1 ml-2" style="width: 50%;" matInput  placeholder="HH:mm AM/PM" type="time" [(ngModel)]="in_time_1" name="in_time_1">
+                </div>
+                <hr style="border: 1px solid #D0D5DD;border-right-width: 40px;" />
+                <div class="time-input col-5 d-flex justify-content-center">
+                    <!-- <mat-label>Out Time</mat-label> -->
+                    <input class="form-control p-1 ml-2" style="width: 50%;" matInput placeholder="HH:mm AM/PM" type="time" [(ngModel)]="out_time_1"
+                        name="out_time_1">
+                </div>
             </div>
         </div>
-        <div class="row mb-3">
-            <div class="time-input col-6">
-                <mat-label>In Time</mat-label>
-                <input class="p-1 ml-2" matInput placeholder="HH:mm AM/PM" type="time" [(ngModel)]="in_time_3"
-                    name="in_time_3">
+        <div class="row mb-4">
+            <div class="time_section d-flex justify-content-center" style="width: 100%;">
+                <div class="time-input col-5 d-flex justify-content-center">
+                    <!-- <mat-label>In Time</mat-label> -->
+                    <input class="form-control p-1 ml-2" style="width: 50%;" matInput placeholder="HH:mm AM/PM" type="time" [(ngModel)]="in_time_2"
+                        name="in_time_2">
+                </div>
+                <hr style="border: 1px solid #D0D5DD;border-right-width: 40px;" />
+                <div class="time-input col-5 d-flex justify-content-center">
+                    <!-- <mat-label>Out Time</mat-label> -->
+                    <input class="form-control p-1 ml-2" style="width: 50%;" matInput placeholder="HH:mm AM/PM" type="time" [(ngModel)]="out_time_2"
+                        name="out_time_2">
+                </div>
             </div>
-            <div class="time-input col-6">
-                <mat-label>Out Time</mat-label>
-                <input class="p-1 ml-2" matInput placeholder="HH:mm AM/PM" type="time" [(ngModel)]="out_time_3"
-                    name="out_time_3">
+        </div>
+        <div class="row mb-4">
+            <div class="time_section d-flex justify-content-center" style="width: 100%;">
+                <div class="time-input col-5 d-flex justify-content-center">
+                    <!-- <mat-label>In Time</mat-label> -->
+                    <input class="form-control p-1 ml-2" style="width: 50%;" matInput placeholder="HH:mm AM/PM" type="time" [(ngModel)]="in_time_3"
+                        name="in_time_3">
+                </div>
+                
+                <hr style="border: 1px solid #D0D5DD;border-right-width: 40px;" />
+
+                <div class="time-input col-5 d-flex justify-content-center">
+                    <!-- <mat-label>Out Time</mat-label> -->
+                    <input class="form-control p-1 ml-2" style="width: 50%;" matInput placeholder="HH:mm AM/PM" type="time" [(ngModel)]="out_time_3"
+                        name="out_time_3">
+                </div>
             </div>
         </div>
 
