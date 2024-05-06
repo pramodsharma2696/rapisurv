@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ViewQrCodeModalComponent } from '../view-qr-code-modal/view-qr-code-modal.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TimesheetService } from 'src/app/shared/services/public-api';
+import { MatTabChangeEvent } from '@angular/material/tabs';
+import { AttendanceComponent } from '../attendance/attendance.component';
+import { SummaryComponent } from '../summary/summary.component';
+import { ApproveTimesheetComponent } from '../approve-timesheet/approve-timesheet.component';
 
 @Component({
   selector: 'app-project-details',
@@ -15,6 +19,12 @@ export class ProjectDetailsComponent implements OnInit {
   timesheetdata;
   project;
   qrlink;
+
+  @ViewChild(AttendanceComponent) attendanceComponent: AttendanceComponent;
+  @ViewChild(SummaryComponent) summaryComponent: SummaryComponent;
+  @ViewChild(ApproveTimesheetComponent) approveTimesheetComponent: ApproveTimesheetComponent;
+
+
   constructor(
     private modalService: NgbModal,
     private route: ActivatedRoute,
@@ -22,6 +32,7 @@ export class ProjectDetailsComponent implements OnInit {
     private timesheetService: TimesheetService
 
   ) { }
+
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -82,6 +93,17 @@ export class ProjectDetailsComponent implements OnInit {
       return 'rd';
     } else {
       return 'th';
+    }
+  }
+
+  tabChanged(tabChangeEvent: MatTabChangeEvent): void {
+    // Fetch data when the tab is changed
+    if (tabChangeEvent.index === 0) {
+      this.summaryComponent.fetchData()
+    } else if (tabChangeEvent.index === 1) {
+      this.attendanceComponent.fetchMonthly()
+    } else if (tabChangeEvent.index === 4) {
+      this.approveTimesheetComponent.fetchData()
     }
   }
 }

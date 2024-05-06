@@ -29,20 +29,20 @@ export class AttendanceMonthlyTableComponent implements OnInit {
 
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
-      let id = res?.data.timesheet_id
-      this.timesheetService.getAllWorkerAttendance(id, this.start_date, this.end_date).subscribe(res => {
-        // this.workers = res?.data;
-        // this.dataSource.data = this.workers
-        let data = res.map((item) => {
-          return {
-            ...item.worker, attendance: item.attendance.data.attendances
-          }
-        })
-        console.log("Attendance ")
-        console.log(data)
-        // this.dataSource.data = data
-        this.workers = data
-      })
+      // let id = res?.data.timesheet_id
+      // this.timesheetService.getAllWorkerAttendance(id, this.start_date, this.end_date).subscribe(res => {
+      //   // this.workers = res?.data;
+      //   // this.dataSource.data = this.workers
+      //   let data = res.map((item) => {
+      //     return {
+      //       ...item.worker, attendance: item.attendance.data.attendances
+      //     }
+      //   })
+      //   console.log("Attendance ")
+      //   console.log(data)
+      //   // this.dataSource.data = data
+      //   this.workers = data
+      // })
 
     })
   }
@@ -68,7 +68,21 @@ export class AttendanceMonthlyTableComponent implements OnInit {
     return datesArray;
   }
 
-
+  fetchData() {
+    this.timesheetService.getAllWorkerAttendance(this.timesheetdata.timesheet_id, this.start_date, this.end_date).subscribe(res => {
+      // this.workers = res?.data;
+      // this.dataSource.data = this.workers
+      let data = res.map((item) => {
+        return {
+          ...item.worker, attendance: item.attendance.data.attendances
+        }
+      })
+      console.log("Attendance ")
+      console.log(data)
+      // this.dataSource.data = data
+      this.workers = data
+    })
+  }
 
 
 }

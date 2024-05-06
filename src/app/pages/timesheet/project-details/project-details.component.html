@@ -1,4 +1,4 @@
-<div class="mb-4">Timesheet  >  {{project?.id}} – {{project?.Description}}</div>
+<div class="mb-4">Timesheet > {{project?.id}} – {{project?.Description}}</div>
 <div class="row mb-5">
     <div class="col-md-7">
         <div class="mb-3">
@@ -46,7 +46,7 @@
 </div>
 
 <div>
-    <mat-tab-group class="bg-transparent">
+    <mat-tab-group class="bg-transparent" (selectedTabChange)="tabChanged($event)">
         <mat-tab label="Summary">
             <app-summary [timesheet]="timesheetdata" [timesheetid]="timesheetid"></app-summary>
         </mat-tab>

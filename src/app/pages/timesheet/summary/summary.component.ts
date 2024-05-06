@@ -43,7 +43,6 @@ export class SummaryComponent implements OnInit, AfterViewInit {
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
       let id = res?.data.timesheet_id
-      console.log("this.timesheetid worker" + JSON.stringify(this.timesheetdata))
       this.timesheetService.getTimesheetWorkerSummary(id).subscribe(res => {
         this.workers = res?.data;;
         this.workers = this.workers.map((worker) => {
@@ -72,6 +71,28 @@ export class SummaryComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  fetchData() {
+    this.timesheetService.getTimesheetWorkerSummary(this.timesheetdata.id).subscribe(res => {
+      this.workers = res?.data;;
+      this.workers = this.workers.map((worker) => {
+        console.log(worker.attendance)
+        if (worker?.attendance != null) {
+          worker.total_hours = worker?.attendance.total_hours
+          worker.approved_hours = worker?.attendance.total_hours_approve
+          worker.rejected_hours = worker?.attendance.total_hours_disapprove
+        } else {
+          worker.total_hours = 0
+          worker.approved_hours = 0
+          worker.rejected_hours = 0
+        }
+        return worker
+      })
+      console.log(this.workers)
+      this.dataSource.data = this.workers;
+
+    })
+  }
+
   exportEsv() {
     console.log(this.dataSource.data)
     let requiredData = this.dataSource.data.map((worker) => {
@@ -88,8 +109,8 @@ export class SummaryComponent implements OnInit, AfterViewInit {
       }
       return data
     })
-    
-    new AngularCsv(requiredData, 'Summary', {headers : ['Worker Id', 'First Name', 'Last Name', 'Status', 'Planned Hours', 'Total Hours', 'Approved Hours', 'Rejected Hours']})
+
+    new AngularCsv(requiredData, 'Summary', { headers: ['Worker Id', 'First Name', 'Last Name', 'Status', 'Planned Hours', 'Total Hours', 'Approved Hours', 'Rejected Hours'] })
   }
 }
 

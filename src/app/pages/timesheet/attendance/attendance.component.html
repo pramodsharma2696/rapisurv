@@ -42,7 +42,7 @@
     <div class="col-md-12">
 
         <div>
-            <mat-tab-group class="bg-transparent">
+            <mat-tab-group class="bg-transparent" (selectedTabChange)="tabChanged($event)">
                 <mat-tab label="Monthly">
                     <app-attendance-monthly-table [timesheetid]="timesheetid"></app-attendance-monthly-table>
                 </mat-tab>

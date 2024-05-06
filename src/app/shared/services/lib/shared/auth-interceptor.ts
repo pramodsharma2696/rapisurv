@@ -27,9 +27,9 @@ export class AuthInterceptor implements HttpInterceptor {
     // });
     // return next.handle(authRequest);
 
-    if (req.url.includes('http://timesheet2.test/')) {
+    if (req.url.includes('http://48.216.210.209/')) {
       const authRequest = req.clone({
-        headers: req.headers.set("Authorization", "Bearer " + '3|EZKUrrVVw2rTYo3p0wSyOkMTYXMf0P3lYBTlAd6bbc40d9e3')
+        headers: req.headers.set("Authorization", "Bearer " + '2|6v4OmSiZYqVYQjxBuiRcmH0w6eA943XF6WYSTPIR399b2125')
       });
       return next.handle(authRequest);
     } else {
