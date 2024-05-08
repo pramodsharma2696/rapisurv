@@ -1,0 +1,37 @@
+.demo-inline-calendar-card {
+    width: 700px;
+}
+
+::ng-deep.time-captured {
+    background-color: #C1FFF7 !important;
+    border: 10px solid white !important;
+}
+
+::ng-deep.non-work-day {
+    background-color: #E9EEF5 !important;
+    border: 10px solid white !important;
+}
+
+::ng-deep.time-approved {
+    background-color: #12AF9B !important;
+    border: 10px solid white !important;
+}
+
+::ng-deep.time-rejected {
+    background-color: #FF5050 !important;
+    border: 10px solid white !important;
+}
+
+::ng-deep.mat-calendar-body-cell {
+    &:not(.mat-calendar-body-disabled) {
+        &:hover {
+            >.mat-calendar-body-cell-content {
+                &:not(.mat-calendar-body-selected) {
+                    &:not(.mat-calendar-body-comparison-identical) {
+                        background-color: transparent !important;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,4 +1,4 @@
-<div>
+<div class="mb-5">
 
     <app-week-days-select (updateDate)="handleUpdateDate($event)"  [timesheetid]="timesheetid"></app-week-days-select>
     <div class="row mt-5">
@@ -77,5 +77,5 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
     <mat-paginator [pageSize]="10"></mat-paginator>
-
 </div>
+<app-enter-my-time-calendar></app-enter-my-time-calendar>
