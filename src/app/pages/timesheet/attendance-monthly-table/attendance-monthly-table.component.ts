@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 import { TimesheetService } from 'src/app/shared/services/public-api';
+import { AngularCsv } from 'angular-csv-ext/dist/Angular-csv';
 
 
 
@@ -13,10 +15,11 @@ export class AttendanceMonthlyTableComponent implements OnInit {
   @Input() timesheetid;
   timesheetdata;
   workers;
-  start_date = '01-04-2024'
-  end_date = '30-04-2024'
-  // dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['Id', 'First Name', 'Last Name',];
+  start_date
+  end_date
+  dataSource = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  displayedColumns: string[] = [];
 
   constructor(
     private timesheetService: TimesheetService
@@ -24,27 +27,14 @@ export class AttendanceMonthlyTableComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    this.displayedColumns = [...this.displayedColumns, ...this.getDatesInRange(this.start_date, this.end_date)]
-
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
-      let id = res?.data.timesheet_id
-      this.timesheetService.getAllWorkerAttendance(id, this.start_date, this.end_date).subscribe(res => {
-        // this.workers = res?.data;
-        // this.dataSource.data = this.workers
-        let data = res.map((item) => {
-          return {
-            ...item.worker, attendance: item.attendance.data.attendances
-          }
-        })
-        console.log("Attendance ")
-        console.log(data)
-        // this.dataSource.data = data
-        this.workers = data
-      })
-
     })
+    this.getCurrentMonthDates()
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
   }
 
   getDatesInRange(startDateStr, endDateStr) {
@@ -68,7 +58,72 @@ export class AttendanceMonthlyTableComponent implements OnInit {
     return datesArray;
   }
 
+  getCurrentMonthDates() {
+    // Get the current date
+    const currentDate = new Date();
 
+    // Get the first day of the month
+    const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
 
+    // Get the last day of the month
+    const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
 
+    // Function to format date as "dd-mm-yyyy"
+    function formatDate(date) {
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}-${month}-${year}`;
+    }
+
+    // Format start and end dates
+    const formattedStartDate = formatDate(firstDayOfMonth);
+    const formattedEndDate = formatDate(lastDayOfMonth);
+
+    // Return the start and end dates
+    this.start_date = formattedStartDate
+    this.end_date = formattedEndDate
+  }
+
+  fetchData() {
+    this.displayedColumns = ['worker_id', 'first_name', 'last_name', ...this.getDatesInRange(this.start_date, this.end_date)]
+    console.log(this.displayedColumns)
+
+    this.timesheetService.getAllWorkerAttendance(this.timesheetdata.timesheet_id, this.start_date, this.end_date).subscribe(res => {
+
+      let data = res.map((item) => {
+        return {
+          ...item.worker, attendance: item.attendance.data.attendances
+        }
+      })
+      this.dataSource.data = data
+      this.workers = data
+    })
+  }
+
+  applyFilter(event: any) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  exportEsv() {
+    let headers = ['Worker id', 'First Name', 'Last Name', ...this.displayedColumns.slice(3)]
+    let requiredData = this.dataSource.data.map((worker) => {
+      let data = {
+        worker_id: worker['worker_id'],
+        first_name: worker['first_name'],
+        last_name: worker['last_name'],
+      }
+      for (let ind in worker['attendance']) {
+        if (worker['attendance'][ind]['id'] != null) {
+          data[this.displayedColumns[parseInt(ind) + 3]] = `${worker['attendance'][ind]?.first_in_time} - ${worker['attendance'][ind]?.last_out_time}`
+        } else {
+          data[this.displayedColumns[parseInt(ind) + 3]] = '-'
+        }
+      }
+      return data
+    })
+   
+    new AngularCsv(requiredData, 'Attendance', { headers: headers })
+  }
 }

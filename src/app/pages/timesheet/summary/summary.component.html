@@ -3,7 +3,7 @@
   <div class="col-md-6">
     <div class="Summary_scetion">
       <div class="edit_qa_btn ml-3 justify-content-end">
-        <button class="btn btn-block link ml-3" outline status="primary" nbButton size="small">
+        <button class="btn btn-block link ml-3" outline status="primary" nbButton size="small" (click)="exportEsv()">
           <mat-icon aria-hidden="false" class="filter mr-1" fontIcon="upload"></mat-icon> Export CSV
         </button>
       </div>
@@ -14,10 +14,15 @@
   <div class="col-md-6">
     <div class="year_week float-right">
       <div class="mb-3 header_pr_name">
-        <div class="">
+        <!-- <div class="">
           <span><mat-icon aria-hidden="false" fontIcon="search"></mat-icon></span>
           <input type="text" class="form-control" placeholder="Search by worker’s ID or Name"
             style="padding: 4px 37px; width: 91%; float: left;" (keyup)="applyFilter($event)" />
+        </div> -->
+        <div class="search_input">
+          <input type="text" class="form-control" placeholder="Search by worker’s ID or Name"
+          style="padding: 4px 37px; width: 91%; float: left;" (keyup)="applyFilter($event)">
+          <i class="material-icons">search</i>
         </div>
       </div>
       <div class="form-group">

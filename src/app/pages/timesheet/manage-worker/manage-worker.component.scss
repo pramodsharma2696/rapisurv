@@ -72,10 +72,10 @@ input.planned_hours {
 
 .assign_work{
     background-color: #F56630;
-    border-radius: 5px;
-    padding: 5px;
+    border-radius: 50px;
+    padding: 10px 16px;
     color: #fff;
-    margin-right: 5px;
+    margin-right: 20px;
 }
 
 
@@ -89,3 +89,13 @@ input.planned_hours {
     height: 14px;
 
   }
+  .assign_work_btn{
+    color: #12af9b;
+    outline: none;
+    font-size: 14px;
+    line-height: 16.94px;
+    font-weight: 600;
+  }
+  :host ::ng-deep label.mat-checkbox-layout {
+    margin-bottom: 0;
+}

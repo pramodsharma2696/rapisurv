@@ -37,28 +37,52 @@ export class ApproveTimesheetComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.selectedDate = '29-04-2024';
+    this.selectedDate = this.getTodayDate();
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
-      this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
-        console.log(res.data)
-        this.workersdata = res.data;
-        this.dataSource.data = this.workersdata.map((worker) => {
-          if (worker?.attendance != null) {
-            worker['total_hours'] = worker.attendance.total_hours;
-            worker['approve'] = worker.attendance.approve
-          } else {
-            worker['total_hours'] = 0
-          }
-          return worker
-        })
-      })
+      // this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
+      //   console.log(res.data)
+      //   this.workersdata = res.data;
+      //   this.dataSource.data = this.workersdata.map((worker) => {
+      //     if (worker?.attendance != null) {
+      //       worker['total_hours'] = worker.attendance.total_hours;
+      //       worker['approve'] = worker.attendance.approve
+      //     } else {
+      //       worker['total_hours'] = 0
+      //     }
+      //     return worker
+      //   })
+      // })
     })
 
   }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
+  }
+
+  fetchData() {
+    this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
+      console.log(res.data)
+      this.workersdata = res.data;
+      this.dataSource.data = this.workersdata.map((worker) => {
+        if (worker?.attendance != null) {
+          worker['total_hours'] = worker.attendance.total_hours;
+          worker['approve'] = worker.attendance.approve
+        } else {
+          worker['total_hours'] = 0
+        }
+        return worker
+      })
+    })
+  }
+
+  getTodayDate() {
+    var today = new Date();
+    var day = String(today.getDate()).padStart(2, '0'); // Ensure day has leading zero if needed
+    var month = String(today.getMonth() + 1).padStart(2, '0'); // Ensure month has leading zero if needed
+    var year = today.getFullYear();
+    return day + '-' + month + '-' + year;
   }
 
   handleUpdateDate(date: Date) {

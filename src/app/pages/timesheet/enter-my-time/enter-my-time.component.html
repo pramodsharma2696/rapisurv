@@ -1,6 +1,6 @@
 <div>
 
-    <app-week-days-select (updateDate)="handleUpdateDate($event)"></app-week-days-select>
+    <app-week-days-select (updateDate)="handleUpdateDate($event)"  [timesheetid]="timesheetid"></app-week-days-select>
     <div class="row mt-5">
         <div class="col-md-6">
             <div class="assign_check">
@@ -10,10 +10,15 @@
         <div class="col-md-6">
             <div class="year_week float-right">
                 <div class="mb-3 header_pr_name">
-                    <div class="">
+                    <!-- <div class=""> 
                         <span><mat-icon class_ aria-hidden="false" fontIcon="search"></mat-icon></span>
-                        <input type="text" class="form-control" placeholder="Search by worker’s ID or Name"
-                            style="padding: 4px 37px; width: 91%; float: left;" (keyup)="applyFilter($event)" />
+                        <input type="text" class="form-control" placeholder="Search by worker’s ID or Name" style="padding: 4px 37px; width: 91%; float: left;" (keyup)="applyFilter($event)" />
+                    </div> -->
+
+                    <div class="search_input">
+                        <input type="text" class="form-control" placeholder="Search by worker’s ID or Name" 
+                               style="padding: 4px 30px; float: left;" (keyup)="applyFilter($event)">
+                        <i class="material-icons">search</i>
                     </div>
                 </div>
             </div>
