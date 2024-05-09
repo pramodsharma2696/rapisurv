@@ -1,0 +1,121 @@
+
+.create_timesheet {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding: 30px 0px;
+}
+label.form-label {
+    color: #000000;
+    font-size: 14px;
+    margin: 3px;
+    font-weight: 600;
+    line-height: 20.3px;
+}
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+  .table-layout-div p {
+    color: #000000;
+    font-size: 14px;
+    margin: 3px;
+    font-weight: 600;
+    line-height: 20.3px;
+}
+label.form-label.close_side{
+    color:  #8B8B8B;
+}
+.openside{
+    color: #5E5E5E;
+}
+button.btn.btn-block {
+  font-size: 16px;
+  font-weight: 600;
+  width: 24%;
+}
+
+
+:host ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+    background-color: #49c5b6 ;
+    height: 24px;
+    width: 39px;
+    border-radius: 40px;
+}
+
+:host ::ng-deep  .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    background-color: #fff ;
+    position: absolute;
+    top: 5px;
+}
+
+:host ::ng-deep span.mat-slide-toggle-bar.mat-slide-toggle-bar-no-side-margin {
+    background-color: #cacaca ;
+    height: 24px;
+    width: 39px;
+    border-radius: 40px;
+}
+
+:host ::ng-deep  span.mat-slide-toggle-bar.mat-slide-toggle-bar-no-side-margin .mat-slide-toggle-thumb {
+    background-color: #fff ;
+    position: absolute;
+    top: 5px;
+    left: 1px;
+}
+.open_close_btn{
+    display: flex;
+}
+
+:host ::ng-deep .mat-radio-button.mat-primary .mat-radio-inner-circle {
+    background-color: #49c5b6 !important;
+  }
+  
+:host ::ng-deep.mat-radio-button.mat-primary.mat-radio-checked .mat-radio-outer-circle {
+   border-color:#49c5b6 !important;
+  }
+
+  :host ::ng-deep  .mat-checkbox-checked.mat-primary .mat-checkbox-background{
+    background-color: #F56630 !important;
+    width: 24px;
+    height: 24px;
+  }
+  :host ::ng-deep .mat-checkbox-frame{
+    width: 24px;
+    height: 24px;
+
+  }
+
+  .open_close_btn span{
+    position: relative;
+    left: 9px;
+    top: 38px;
+  }
+  :host ::ng-deep .material-icons {
+    font-size: 19px;
+    color: #5E5E5E;
+  }
+  
+  label.form-label.ml-2.admin_name {
+    font-size: 16px;
+    font-weight: 400;
+    color:#010203;
+}
+.admin_pic_name{
+  width: 48px;
+    height: 48px;
+    background-color: #FFECE5;
+    text-align: center;
+    border-radius: 50px;
+    font-size: 18px;
+    padding: 14px 9px;
+}
+.assign_role.mt-2 {
+  line-height: 54px;
+}
+.assign_time{
+  display: flex;
+  line-height: 43px;
+}
+.assign_section {
+  padding: 30px 0px;
+}

@@ -1,0 +1,25 @@
+<div (click)="clickProject()" class="mr-3 mb-2 mt-3">
+  <div class="project_card">
+    <div class="pr_time">
+      <h6>Project: {{project?.id}} – {{project?.Description}}</h6>
+      <div class="pr_time mt-3 mb-3">
+        <p>Duration</p>
+        <span>{{formatDate(timesheetdata.start_date)}} - {{formatDate(timesheetdata.end_date)}}</span>
+      </div>
+      <div class="pr_time ">
+        <p>No of Workers</p>
+        <span>{{total_workers}} {{total_workers < 2 ? 'Worker' : 'Workers'}}</span>
+      </div>
+    </div>
+    <div class="pr_assign">
+      <div class="emp_img mb-3">
+        <img src="../../../../assets/images/admin_pic.png" />
+        <img src="../../../../assets/images/admin_pic.png" />
+        <img src="../../../../assets/images/admin_pic.png" />
+      </div>
+      <p>status</p>
+      <span [style.background-color]="timesheetdata.status == '1' ? '#F56630' : '#D0D5DD'" >{{timesheetdata.status == '1' ? 'Open' : 'Closed'}}</span>
+    </div>
+
+  </div>
+</div>

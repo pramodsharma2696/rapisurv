@@ -5,9 +5,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { PagesComponent } from './pages.component';
 import { MainDashboardComponent } from './dashboard/dashboard.component';
 import { ApplicationsComponent } from './applications/applications.component';
-import { TimesheetComponent } from './timesheet/timesheet.component';
-import { CreateTimesheetComponent } from './timesheet/create-timesheet/create-timesheet.component';
-import { ProjectDetailsComponent } from './timesheet/project-details/project-details.component';
 const routes: Routes = [
   {
     path: '',
@@ -17,11 +14,6 @@ const routes: Routes = [
         path: 'portfolio',
         loadChildren: () => import('./portfolio/dashboard.module')
           .then(m => m.DashboardModule),
-      },
-      {
-        path: 'timesheet',
-        loadChildren: () => import('./timesheet/timesheet.module')
-          .then(m => m.TimesheetModule),
       },
       {
         path: 'dashboard',
@@ -39,7 +31,6 @@ const routes: Routes = [
         path: 'projects/:project_id',
         component: ShowProjectComponent
       },
-
       {
         path: '',
         redirectTo: 'portfolio',

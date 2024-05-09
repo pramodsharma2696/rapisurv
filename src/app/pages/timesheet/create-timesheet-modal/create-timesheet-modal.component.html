@@ -1,0 +1,31 @@
+<div class="modal-body">
+
+  <div class="row">
+    <div class="col-md-6"></div>
+    <div class="col-md-6">
+      <button class="close" style="margin-right: 20px;" aria-label="Close" (click)="closeModal('close')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="col-md-12">
+      <p style="font-size: 12; font-weight: bold; text-align: center;"> Select Project </p>
+    </div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <ng-select class="ng-select-container project_list" bindLabel="Description" dropdownPosition="auto"
+          [items]="projects" placeholder="Select Project" (change)="onSelectProject($event)">
+        </ng-select>
+      </div>
+    </div>
+  </div>
+
+
+  <!--  -->
+
+  <button class="btn btn-block create_btn" style="margin-top: 13px" nbButton size="small" [disabled]="!selectedProject" (click)="gotoTimesheet()">
+    Create Timesheet
+  </button>
+
+
+
+</div>

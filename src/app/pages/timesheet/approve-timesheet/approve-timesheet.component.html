@@ -1,0 +1,76 @@
+<div>
+  <app-week-days-select (updateDate)="handleUpdateDate($event)" [timesheetid]="timesheetid"></app-week-days-select>
+
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="assign_check">
+      <!-- <label class="mr-2">Monday 22nd Jan</label> -->
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="invites_pending Accept_btn">
+      <button class="btn btn-block reject" outline status="primary" nbButton size="small"
+        (click)="rejectAllWorkerAttendance()">
+        <mat-icon aria-hidden="false" class="filter mr-1" fontIcon="clear"></mat-icon> Reject
+      </button>
+      <button class="btn btn-block create_btn mr-3" outline status="primary" nbButton size="small"
+        (click)="approveAllWorkerAttendance()">
+        <i class="material-icons">done</i> Accept all
+      </button>
+    </div>
+  </div>
+  <!-- workers-table.component.html -->
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- Worker ID Column -->
+    <ng-container matColumnDef="worker_id">
+      <th mat-header-cell *matHeaderCellDef> Worker ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.worker_id}} </td>
+    </ng-container>
+
+    <!-- First Name Column -->
+    <ng-container matColumnDef="first_name">
+      <th mat-header-cell *matHeaderCellDef> First Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.first_name}} </td>
+    </ng-container>
+
+    <!-- Last Name Column -->
+    <ng-container matColumnDef="last_name">
+      <th mat-header-cell *matHeaderCellDef> Last Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.last_name}} </td>
+    </ng-container>
+
+    <!-- Hours Column -->
+    <ng-container matColumnDef="total_hours">
+      <th mat-header-cell *matHeaderCellDef> Hours </th>
+      <td mat-cell *matCellDef="let element"> {{element.total_hours}}</td>
+    </ng-container>
+
+    <!-- Action Column -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let element">
+        <div *ngIf="element.total_hours > 0">
+          <button mat-icon-button class="reject_btn mr-2"
+            [style.backgroundColor]="element.approve == '1' ? '#12AF9B' : '#D0D5DD'"
+            (click)="approveWorkerAttendance(element)">
+            <mat-icon>done</mat-icon>
+          </button>
+          <button mat-icon-button class="reject_btn"
+            [style.backgroundColor]="element.approve == '0' ? 'red' : '#D0D5DD'"
+            (click)="rejectWorkerAttendance(element)">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+
+      </td>
+    </ng-container>
+
+    <!-- Define the table rows -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+</div>
+<mat-paginator [pageSize]="10"></mat-paginator>

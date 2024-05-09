@@ -1,0 +1,57 @@
+<div class="row" *ngIf="!showTimesheets">
+  <div class="empty_project">
+    <div class="col-md-12">
+      <div class="mb-3">
+        <div class="empty_timesheet">
+          <div class="empty_timesheet_img">
+            <img src="../../../assets/images/empty_timesheet.png" />
+          </div>
+
+          <h5>No Timesheet created</h5>
+          <button class="btn btn-block create_btn" style="margin-top: 13px" outline status="primary" nbButton
+            size="small" (click)="createTimeSheet()">
+            Create Timesheet
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="project_card_section" *ngIf="showTimesheets">
+  <div class="row">
+    <div class="col-md-7">
+      <div class="mb-3">
+        <h6 class="section_header">Create Timesheet</h6>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="mb-3 header_pr_name">
+        <div class="">
+          <span><mat-icon aria-hidden="false" fontIcon="search"></mat-icon></span>
+          <input type="text" class="form-control" placeholder="Search by project name or ID"
+            style="padding: 4px 37px; width: 91%; float: left;" required />
+          <span><mat-icon aria-hidden="false" class="filter mt-1" fontIcon="filter_list"></mat-icon></span>
+        </div>
+        <button class="btn btn-block create_btn" style="margin-top: 13px" outline status="primary" nbButton size="small"
+          (click)="createTimeSheet()">
+          + Create Timesheet
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="row">
+    <app-project-detail-card></app-project-detail-card>
+    <app-project-detail-card></app-project-detail-card>
+  </div>
+  <div class="row mt-3">
+    <app-project-detail-card></app-project-detail-card>
+  </div> -->
+
+  <div class="row">
+    <div class="col-md-5" *ngFor="let timesheet of timesheets">
+      <app-project-detail-card [timesheetdata]="timesheet"></app-project-detail-card>
+    </div>
+  </div>
+</div>

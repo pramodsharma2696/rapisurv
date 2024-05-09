@@ -1,0 +1,63 @@
+.invite_workers {
+    display: flow-root;
+}
+.invite_workers button{
+    padding: 8px 12px 8px 12px;
+    width: 184px;
+    height: 40px;
+    border-radius: 5px;
+    float: right;
+}
+.invite_workers h6 {
+    font-size: 16px;
+    line-height: 20.08px;
+    font-weight: 600;
+    text-align: center;
+}
+mat-icon.mat-icon.notranslate.filter.material-icons.mat-ligature-font.mat-icon-no-color {
+    font-size: 18px;
+    display: contents;
+}
+.mat-icon.mat-ligature-font[fontIcon]::before {
+    margin-right: 6px;
+}
+.mat-icon.notranslate.material-icons.mat-ligature-font.mat-icon-no-color {
+    font-size: 19px;
+    color: #5E5E5E;
+    position: absolute;
+    margin: 0 auto;
+    left: 23px;
+    bottom: 156px;
+}
+.invites_pending {
+    float: left;
+    width: 100%;
+}
+.invites_pending p {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20.3px;
+}
+.admin_pic_name{
+    width: 48px;
+      height: 48px;
+      background-color: #FFECE5;
+      text-align: center;
+      border-radius: 50px;
+      font-size: 18px;
+      padding: 14px 9px;
+  }
+  .assign_role.mt-2 {
+    line-height: 54px;
+  }
+  .assign_time{
+    display: flex;
+    line-height: 43px;
+  }
+  .assign_section {
+    padding: 30px 0px;
+  }
+  img.ml-4.remove_image {
+    float: right;
+    margin-top: 15px;
+}
