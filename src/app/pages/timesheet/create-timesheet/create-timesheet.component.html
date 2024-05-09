@@ -1,7 +1,8 @@
 <div class="row">
   <div class="col-md-7">
     <div class="mb-3">
-      <h6 class="section_header">Create Timesheet</h6>
+      <h6 class="section_header" *ngIf="!isEdit">Create Timesheet</h6>
+      <h6 class="section_header" *ngIf="isEdit">Edit Timesheet</h6>
     </div>
   </div>
   <div class="col-md-5">
@@ -10,201 +11,202 @@
         <p>Project Name</p>
         <span>Project: {{projectDetails?.id}} – {{projectDetails?.Description}}</span>
       </div>
-      <!-- <div class="pr_name">
+      <div class="pr_name">
         <p>Timesheet ID</p>
-        <span>233</span>
-      </div> -->
+        <!-- <span>{{timesheetid}}</span> -->
+        <span *ngIf="isEdit">{{timesheetdata?.timesheet_id}}</span>
+        <span *ngIf="!isEdit">{{generated_timesheet_id}}</span>
+      </div>
     </div>
   </div>
 </div>
-
-<div class="create_timesheet">
-  <div class="col-md-6">
-    <div class="row">
-      <div class="col-md-6 mb-3">
-        <div class="form-group">
-          <label for="inputEmail4" class="form-label"> Start Date</label>
-          <input type="date" name="planned_start" class="form-control" required />
+<form [formGroup]="timesheetform" (ngSubmit)="onFormSubmit()">
+  <div class="create_timesheet">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <div class="form-group">
+            <label for="start_date" class="form-label">Start Date</label>
+            <input type="date" formControlName="start_date" id="start_date" class="form-control" />
+          </div>
         </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="inputEmail4" class="form-label"> End Date</label>
-          <input type="date" name="planned_start" id="planned_start" class="form-control" required />
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="end_date" class="form-label">End Date</label>
+            <input type="date" formControlName="end_date" id="end_date" class="form-control" />
+          </div>
         </div>
-      </div>
-      <div class="col-md-6">
-        <div class="table-layout-div">
-          <p>Status</p>
-          <div class="open_close_btn">
-            <label class="form-label close_side"> Close</label>
-            <label class="mr-2 ml-2">
-              <!-- <input type="checkbox" checked> -->
-              <mat-slide-toggle checked></mat-slide-toggle>
-            </label>
-            <label class="form-label open_side"> Open</label>
+        <div class="col-md-6">
+          <div class="table-layout-div">
+            <p>Status</p>
+            <div class="open_close_btn">
+              <label class="form-label close_side"> Close</label>
+              <label class="mr-2 ml-2">
+                <mat-slide-toggle formControlName="status"></mat-slide-toggle>
+              </label>
+              <label class="form-label open_side"> Open</label>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
 
-<!-- <mat-radio-button color="primary"></mat-radio-button>
+  <!-- <mat-radio-button color="primary"></mat-radio-button>
   <mat-radio-button color="primary"></mat-radio-button>
   <mat-checkbox color="primary"></mat-checkbox> -->
 
 
 
-<div class="create_timesheet">
-  <div class="mb-3">
-    <h6 class="section_header">Attendance Settings</h6>
-  </div>
-  <div class="table-layout-div">
-    <p>Enable Local Work</p>
-    <div class="open_close_btn">
-      <label class="form-label close_side"> No</label>
-      <label class="mr-2 ml-2">
-        <mat-slide-toggle checked></mat-slide-toggle>
-      </label>
-      <label class="form-label open_side"> Yes</label>
+  <div class="create_timesheet">
+    <div class="mb-3">
+      <h6 class="section_header">Attendance Settings</h6>
     </div>
-  </div>
-  <div class="table-layout-div">
-    <p>Enable Scanning</p>
-    <div class="open_close_btn">
-      <label class="form-label close_side"> No</label>
-      <label class="mr-2 ml-2">
-        <mat-slide-toggle checked></mat-slide-toggle>
-      </label>
-      <label class="form-label open_side"> Yes</label>
-    </div>
-  </div>
-  <div class="table-layout-div">
-    <p>Calculate Hours</p>
-    <div class="open_close_btn">
-      <label class="form-label close_side"> No</label>
-      <label class="mr-2 ml-2">
-        <mat-slide-toggle checked></mat-slide-toggle>
-      </label>
-      <label class="form-label open_side"> Yes</label>
-    </div>
-  </div>
-  <div class="table-layout-div">
-    <p>Enable Break</p>
-    <div class="open_close_btn">
-      <label class="form-label close_side"> No</label>
-      <label class="mr-2 ml-2">
-        <mat-slide-toggle checked></mat-slide-toggle>
-      </label>
-      <label class="form-label open_side"> Yes</label>
-    </div>
-  </div>
-
-  <div class="table-layout-div mb-3">
-    <p>Break Duration</p>
-    <div class="open_close_btn ">
-      <input type="text" class="form-control" placeholder="Enter number" style="width: 10%;" required />
-      <label class="mr-2 ml-2" style="margin-top: 8px;">
-        <mat-radio-button color="primary" checked>Hours</mat-radio-button>
-        <mat-radio-button color="primary" class="ml-4">Minutes</mat-radio-button>
-      </label>
-    </div>
-  </div>
-
-
-  <div class="table-layout-div">
-    <p>Register Scanning Device</p>
-    <div class="open_close_btn mb-3" style="display: revert;margin-top: -19px;">
-      <span><mat-icon aria-hidden="false" fontIcon="search"></mat-icon></span>
-      <input type="text" class="form-control" placeholder="Enter Device Identification or Linking Number "
-        style="width: 27%;padding: 4px 37px;" required />
-    </div>
-    <div class="barcode_box mb-3">
-      <div class="barcode_img">
-        <img src="../../../assets/images/barcode.svg" class="mr-4" />
-        <!-- <span><mat-icon aria-hidden="false" class="delete" fontIcon="delete"></mat-icon></span> -->
-        <img src="../../../assets/images/icon.svg" class="mr-4" />
+    <div class="table-layout-div">
+      <p>Enable Local Work</p>
+      <div class="open_close_btn">
+        <label class="form-label close_side"> No</label>
+        <label class="mr-2 ml-2">
+          <mat-slide-toggle formControlName="localwork" (change)="toggleLocalWork($event)"></mat-slide-toggle>
+        </label>
+        <label class="form-label open_side"> Yes</label>
       </div>
-      <p>ZZZ324HHU889UUJJ334</p>
     </div>
-
-    <div class="barcode_box">
-      <div class="barcode_img">
-        <img src="../../../assets/images/barcode.svg" class="mr-4" />
-        <!-- <span><mat-icon aria-hidden="false" class="delete" fontIcon="delete"></mat-icon></span> -->
-        <img src="../../../assets/images/icon.svg" class="mr-4" />
+    <div class="table-layout-div">
+      <p>Enable Scanning</p>
+      <div class="open_close_btn">
+        <label class="form-label close_side"> No</label>
+        <label class="mr-2 ml-2">
+          <mat-slide-toggle  formControlName="scanning" (change)="toggleScanning($event)" ></mat-slide-toggle>
+        </label>
+        <label class="form-label open_side"> Yes</label>
       </div>
-      <p>ZZZ324HHU889UUJJ334</p>
+    </div>
+    <div class="table-layout-div">
+      <p>Calculate Hours</p>
+      <div class="open_close_btn">
+        <label class="form-label close_side"> No</label>
+        <label class="mr-2 ml-2">
+          <mat-slide-toggle formControlName="hours" (change)="toggleHours($event)"></mat-slide-toggle>
+        </label>
+        <label class="form-label open_side"> Yes</label>
+      </div>
+    </div>
+    <div class="table-layout-div">
+      <p>Enable Break</p>
+      <div class="open_close_btn">
+        <label class="form-label close_side"> No</label>
+        <label class="mr-2 ml-2">
+          <mat-slide-toggle formControlName="break" (change)="toggleBreak($event)"></mat-slide-toggle>
+        </label>
+        <label class="form-label open_side"> Yes</label>
+      </div>
+    </div>
+
+    <div class="table-layout-div mb-3">
+      <p>Break Duration</p>
+      <div class="open_close_btn ">
+        <input type="text" class="form-control" placeholder="Enter number" style="width: 10%;"
+          formControlName="break_duration" />
+        <label class="mr-2 ml-2" style="margin-top: 8px;">
+          <mat-radio-group formControlName="break_duration_type">
+            <mat-radio-button value="hours" color="primary" checked>Hours</mat-radio-button>
+            <mat-radio-button value="minutes" color="primary" class="ml-4">Minutes</mat-radio-button>
+          </mat-radio-group>
+        </label>
+      </div>
+    </div>
+
+
+    <div class="table-layout-div">
+      <p>Register Scanning Device</p>
+      <div class="open_close_btn mb-3" style="display: revert;margin-top: -19px;">
+        <span><mat-icon aria-hidden="false" fontIcon="search"></mat-icon></span>
+        <input type="text" class="form-control" placeholder="Enter Device Identification or Linking Number "
+          style="width: 27%;padding: 4px 37px;" required />
+      </div>
+      <div class="barcode_box mb-3">
+        <div class="barcode_img">
+          <img src="../../../assets/images/barcode.svg" class="mr-4" />
+          <!-- <span><mat-icon aria-hidden="false" class="delete" fontIcon="delete"></mat-icon></span> -->
+          <img src="../../../assets/images/icon.svg" class="mr-4" />
+        </div>
+        <p>ZZZ324HHU889UUJJ334</p>
+      </div>
+
+      <div class="barcode_box">
+        <div class="barcode_img">
+          <img src="../../../assets/images/barcode.svg" class="mr-4" />
+          <!-- <span><mat-icon aria-hidden="false" class="delete" fontIcon="delete"></mat-icon></span> -->
+          <img src="../../../assets/images/icon.svg" class="mr-4" />
+        </div>
+        <p>ZZZ324HHU889UUJJ334</p>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="assign_section">
-  <div class="mb-3">
-    <h6 class="section_header">Assign Admin</h6>
-  </div>
-  <div class="table-layout-div">
-    <div class="open_close_btn mb-3" style="display: revert;margin-top: -19px;">
-      <span><mat-icon aria-hidden="false" fontIcon="search"></mat-icon></span>
-      <input type="text" class="form-control" placeholder="Enter Device Identification or Linking Number "
-        style="width: 27%;padding: 4px 37px;" required />
+  <div class="assign_section">
+    <div class="mb-3">
+      <h6 class="section_header">Assign Admin</h6>
     </div>
+    <div class="table-layout-div">
+      <div class="open_close_btn mb-3" style="display: revert;margin-top: -19px;">
+        <span><mat-icon aria-hidden="false" fontIcon="search"></mat-icon></span>
+        <!-- <input type="text" class="form-control" placeholder="Search by name or worker’s ID"
+          style="width: 27%;padding: 4px 37px;" required /> -->
+        <ng-select class="ng-select-container" style="width: 30%;" dropdownPosition="auto" [items]="users"
+          placeholder="Search by name or worker’s ID" (change)="onSelectWorker($event)" bindLabel="fullname">
+          <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+            <p>{{item.finm}} {{item.lamn}}</p>
+          </ng-template>
+        </ng-select>
+      </div>
 
-    <div class="row">
-      <div class="col-md-4 mb-3">
-        <div class="form-group">
-          <label for="inputEmail4" class="form-label mb-3"> Admins</label>
-          <div class="admin_img mb-3">
-            <img src="../../../assets/images/admin_pic.png" />
-            <label class="form-label ml-2 admin_name"> JBIDEN - Joe Biden</label>
-          </div>
-          <div class="admin_img mb-3">
-            <label class="form-label admin_pic_name"> OM </label>
-            <label class="form-label ml-2 admin_name"> EMMCC - Emily McCoy</label>
+      <div class="row mt-5" *ngIf="selectedAdmin.length > 0">
+        <label for="inputEmail4" class="col-md-4 mb-3" style="font-weight: bold;">Admins</label>
+        <label for="inputEmail4" class="col-md-4 mb-3" style="font-weight: bold;">Assign Roles</label>
+      </div>
+
+      <div class="row" *ngFor="let user of selectedAdmin">
+
+        <div class="col-md-4 mb-3">
+          <div class="form-group">
+            <div class="admin_img mb-3">
+              <img src="../../../assets/images/admin_pic.png" />
+              <label class="form-label ml-2 admin_name">{{user.finm}} {{user.lamn}}</label>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="form-group">
-          <label for="inputEmail4" class="form-label mb-3"> Assign Roles</label>
-          <div class="table-layout-div assign_time">
-            <div class="assign_role mr-3">
-              <label class="mr-2">
-                <mat-checkbox color="primary" checked></mat-checkbox>
-              </label>
-              <label class="form-label ml-2 admin_name"> Manage time</label>
-            </div>
-            <div class="assign_role ml-2">
-              <label class="mr-2">
-                <mat-checkbox color="primary"></mat-checkbox>
-              </label>
-              <label class="form-label ml-2 admin_name"> Manage time</label>
-              <img src="../../../assets/images/admin_remove.png" class="ml-4" />
-            </div>
-          </div>
-
-          <div class="table-layout-div assign_time">
-            <div class="assign_role mr-3">
-              <label class="mr-2">
-                <mat-checkbox color="primary" checked></mat-checkbox>
-              </label>
-              <label class="form-label ml-2 admin_name"> Manage time</label>
-            </div>
-            <div class="assign_role ml-2">
-              <label class="mr-2">
-                <mat-checkbox color="primary"></mat-checkbox>
-              </label>
-              <label class="form-label ml-2 admin_name"> Manage time</label>
-              <img src="../../../assets/images/admin_remove.png" class="ml-4" />
+        <div class="col-md-4">
+          <div class="form-group">
+            <div class="table-layout-div assign_time">
+              <div class="assign_role mr-3">
+                <label class="mr-2">
+                  <mat-checkbox [checked]="user?.manage_time" (change)="toggleManageTime(user)"
+                    color="primary"></mat-checkbox>
+                </label>
+                <label class="form-label ml-2 admin_name">Manage time</label>
+              </div>
+              <div class="assign_role ml-2">
+                <label class="mr-2">
+                  <mat-checkbox [checked]="user?.manage_worker" (change)="toggleManageWorkers(user)"
+                    color="primary"></mat-checkbox>
+                </label>
+                <label class="form-label ml-2 admin_name">Manage workers</label>
+                <img src="../../../assets/images/admin_remove.png" class="ml-4" />
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="row">
+
+      </div>
+      <button type="submit" class="btn btn-block create_btn" style="margin-top: 13px" outline status="primary" nbButton
+        size="small">
+        Save Timesheet
+      </button>
     </div>
-    <button class="btn btn-block create_btn" style="margin-top: 13px" outline status="primary" nbButton size="small">
-      Save Timesheet
-    </button>
   </div>
-</div>
+</form>

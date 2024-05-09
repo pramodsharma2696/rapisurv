@@ -42,3 +42,8 @@ span.active_colum {
     border-radius: 60px;
     color: #009B15;
 }
+
+::ng-deep .mat-paginator-page-size,
+::ng-deep .mat-paginator-page-size-label {
+    display: none !important;
+}

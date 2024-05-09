@@ -1,11 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TimesheetService } from 'src/app/shared/services/public-api';
+import { EnterAttendanceModalComponent } from '../enter-attendance-modal/enter-attendance-modal.component';
+import { EnterTimeAssignedTaskModalComponent } from '../enter-time-assigned-task-modal/enter-time-assigned-task-modal.component';
+import { MatPaginator } from '@angular/material/paginator';
 
 export interface Worker {
   workerId: number;
   firstName: string;
   lastName: string;
-  hours: number;
+  total_hours: number;
 }
 
 export interface WeekDay {
@@ -24,20 +29,109 @@ export interface WeekDay {
   templateUrl: './enter-my-time.component.html',
   styleUrls: ['./enter-my-time.component.scss']
 })
-export class EnterMyTimeComponent implements OnInit {
-  dataSource = new MatTableDataSource<Worker>();
-  
-  displayedColumns: string[] = ['workerId', 'firstName', 'lastName', 'hours'];
+export class EnterMyTimeComponent implements OnInit, AfterViewInit {
 
-  constructor() { }
+  @Input() timesheetid;
+  @Input() timesheet;
+  timesheetdata;
+  workersdata;
+
+  dataSource = new MatTableDataSource<Worker>();
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  displayedColumns: string[] = ['worker_id', 'first_name', 'last_name', 'attendance', 'assigned_task', 'total_hours'];
+  selectedDate;
+  constructor(
+    private timesheetService: TimesheetService,
+    private modalService: NgbModal,
+
+  ) { }
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
 
   ngOnInit(): void {
-    this.dataSource.data = [
-      { workerId: 1, firstName: 'John', lastName: 'Doe', hours: 40 },
-      { workerId: 1, firstName: 'John', lastName: 'Doe', hours: 40 },
-      { workerId: 1, firstName: 'John', lastName: 'Doe', hours: 40 }
-      // Add more workers as needed
-    ];
+    this.selectedDate = this.getTodayDate();
+    this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
+      this.timesheetdata = res.data
+      this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
+        console.log('res.data attendance')
+        console.log(res.data)
+        this.workersdata = res.data;
+        this.dataSource.data = this.workersdata.map((worker) => {
+          if (worker?.attendance != null) {
+            worker['total_hours'] = worker.attendance.total_hours;
+          } else {
+            worker['total_hours'] = 0
+          }
+          return worker
+        })
+      })
+    })
+  }
+  getTodayDate() {
+    var today = new Date();
+    var day = String(today.getDate()).padStart(2, '0'); // Ensure day has leading zero if needed
+    var month = String(today.getMonth() + 1).padStart(2, '0'); // Ensure month has leading zero if needed
+    var year = today.getFullYear();
+    return day + '-' + month + '-' + year;
+  }
+  handleUpdateDate(date: Date) {
+    this.selectedDate = date;
+    this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
+      console.log(res.data)
+      this.workersdata = res.data;
+      this.dataSource.data = this.workersdata.map((worker) => {
+        if (worker?.attendance != null) {
+          worker['total_hours'] = worker.attendance.total_hours;
+        } else {
+          worker['total_hours'] = 0
+        }
+        return worker
+      })
+    })
+  }
+
+  applyFilter(event: any) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  fetchData() {
+    this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
+      console.log(res.data)
+      this.workersdata = res.data;
+      this.dataSource.data = this.workersdata.map((worker) => {
+        if (worker?.attendance != null) {
+          worker['total_hours'] = worker.attendance.total_hours;
+        } else {
+          worker['total_hours'] = 0
+        }
+        return worker
+      })
+    })
+  }
+
+  clickAttendance(worker, date) {
+    const activeModal = this.modalService.open(EnterAttendanceModalComponent, {
+      size: 'md',
+      container: 'nb-layout',
+      centered: true,
+    });
+    activeModal.componentInstance.worker = worker
+    activeModal.componentInstance.date = date
+    activeModal.componentInstance.fetchData = this.fetchData.bind(this)
+  }
+
+  clickAssignedTask(worker, date) {
+    const activeModal = this.modalService.open(EnterTimeAssignedTaskModalComponent, {
+      size: 'md',
+      container: 'nb-layout',
+      centered: true,
+    });
+    activeModal.componentInstance.worker = worker
+    activeModal.componentInstance.date = date
+    activeModal.componentInstance.fetchData = this.fetchData.bind(this)
   }
 
 }

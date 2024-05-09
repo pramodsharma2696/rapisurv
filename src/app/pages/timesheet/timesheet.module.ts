@@ -30,6 +30,11 @@ import { ManageWorkerAssignWorkerModalComponent } from './manage-worker-assign-w
 import { ManageWorkerInviteWorkersModalComponent } from './manage-worker-invite-workers-modal/manage-worker-invite-workers-modal.component';
 import { ViewQrCodeModalComponent } from './view-qr-code-modal/view-qr-code-modal.component';
 
+import { ReactiveFormsModule } from '@angular/forms';
+import { TimesheetRoutingModule } from './timesheet-routing.module';
+import { EnterAttendanceModalComponent } from './enter-attendance-modal/enter-attendance-modal.component';
+import { EnterTimeAssignedTaskModalComponent } from './enter-time-assigned-task-modal/enter-time-assigned-task-modal.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -49,9 +54,12 @@ import { ViewQrCodeModalComponent } from './view-qr-code-modal/view-qr-code-moda
     ManageWorkerAddLocalWorkerModalComponent,
     ManageWorkerAssignWorkerModalComponent,
     ManageWorkerInviteWorkersModalComponent,
-    ViewQrCodeModalComponent
+    ViewQrCodeModalComponent,
+    EnterAttendanceModalComponent,
+    EnterTimeAssignedTaskModalComponent
   ],
   imports: [
+    CommonModule,
     MatSlideToggleModule,
     MatRadioModule,
     MatCheckboxModule,
@@ -63,7 +71,10 @@ import { ViewQrCodeModalComponent } from './view-qr-code-modal/view-qr-code-moda
     MatTableModule,
     FormsModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    ReactiveFormsModule,
+    TimesheetRoutingModule,
+    MatPaginatorModule
   ]
 })
 export class TimesheetModule { }

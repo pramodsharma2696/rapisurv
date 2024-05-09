@@ -19,6 +19,11 @@ const routes: Routes = [
           .then(m => m.DashboardModule),
       },
       {
+        path: 'timesheet',
+        loadChildren: () => import('./timesheet/timesheet.module')
+          .then(m => m.TimesheetModule),
+      },
+      {
         path: 'dashboard',
         component: MainDashboardComponent
       },
@@ -34,19 +39,7 @@ const routes: Routes = [
         path: 'projects/:project_id',
         component: ShowProjectComponent
       },
-      {
-        path: 'timesheet',
-        component: TimesheetComponent,
-      },
-      
-      {
-        path: 'timesheet/create/:id',
-        component: CreateTimesheetComponent
-      },
-      {
-        path: 'timesheet/project',
-        component: ProjectDetailsComponent
-      },
+
       {
         path: '',
         redirectTo: 'portfolio',
