@@ -30,6 +30,8 @@ import { ManageWorkerAssignWorkerModalComponent } from './manage-worker-assign-w
 import { ManageWorkerInviteWorkersModalComponent } from './manage-worker-invite-workers-modal/manage-worker-invite-workers-modal.component';
 import { ViewQrCodeModalComponent } from './view-qr-code-modal/view-qr-code-modal.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { TimesheetRoutingModule } from './timesheet-routing.module';
@@ -37,6 +39,7 @@ import { EnterAttendanceModalComponent } from './enter-attendance-modal/enter-at
 import { EnterTimeAssignedTaskModalComponent } from './enter-time-assigned-task-modal/enter-time-assigned-task-modal.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { EnterMyTimeCalendarComponent } from './enter-my-time-calendar/enter-my-time-calendar.component';
+
 
 @NgModule({
   declarations: [
@@ -78,7 +81,8 @@ import { EnterMyTimeCalendarComponent } from './enter-my-time-calendar/enter-my-
     ReactiveFormsModule,
     TimesheetRoutingModule,
     MatPaginatorModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    FullCalendarModule
   ]
 })
 export class TimesheetModule { }
