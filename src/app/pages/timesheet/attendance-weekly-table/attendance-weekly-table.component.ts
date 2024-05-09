@@ -67,7 +67,7 @@ export class AttendanceWeeklyTableComponent implements OnInit {
     startDate.setDate(currentDate.getDate() - diffFromStartOfWeek);
 
     const endDate = new Date(startDate);
-    endDate.setDate(startDate.getDate() + (6 - diffFromStartOfWeek));
+    endDate.setDate(startDate.getDate() + 6);
 
     function formatDate(date) {
       const day = date.getDate().toString().padStart(2, '0');
@@ -127,7 +127,7 @@ export class AttendanceWeeklyTableComponent implements OnInit {
       }
       return data
     })
-   
+
     new AngularCsv(requiredData, 'Attendance', { headers: headers })
   }
 }
