@@ -33,18 +33,30 @@ export class AttendanceComponent implements OnInit {
     this.selectedWeekInput = this.getCurrentWeekNumber()
     this.selectedTab = 'Month'
   }
+
   getWeekNumbersArray() {
     const weeksArray = [];
-    // Push week numbers from 1 to 52 into the array
-    for (let i = 1; i <= 52; i++) {
-      weeksArray.push(i);
+    const firstDayOfYear = new Date(this.selectedYear, 0, 1);
+    const daysOffset = (11 - firstDayOfYear.getDay() + 7) % 7; // Day of the week of January 4th
+
+    for (let i = 0; i < 52; i++) {
+      const firstDayOfWeek = new Date(this.selectedYear, 0, 4 + i * 7 - daysOffset);
+      const weekNumber = Math.floor(i + 1);
+
+      weeksArray.push(weekNumber);
     }
+
+    // If the last week of the year is not a full week, push 53
+    const lastWeekOfYear = new Date(this.selectedYear, 11, 31);
+    if (lastWeekOfYear.getDay() < 4) {
+      weeksArray.push(53);
+    }
+
     return weeksArray;
   }
-
   getCurrentWeekNumber() {
     const now = new Date();
-    const januaryFirst = new Date(now.getFullYear(), 0, 1);
+    const januaryFirst = new Date(this.selectedYear, 0, 1);
     const millisecondsInWeek = 7 * 24 * 60 * 60 * 1000;
 
     // Calculate the difference in milliseconds between now and January 1st
@@ -62,7 +74,7 @@ export class AttendanceComponent implements OnInit {
     const dayIndex = today.getDay(); // 0 for Sunday, 1 for Monday, etc.
     const currentDate = today.getDate();
     const currentMonth = today.getMonth() + 1;
-    const currentYear = today.getFullYear();
+    const currentYear = this.selectedYear;
     const currentWeek = [];
 
     // Calculate the starting date of the current week (Monday)
@@ -70,9 +82,9 @@ export class AttendanceComponent implements OnInit {
 
     // Iterate through the days of the week and construct the array
     for (let i = 0; i < 7; i++) {
-      const date = new Date(startOfWeek.getFullYear(), startOfWeek.getMonth(), startOfWeek.getDate() + i);
+      const date = new Date(this.selectedYear, startOfWeek.getMonth(), startOfWeek.getDate() + i);
       const dayOfWeek = daysOfWeek[date.getDay()];
-      const formattedDate = `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}`;
+      const formattedDate = `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${this.selectedYear}`;
       currentWeek.push({ day: dayOfWeek, date: formattedDate });
     }
 
@@ -82,7 +94,7 @@ export class AttendanceComponent implements OnInit {
 
   onSelectWeek() {
     console.log(this.selectedWeekInput)
-    let data = this.getDatesOfWeek(this.selectedWeekInput, 2024);
+    let data = this.getDatesOfWeek(this.selectedWeekInput, this.selectedYear);
     this.selectedWeek = data
     this.attendanceWeeklyTableComponent.setStartAndEndData(this.selectedWeek[0]['date'], this.selectedWeek[6]['date'])
     this.attendanceWeeklyTableComponent.fetchData()
@@ -92,7 +104,7 @@ export class AttendanceComponent implements OnInit {
 
   getDatesOfWeek(weekNumber: number, year: number) {
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const januaryFirst = new Date(year, 0, 1);
+    const januaryFirst = new Date(this.selectedYear, 0, 1);
     const firstMondayOffset = (1 - januaryFirst.getDay() + 7) % 7; // Offset to the first Monday
     const firstMonday = new Date(januaryFirst.getFullYear(), 0, 1 + firstMondayOffset);
 
@@ -103,7 +115,7 @@ export class AttendanceComponent implements OnInit {
 
     for (let i = 0; i < 7; i++) {
       const currentDate = new Date(startDate.getTime() + i * 24 * 60 * 60 * 1000);
-      const formattedDate = `${String(currentDate.getDate()).padStart(2, '0')}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${currentDate.getFullYear()}`;
+      const formattedDate = `${String(currentDate.getDate()).padStart(2, '0')}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${this.selectedYear}`;
       const dayOfWeek = daysOfWeek[currentDate.getDay()];
       datesOfWeek.push({ day: dayOfWeek, date: formattedDate });
     }
