@@ -105,6 +105,11 @@ export class AttendanceWeeklyTableComponent implements OnInit {
     })
   }
 
+  setStartAndEndData(start_date, end_date) {
+    this.start_date = start_date;
+    this.end_date = end_date
+  }
+
   applyFilter(event: any) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
