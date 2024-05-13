@@ -4,10 +4,41 @@
 </mat-card> -->
 
 <!-- </div> -->
-
-<div>
-    <div *ngIf="showCalendar" id='calendar' style="height: 500px;width: 500px;">
-        <full-calendar class="custom-calendar" [options]="calendarOptions"></full-calendar>
+<div class="row">
+    <div class="calendar_section col-md-8">
+        <div class="row">
+            <full-calendar class="custom-calendar col-md-10" [options]="calendarOptions"></full-calendar>
+            <div class="col-md-2">
+                <div class="Total_hrs">
+                    <h6>Total Hours</h6>
+                    <ul>
+                        <li>40</li>
+                        <li>40</li>
+                        <li>40</li>
+                        <li>40</li>
+                        <li>40</li>
+                        <!-- <li>40</li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+    <div class="col-md-3">
+        <div class="indicators_sec">
+            <div class="indicators_one">
+                <span class="time_capture"></span> Time captured
+            </div>
+            <div class="indicators_two">
+                <span class="Non-Work"></span> Non-Work day
+            </div>
+            <div class="indicators_three">
+                <span class="Time_approved"></span> Time approved
+            </div>
+            <div class="indicators_four">
+                <span class="Time_rejected"></span> Time rejected
+            </div>
+
+          </div>
+    </div> 
+</div> 
 <!-- </mat-card> -->
