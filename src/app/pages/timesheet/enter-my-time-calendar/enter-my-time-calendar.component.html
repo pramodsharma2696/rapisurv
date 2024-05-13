@@ -5,7 +5,9 @@
 
 <!-- </div> -->
 
-<div style="width: 500px;height: 500px;">
-    <full-calendar class="custom-calendar" [options]="calendarOptions"></full-calendar>
-</div>  
+<div>
+    <div *ngIf="showCalendar" id='calendar' style="height: 500px;width: 500px;">
+        <full-calendar class="custom-calendar" [options]="calendarOptions"></full-calendar>
+    </div>
+</div>
 <!-- </mat-card> -->

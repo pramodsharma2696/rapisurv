@@ -36,6 +36,43 @@
     }
 }
 
-.custom-calendar .fc-event, .custom-calendar .fc-title {
-    color: #333; /* Set your desired text color */
-  }
+.custom-calendar .fc-event,
+.custom-calendar .fc-title {
+    color: #333;
+    /* Set your desired text color */
+}
+
+.fc {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+.fc-header {
+    background-color: #eee;
+    padding: 10px;
+}
+
+.fc-toolbar {
+    float: right;
+}
+
+.fc-toolbar button {
+    margin: 0 5px;
+}
+
+.fc-view {
+    clear: both;
+}
+
+.fc-daygrid-day {
+    width: 100px;
+    height: 100px;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+.fc-daygrid-event {
+    background-color: #000;
+    color: #fff;
+    padding: 5px;
+}

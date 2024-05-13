@@ -39,8 +39,10 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<Worker>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['worker_id', 'first_name', 'last_name', 'attendance', 'assigned_task', 'total_hours'];
+  displayedColumns: string[];
   selectedDate;
+
+  calculate_hours: boolean = false
   constructor(
     private timesheetService: TimesheetService,
     private modalService: NgbModal,
@@ -54,6 +56,16 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
     this.selectedDate = this.getTodayDate();
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
+      console.log("enter my time")
+      console.log(this.timesheetdata)
+      this.calculate_hours = this.timesheetdata.hours == '1';
+      console.log(this.calculate_hours)
+      if (this.calculate_hours) {
+        this.displayedColumns = ['worker_id', 'first_name', 'last_name', 'attendance', 'assigned_task', 'total_hours'];
+      } else {
+        this.displayedColumns = ['worker_id', 'first_name', 'last_name', 'assigned_task', 'total_hours'];
+      }
+
       this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
         console.log('res.data attendance')
         console.log(res.data)

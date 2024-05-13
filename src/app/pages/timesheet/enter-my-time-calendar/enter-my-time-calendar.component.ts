@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { CalendarOptions } from '@fullcalendar/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FullCalendarComponent } from '@fullcalendar/angular';
+import { Calendar, CalendarOptions } from '@fullcalendar/core';
+import interactionPlugin from '@fullcalendar/interaction'
 import dayGridPlugin from '@fullcalendar/daygrid';
 
 @Component({
@@ -7,13 +9,24 @@ import dayGridPlugin from '@fullcalendar/daygrid';
   templateUrl: './enter-my-time-calendar.component.html',
   styleUrls: ['./enter-my-time-calendar.component.scss']
 })
-export class EnterMyTimeCalendarComponent implements OnInit {
-  calendarOptions: CalendarOptions;
+export class EnterMyTimeCalendarComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('calendar') calendarComponent: FullCalendarComponent;
+
+  showCalendar = false
+  calendarOptions: CalendarOptions = {
+    initialView: 'dayGridMonth',
+    events: [],
+    plugins: [dayGridPlugin, interactionPlugin],
+    eventColor: 'transparent',
+    eventTextColor: 'black',
+  };
+
+
 
   constructor() { }
 
   ngOnInit(): void {
-
     this.calendarOptions = {
       initialView: 'dayGridMonth',
 
@@ -35,9 +48,21 @@ export class EnterMyTimeCalendarComponent implements OnInit {
       plugins: [dayGridPlugin],
       eventColor: 'transparent',
       eventTextColor: 'black',
-
+      // height: '100%',
     };
+    setTimeout(() => {
+      // Simulate fetching data from an API after 2 seconds
+      this.showCalendar = true
+    }, 3000);
+
+
   }
 
+  ngAfterViewInit(): void {
 
+  }
+
+  showCal() {
+    this.showCalendar = true
+  }
 }
