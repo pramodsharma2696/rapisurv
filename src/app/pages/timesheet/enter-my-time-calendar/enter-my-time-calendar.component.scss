@@ -1,41 +1,202 @@
-.demo-inline-calendar-card {
-    width: 700px;
-}
-
-::ng-deep.time-captured {
-    background-color: #C1FFF7 !important;
-    border: 10px solid white !important;
-}
-
-::ng-deep.non-work-day {
-    background-color: #E9EEF5 !important;
-    border: 10px solid white !important;
-}
-
-::ng-deep.time-approved {
-    background-color: #12AF9B !important;
-    border: 10px solid white !important;
-}
-
-::ng-deep.time-rejected {
-    background-color: #FF5050 !important;
-    border: 10px solid white !important;
-}
-
-::ng-deep.mat-calendar-body-cell {
-    &:not(.mat-calendar-body-disabled) {
-        &:hover {
-            >.mat-calendar-body-cell-content {
-                &:not(.mat-calendar-body-selected) {
-                    &:not(.mat-calendar-body-comparison-identical) {
-                        background-color: transparent !important;
-                    }
-                }
-            }
-        }
-    }
-}
-
 .custom-calendar .fc-event, .custom-calendar .fc-title {
     color: #333; /* Set your desired text color */
+}
+
+.calendar_section {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 25px;
+    margin-left: 15px;
+}
+table.fc-scrollgrid.fc-scrollgrid-liquid {
+    border: 0;
+}
+:host ::ng-deep .fc-theme-standard .fc-scrollgrid {
+    border: 0 !important;
+}
+:host ::ng-deep .fc .fc-daygrid-day-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+:host ::ng-deep .fc-theme-standard td, .fc-theme-standard th {
+    border: 0;
+}
+:host ::ng-deep .fc .fc-daygrid-day-number {
+    padding: 4px;
+    position: relative;
+    z-index: 4;
+    color: #5E5E5E;
+}
+:host ::ng-deep a.fc-col-header-cell-cushion {
+    color: #5E5E5E;
+    font-size: 12px;
+    font-weight: 400;
+    text-decoration-line: blink;
+    line-height: 16px;
+    margin-bottom: 8px;
+}
+:host ::ng-deep .fc-theme-standard th {
+    border: 0;
+    text-align: left;
+}
+:host ::ng-deep .fc .fc-daygrid-day-frame {
+    margin-right: 20px;
+    background-color: #C1FFF7;
+    margin-bottom: 20px;
+}
+:host ::ng-deep .fc .fc-daygrid-day.fc-day-today{
+    background-color: rgb(252 252 252);
+}
+:host ::ng-deep .fc-scroller {
+    overflow: hidden !important;
+}
+:host ::ng-deep .fc .fc-toolbar {
+    display: block;
+}
+:host ::ng-deep h2.fc-toolbar-title {
+    text-align: center;
+}
+:host ::ng-deep button.fc-today-button.fc-button.fc-button-primary {
+    display: none;
+}
+:host ::ng-deep button.fc-prev-button.fc-button.fc-button-primary {
+    background-color: transparent;
+    color: #000;
+    border: 0px solid #222B45;
+    border-radius: 80%;
+    padding: 2px;
+}
+:host ::ng-deep .fc .fc-button:focus {
+    outline: none;
+    box-shadow: none !important;
+}
+:host ::ng-deep .fc .fc-button-primary:not(:disabled).fc-button-active:focus, .fc .fc-button-primary:not(:disabled):active:focus {
+    box-shadow: none;
+}
+
+:host ::ng-deep span.fc-icon.fc-icon-chevron-left {
+    border: 1px solid #222B45;
+    border-radius: 49px;
+}
+:host ::ng-deep button.fc-next-button.fc-button.fc-button-primary{
+    background-color: transparent;
+    color: #000;
+    border: 0px solid #222B45;
+    border-radius: 80%;
+    padding: 2px;
+}
+:host ::ng-deep span.fc-icon.fc-icon-chevron-right {
+    border: 1px solid #222B45;
+    border-radius: 49px;
+}
+:host ::ng-deep .fc-button-group {
+    display: flex;
+    width: 100%;
+    top: -31px;
+    position: relative;
+    left: -7px;
+}
+:host ::ng-deep .fc-view-harness.fc-view-harness-active {
+    height: 400.741px !important;
+}
+.Total_hrs {
+    display: inline-table;
+    margin-top: 93px;
+}
+.Total_hrs h6 {
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 400;
+}
+.Total_hrs ul {
+    display: block;
+    padding: 0;
+    text-align: center;
+}
+.Total_hrs ul li {
+    display: block;
+    margin-top: 40px;
+}
+.Total_hrs ul {
+    display: block;
+    padding: 0;
+    text-align: center;
+    font-size: 16px;
+    line-height: 19.36px;
+    font-weight: 400;
+}
+.indicators_sec {
+    position: relative; /* Positioning context for the absolute positioned div */
+    width: 100%; /* Or any desired width */
+    height: 100%; /* Or any desired height */
   }
+  
+  .indicators_one {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-size: 16px;
+    bottom: 150px;
+  }
+  .indicators_two {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-size: 16px;
+    bottom: 100px;
+  }
+  .indicators_three {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-size: 16px;
+    bottom: 50px;
+  }
+  .indicators_four {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-size: 16px;
+  }
+  .time_capture {
+    width: 34px;
+    height: 34px;
+    background-color: #C1FFF7;
+    border-radius: 5px;
+    display: flex;
+}
+.Non-Work {
+    width: 34px;
+    height: 34px;
+    background-color: #E9EEF5;
+    border-radius: 5px;
+    display: flex;
+}
+.Time_approved {
+    width: 34px;
+    height: 34px;
+    background-color: #12AF9B;
+    border-radius: 5px;
+    display: flex;
+}
+.Time_rejected {
+    width: 34px;
+    height: 34px;
+    background-color: #FF5050;
+    border-radius: 5px;
+    display: flex;
+}
+  
