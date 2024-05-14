@@ -71,20 +71,40 @@ export class ManageWorkerAddLocalWorkerModalComponent implements OnInit {
 
   submitLocalWorker() {
     // createLocalWorker
-    this.timesheetService.createLocalWorker(this.localworkers).subscribe(res => {
-      console.log(res)
-      if (res.type == 'success') {
-        this.activeModal.close({});
-        this.fetchWorkerData()
+    console.log(this.localworkers)
+    console.log(this.first_name)
+    console.log(this.last_name)
+    if (this.localworkers.length == 0 && this.first_name == undefined && this.last_name == undefined) {
+      this.toastrService.warning('Please add worker data!', 'Warning', {
+        duration: 3000,
+      });
+    } else {
+      if (this.first_name != undefined && this.last_name != undefined && this.last_name != '' && this.first_name != '') {
+        let worker = {
+          timesheet_id: this.timesheetid,
+          first_name: this.first_name,
+          last_name: this.last_name
+        }
+        this.localworkers = [...this.localworkers, worker];
+        this.first_name = '';
+        this.last_name = ''
       }
-    },
-      error => {
-        console.error('An error occurred:', error);
-        this.toastrService.warning('Unable to add worker.', 'Error', {
-          duration: 3000,
-        });
-      }
-    )
+      this.timesheetService.createLocalWorker(this.localworkers).subscribe(res => {
+        console.log(res)
+        if (res.type == 'success') {
+          this.activeModal.close({});
+          this.fetchWorkerData()
+        }
+      },
+        error => {
+          console.error('An error occurred:', error);
+          this.toastrService.warning('Unable to add worker.', 'Error', {
+            duration: 3000,
+          });
+        }
+      )
+    }
+
   }
 
   onFileDropped(event: DragEvent) {
@@ -106,7 +126,7 @@ export class ManageWorkerAddLocalWorkerModalComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', this.file);
     // formData.append('timesheet_id', this.timesheetid)
-    this.timesheetService.updateLocalWorkerByFile(this.file,this.timesheetid).subscribe(res => {
+    this.timesheetService.updateLocalWorkerByFile(this.file, this.timesheetid).subscribe(res => {
       console.log(res)
       if (res.type == 'success') {
         this.activeModal.close({});
