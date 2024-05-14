@@ -17,7 +17,7 @@ export class EnterMyTimeCalendarComponent implements OnInit, AfterViewInit {
   @Input() workerid;
   month;
   year;
-
+  worker;
   timesheetdata;
 
   showCalendar = false;
@@ -42,28 +42,9 @@ export class EnterMyTimeCalendarComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
-      this.timesheetService.getWorkerCalendarDataByMonth(this.workerid, this.timesheetdata.timesheet_id, this.month, this.year).subscribe(res => {
-        this.weeklyHours = Object.values(res.data.weekly_working_hours)
-        console.log("Calendar data")
-        console.log(res.data)
-        this.workerdataMonthy = res.data
-        let event = this.convertDataToEvents(res.data)
-        // let 
-        this.calendarOptions = {
-          initialView: 'dayGridMonth',
-          events: event,
-          plugins: [dayGridPlugin],
-          eventColor: 'transparent',
-          eventTextColor: 'black',
-          // height: '100%',
-          firstDay: 1
-        };
-        setTimeout(() => {
-          // Simulate fetching data from an API after 2 seconds
-          this.showCalendar = true
-        }, 2000);
-      })
-
+      setTimeout(() => {
+        this.showCalendar = true
+      }, 2000);
     })
   }
 
@@ -83,8 +64,26 @@ export class EnterMyTimeCalendarComponent implements OnInit, AfterViewInit {
   }
 
 
-
-
+  showWorkerData(worker) {
+    this.timesheetService.getWorkerCalendarDataByMonth(worker.id, this.timesheetdata.timesheet_id, this.month, this.year).subscribe(res => {
+      this.worker = worker
+      this.weeklyHours = Object.values(res.data.weekly_working_hours)
+      console.log("Calendar data")
+      console.log(res.data)
+      this.workerdataMonthy = res.data
+      let event = this.convertDataToEvents(res.data)
+      // let 
+      this.calendarOptions = {
+        initialView: 'dayGridMonth',
+        events: event,
+        plugins: [dayGridPlugin],
+        eventColor: 'transparent',
+        eventTextColor: 'black',
+        // height: '100%',
+        firstDay: 1
+      };
+    })
+  }
   showCal() {
     this.showCalendar = true
   }

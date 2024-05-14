@@ -18,6 +18,7 @@ export class EnterTimeAssignedTaskModalComponent implements OnInit {
   work_assigned;
   taskForm: FormGroup;
   work_assigned_data;
+  total_hours_input;
   constructor(
     private fb: FormBuilder,
     private timesheetService: TimesheetService,
@@ -72,13 +73,41 @@ export class EnterTimeAssignedTaskModalComponent implements OnInit {
       console.log(res.data)
       if (res.type == 'success') {
         this.fetchData()
-        this.toastrService.success('Worker attendance updated!', 'Success', {
+        this.toastrService.success('Worker hours updated!', 'Success', {
           duration: 3000,
         });
       }
       this.activeModal.close({});
 
     })
+  }
+
+  convertDateFormat(dateString) {
+    var parts = dateString.split("-");
+    // Note: parts[0] is the day, parts[1] is the month, and parts[2] is the year
+    return parts[2] + "-" + parts[1] + "-" + parts[0];
+  }
+
+  submitTotalHours() {
+    if (this.total_hours_input != undefined) {
+      this.timesheetService.addAttendanceTotalHours(this.worker.timesheet_id, this.worker.id, this.convertDateFormat(this.date), this.total_hours_input).subscribe(res => {
+        console.log(res.data)
+        if (res.type == 'success') {
+          this.fetchData()
+          this.toastrService.success('Worker hours updated!', 'Success', {
+            duration: 3000,
+          });
+        }
+        this.activeModal.close({});
+
+      })
+    } else {
+      this.toastrService.warning('Enter total hours.', 'Warning', {
+        duration: 3000,
+      })
+    }
+
+    console.log(this.total_hours_input)
   }
 
 }

@@ -209,4 +209,10 @@ export class TimesheetService {
     const url = this.timesheetapiBase + `api/update-assign-task-checkbox`;
     return this.http.post<any>(url, { timesheet_id: timesheetid });
   }
+
+  public addAttendanceTotalHours(timesheet_id, worker_id, date, total_hours) {
+    const url = this.timesheetapiBase + `api/assign-task-add`;
+    return this.http.post<any>(url, { timesheet_id: timesheet_id, worker_id: 5, date: date, total_hours: total_hours });
+  }
+
 }

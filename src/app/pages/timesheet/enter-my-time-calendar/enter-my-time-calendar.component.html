@@ -4,6 +4,7 @@
 </mat-card> -->
 
 <!-- </div> -->
+<!-- <div *ngIf="worker != 'undefined'">{{worker.worker_id}}-{{worker.first_name}} {{worker.last_name}}</div> -->
 <div class="row" *ngIf="showCalendar">
     <div class="calendar_section col-md-8">
         <div class="row">
@@ -15,12 +16,6 @@
                         <li *ngFor="let hours of weeklyHours; ">
                             {{ hours }}
                         </li>
-                        <!-- <li>40</li>
-                        <li>40</li>
-                        <li>40</li>
-                        <li>40</li>
-                        <li>40</li> -->
-                        <!-- <li>40</li> -->
                     </ul>
                 </div>
             </div>

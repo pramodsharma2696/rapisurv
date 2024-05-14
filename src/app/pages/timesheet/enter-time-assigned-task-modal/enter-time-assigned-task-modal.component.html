@@ -1,7 +1,7 @@
 <div class="modal-body">
 
   <div class="invite_workers">
-    <h6>Assigned Task</h6>
+    <h6>Work Hours</h6>
   </div>
 
 
@@ -21,24 +21,34 @@
           <label class="form-label ml-3 admin_name" style="display: flex;width: 82%;"> Clearing :</label>
           <input class="form-control" style="padding: 0px 10px;width: 12%;text-align: center;" type="text" name="" id="" value="8">
         </div> -->
-        <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-          <div *ngFor="let task of work_assigned">
-            <div class="admin_img mb-3 mt-3">
-              <label class="form-label ml-3 admin_name" style="display: flex;width: 82%;">{{task}}</label>
-              <input class="form-control" style="padding: 0px 10px;width: 12%;text-align: center;" type="text"
-                [formControlName]="task.toLowerCase()">
+        <div *ngIf="work_assigned.length > 0">
+          <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+            <div *ngFor="let task of work_assigned">
+              <div class="admin_img mb-3 mt-3">
+                <label class="form-label ml-3 admin_name" style="display: flex;width: 82%;">{{task}}</label>
+                <input class="form-control" style="padding: 0px 10px;width: 12%;text-align: center;" type="number"
+                  [formControlName]="task.toLowerCase()">
+              </div>
             </div>
-          </div>
-          <button class="btn btn-block create_btn" style="margin-top: 13px" nbButton size="small" type="submit">
+            <button class="btn btn-block create_btn" style="margin-top: 13px" nbButton size="small" type="submit">
+              Save
+            </button>
+          </form>
+        </div>
+        <div *ngIf="work_assigned.length == 0">
+          <input class="form-control mt-2 mb-2" type="number" placeholder="Enter total hours"
+            [(ngModel)]="total_hours_input">
+          <button class="btn btn-block create_btn" style="margin-top: 13px" nbButton size="small" ty
+            (click)="submitTotalHours()">
             Save
           </button>
-        </form>
+        </div>
       </div>
     </div>
 
   </div>
 
- 
+
 
 
 
