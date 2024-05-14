@@ -90,7 +90,7 @@ export class EnterTimeAssignedTaskModalComponent implements OnInit {
 
   submitTotalHours() {
     if (this.total_hours_input != undefined) {
-      this.timesheetService.addAttendanceTotalHours(this.worker.timesheet_id, this.worker.id, this.convertDateFormat(this.date), this.total_hours_input).subscribe(res => {
+      this.timesheetService.addAttendanceTotalHours(this.worker.timesheet_id, this.worker.id, this.date, this.total_hours_input).subscribe(res => {
         console.log(res.data)
         if (res.type == 'success') {
           this.fetchData()

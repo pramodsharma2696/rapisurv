@@ -211,8 +211,9 @@ export class TimesheetService {
   }
 
   public addAttendanceTotalHours(timesheet_id, worker_id, date, total_hours) {
+    console.log(date)
     const url = this.timesheetapiBase + `api/assign-task-add`;
-    return this.http.post<any>(url, { timesheet_id: timesheet_id, worker_id: 5, date: date, total_hours: total_hours });
+    return this.http.post<any>(url, { timesheet_id: timesheet_id, worker_id: worker_id, date: date, total_hours: total_hours });
   }
 
 }
