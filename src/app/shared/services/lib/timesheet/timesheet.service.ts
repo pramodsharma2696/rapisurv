@@ -203,4 +203,10 @@ export class TimesheetService {
     const url = this.timesheetapiBase + `api/refresh-qr/${id}`;
     return this.http.get<any>(url);
   }
+
+  public setAssignedTaskStatus(timesheetid) {
+    console.log(timesheetid)
+    const url = this.timesheetapiBase + `api/update-assign-task-checkbox`;
+    return this.http.post<any>(url, { timesheet_id: timesheetid });
+  }
 }

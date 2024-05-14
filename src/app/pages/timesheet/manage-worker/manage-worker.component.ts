@@ -45,6 +45,13 @@ export class ManageWorkerComponent implements OnInit, AfterViewInit {
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
       let id = res?.data.timesheet_id
+      this.isAssignwork = res.data.assign_task == '1'
+      if (this.isAssignwork) {
+        this.displayedColumns = [...this.displayedColumns, 'work_assignment', 'assign_work']
+      } else {
+        this.displayedColumns = ['worker_id', 'first_name', 'last_name', 'status', 'planned_hours']
+      }
+      console.log("assigned task status>>>>>>" + res.data.assign_task)
       console.log("this.timesheetid worker" + JSON.stringify(this.timesheetdata))
       this.timesheetService.getTimesheetLocalWorker(id).subscribe(res => {
         this.workers = res?.data;;
@@ -132,6 +139,9 @@ export class ManageWorkerComponent implements OnInit, AfterViewInit {
 
   onClickAssignWork() {
     console.log(this.isAssignwork)
+    this.timesheetService.setAssignedTaskStatus(this.timesheetdata.timesheet_id).subscribe(res => {
+      console.log(res)
+    })
     if (this.isAssignwork) {
       this.displayedColumns = [...this.displayedColumns, 'work_assignment', 'assign_work']
     } else {
