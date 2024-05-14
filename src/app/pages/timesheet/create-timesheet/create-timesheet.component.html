@@ -7,6 +7,11 @@
   </div>
   <div class="col-md-5">
     <div class="row-center center ng-star-inserted mb-3 header_pr_name">
+      <div class="edit_qa_btn mr-3" *ngIf="isEdit">
+        <button class="btn btn-block link ml-3" outline status="primary" nbButton size="small" (click)="refershQRCode()">
+           Refresh QR Code
+        </button>
+      </div>
       <div class="pr_name mr-4">
         <p>Project Name</p>
         <span>Project: {{projectDetails?.id}} – {{projectDetails?.Description}}</span>

@@ -34,7 +34,7 @@ export class CreateTimesheetComponent implements OnInit {
   break_duration_type;
   assign_admin
 
-  
+
 
   constructor(
     private route: ActivatedRoute,
@@ -198,6 +198,11 @@ export class CreateTimesheetComponent implements OnInit {
       this.users = this.users.filter(user => user.fullname !== selectedValue.fullname);
       this.selectedAdmin = [...this.selectedAdmin, selectedValue];
     }
+  }
+
+  refershQRCode() {
+    console.log("Clicked")
+    this.timesheetService.refreshQRCode(this.timesheetdata.project_id)
   }
 
   onFormSubmit() {

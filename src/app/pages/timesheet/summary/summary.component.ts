@@ -72,7 +72,7 @@ export class SummaryComponent implements OnInit, AfterViewInit {
   }
 
   fetchData() {
-    this.timesheetService.getTimesheetWorkerSummary(this.timesheetdata.id).subscribe(res => {
+    this.timesheetService.getTimesheetWorkerSummary(this.timesheetdata.timesheet_id).subscribe(res => {
       this.workers = res?.data;;
       this.workers = this.workers.map((worker) => {
         console.log(worker.attendance)

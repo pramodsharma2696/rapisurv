@@ -19,7 +19,7 @@ const httpOptions = {
 export class TimesheetService {
   private userdata;
   private apiBase = '';
-  private timesheetapiBase = 'http://48.216.210.209/';
+  private timesheetapiBase = 'http://timesheet2.test/';
 
   constructor(
     private http: HttpClient,
@@ -193,4 +193,14 @@ export class TimesheetService {
     );
   }
 
+  public getWorkerCalendarDataByMonth(timesheetid, workerid, month, year) {
+    const url = this.timesheetapiBase + `api/daily-weekly-worker-total-hrs/${timesheetid}/${workerid}/${month}/${year}`;
+    return this.http.get<any>(url);
+  }
+
+  public refreshQRCode(id) {
+    console.log(id)
+    const url = this.timesheetapiBase + `api/refresh-qr/${id}`;
+    return this.http.get<any>(url);
+  }
 }

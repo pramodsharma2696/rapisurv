@@ -33,6 +33,7 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
 
   @Input() timesheetid;
   @Input() timesheet;
+  
   timesheetdata;
   workersdata;
 
