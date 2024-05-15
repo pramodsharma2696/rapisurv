@@ -100,7 +100,15 @@ export class EnterTimeAssignedTaskModalComponent implements OnInit {
         }
         this.activeModal.close({});
 
+      }, error => {
+        console.error('An error occurred:', error);
+        this.toastrService.warning('Unable to add work hours', 'Error', {
+          duration: 3000,
+        });
+        this.activeModal.close({});
+
       })
+
     } else {
       this.toastrService.warning('Enter total hours.', 'Warning', {
         duration: 3000,
