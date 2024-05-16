@@ -22,7 +22,7 @@ export class EnterMyTimeCalendarComponent implements OnInit, AfterViewInit {
 
   showCalendar = false;
   workerdataMonthy;
-  weeklyHours = []
+  weeklyHours = [0, 0, 0, 0, 0]
 
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
@@ -43,8 +43,16 @@ export class EnterMyTimeCalendarComponent implements OnInit, AfterViewInit {
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
       setTimeout(() => {
+        // this.calendarOptions = {
+        //   initialView: 'dayGridMonth',
+        //   events: [],
+        //   plugins: [dayGridPlugin, interactionPlugin],
+        //   eventColor: 'transparent',
+        //   eventTextColor: 'black',
+        //   firstDay: 1
+        // };
         this.showCalendar = true
-      }, 2000);
+      }, 3000);
     })
   }
 

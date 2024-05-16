@@ -74,7 +74,7 @@ export class ManageWorkerAddLocalWorkerModalComponent implements OnInit {
     console.log(this.localworkers)
     console.log(this.first_name)
     console.log(this.last_name)
-    if (this.localworkers.length == 0 || this.first_name == undefined || this.last_name == undefined) {
+    if (this.localworkers.length == 0 && this.first_name == undefined || this.last_name == undefined) {
       this.toastrService.warning('Please add worker data!', 'Warning', {
         duration: 3000,
       });
