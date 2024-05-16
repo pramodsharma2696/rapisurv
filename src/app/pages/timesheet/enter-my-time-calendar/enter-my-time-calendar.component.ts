@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { Calendar, CalendarOptions } from '@fullcalendar/core';
-import interactionPlugin from '@fullcalendar/interaction'
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { TimesheetService } from 'src/app/shared/services/public-api';
 
@@ -27,7 +26,7 @@ export class EnterMyTimeCalendarComponent implements OnInit, AfterViewInit {
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     events: [],
-    plugins: [dayGridPlugin, interactionPlugin],
+    plugins: [dayGridPlugin],
     eventColor: 'transparent',
     eventTextColor: 'black',
     firstDay: 1
@@ -43,14 +42,6 @@ export class EnterMyTimeCalendarComponent implements OnInit, AfterViewInit {
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
       setTimeout(() => {
-        // this.calendarOptions = {
-        //   initialView: 'dayGridMonth',
-        //   events: [],
-        //   plugins: [dayGridPlugin, interactionPlugin],
-        //   eventColor: 'transparent',
-        //   eventTextColor: 'black',
-        //   firstDay: 1
-        // };
         this.showCalendar = true
       }, 3000);
     })

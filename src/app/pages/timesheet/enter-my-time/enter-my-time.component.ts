@@ -60,8 +60,6 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
     this.selectedDate = this.getTodayDate();
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
-      console.log("enter my time")
-      console.log(this.timesheetdata)
       this.calculate_hours = this.timesheetdata.hours == '1';
       console.log(this.calculate_hours)
 
