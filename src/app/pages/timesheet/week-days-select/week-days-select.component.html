@@ -4,9 +4,9 @@
         <div class="col-md-6">
             <div class="year_week float-right">
                 <div class="form-group">
-                    <ng-select class="ng-select-container project_list mr-4" bindLabel="name" dropdownPosition="auto"
-                        placeholder="2024">
-                    </ng-select>
+                    <ng-select class="ng-select-container project_list mr-4" bindLabel="year" placeholder="Select a year" [(ngModel)]="selectedYear" [clearable]="false">
+                        <ng-option *ngFor="let year of years" [value]="year">{{ year }}</ng-option>
+                      </ng-select>
                 </div>
                 <div class="form-group">
                     <ng-select class="ng-select-container project_list"  dropdownPosition="auto" [(ngModel)]="selectedWeekInput" [clearable]="false"

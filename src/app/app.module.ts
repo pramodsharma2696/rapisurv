@@ -39,6 +39,8 @@ import {
   NbCheckboxModule
 
 } from '@nebular/theme';
+import { FullCalendarModule } from '@fullcalendar/angular';
+
 @NgModule({
   declarations: [
     AppComponent, 
@@ -66,7 +68,8 @@ import {
     ThemeModule.forRoot(), 
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
-    NbEvaIconsModule
+    NbEvaIconsModule,
+    FullCalendarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

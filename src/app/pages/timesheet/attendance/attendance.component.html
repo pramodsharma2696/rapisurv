@@ -26,14 +26,17 @@
                 </div>
 
             </div>
-            <div class="form-group">
-                <ng-select class="ng-select-container project_list mr-4" bindLabel="name" dropdownPosition="auto"
-                    placeholder="2024">
+            <div class="form-group" *ngIf="selectedTab == 'Week'">
+                <ng-select class="ng-select-container project_list mr-4" bindLabel="year" placeholder="Select a year"
+                    [(ngModel)]="selectedYear" [clearable]="false">
+                    <ng-option *ngFor="let year of years" [value]="year">{{ year }}</ng-option>
                 </ng-select>
             </div>
-            <div class="form-group">
-                <ng-select class="ng-select-container project_list" bindLabel="name" dropdownPosition="auto"
-                    placeholder="Week 3">
+            <div class="form-group" *ngIf="selectedTab == 'Week'">
+                <ng-select class="ng-select-container project_list" dropdownPosition="auto"
+                    [(ngModel)]="selectedWeekInput" [clearable]="false" placeholder="Select..."
+                    (change)="onSelectWeek()">
+                    <ng-option *ngFor="let week of weeksoption" [value]="week">{{ 'Week ' + week }}</ng-option>
                 </ng-select>
             </div>
         </div>

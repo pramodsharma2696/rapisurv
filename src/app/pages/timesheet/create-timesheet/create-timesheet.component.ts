@@ -34,6 +34,8 @@ export class CreateTimesheetComponent implements OnInit {
   break_duration_type;
   assign_admin
 
+
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -64,6 +66,19 @@ export class CreateTimesheetComponent implements OnInit {
     // check if edit or not
     // if edit then set default values
     if (this.isEdit) {
+      // initialize form group
+      this.timesheetform = this.fb.group({
+        start_date: [''],
+        end_date: [''],
+        status: [true],
+        localwork: [''],
+        scanning: [''],
+        hours: [''],
+        break: [''],
+        break_duration: ['0'],
+        break_duration_type: [''],
+        assign_admin: ['']
+      })
       // time sheet id
       this.route.params.subscribe(params => {
         this.timesheetid = params['id'];
@@ -135,7 +150,19 @@ export class CreateTimesheetComponent implements OnInit {
 
       })
     } else {
-
+      // initialize form group
+      this.timesheetform = this.fb.group({
+        start_date: [''],
+        end_date: [''],
+        status: [true],
+        localwork: [''],
+        scanning: new FormControl({ value: '', disabled: true }),
+        hours: new FormControl({ value: '', disabled: true }),
+        break: new FormControl({ value: '', disabled: true }),
+        break_duration: new FormControl({ value: '0', disabled: true }),
+        break_duration_type: new FormControl({ value: '', disabled: true }),
+        assign_admin: ['']
+      })
       // new timesheet create
       this.route.params.subscribe(params => {
         this.projectId = params['id'];
@@ -171,6 +198,11 @@ export class CreateTimesheetComponent implements OnInit {
       this.users = this.users.filter(user => user.fullname !== selectedValue.fullname);
       this.selectedAdmin = [...this.selectedAdmin, selectedValue];
     }
+  }
+
+  refershQRCode() {
+    console.log("Clicked")
+    this.timesheetService.refreshQRCode(this.timesheetdata.project_id)
   }
 
   onFormSubmit() {

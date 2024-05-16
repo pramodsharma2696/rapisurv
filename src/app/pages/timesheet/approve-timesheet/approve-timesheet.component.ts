@@ -154,7 +154,7 @@ export class ApproveTimesheetComponent implements OnInit {
       }
     },
       err => {
-        this.toastrService.warning('All worker attendace approved!.', 'Something went worng. Please try again!', {
+        this.toastrService.warning('Something went worng. Please try again!', 'Warning', {
           duration: 3000,
         });
       }

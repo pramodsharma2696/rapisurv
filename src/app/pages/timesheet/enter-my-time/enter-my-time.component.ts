@@ -5,6 +5,7 @@ import { TimesheetService } from 'src/app/shared/services/public-api';
 import { EnterAttendanceModalComponent } from '../enter-attendance-modal/enter-attendance-modal.component';
 import { EnterTimeAssignedTaskModalComponent } from '../enter-time-assigned-task-modal/enter-time-assigned-task-modal.component';
 import { MatPaginator } from '@angular/material/paginator';
+import { EnterMyTimeCalendarComponent } from '../enter-my-time-calendar/enter-my-time-calendar.component';
 
 export interface Worker {
   workerId: number;
@@ -33,14 +34,19 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
 
   @Input() timesheetid;
   @Input() timesheet;
+
   timesheetdata;
   workersdata;
+
+  @ViewChild('calendarcomp') calendarcomp: EnterMyTimeCalendarComponent;
 
   dataSource = new MatTableDataSource<Worker>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['worker_id', 'first_name', 'last_name', 'attendance', 'assigned_task', 'total_hours'];
+  displayedColumns: string[] = ['worker_id', 'first_name', 'last_name', 'attendance', 'assigned_task', 'total_hours'];;
   selectedDate;
+
+  calculate_hours: boolean = false
   constructor(
     private timesheetService: TimesheetService,
     private modalService: NgbModal,
@@ -54,6 +60,14 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
     this.selectedDate = this.getTodayDate();
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
+      console.log("enter my time")
+      console.log(this.timesheetdata)
+      this.calculate_hours = this.timesheetdata.hours == '1';
+      console.log(this.calculate_hours)
+
+      this.displayedColumns = ['worker_id', 'first_name', 'last_name', 'attendance', 'assigned_task', 'total_hours'];
+
+
       this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
         console.log('res.data attendance')
         console.log(res.data)
@@ -134,4 +148,8 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
     activeModal.componentInstance.fetchData = this.fetchData.bind(this)
   }
 
+  showCalendarData(row) {
+    console.log(row)
+    this.calendarcomp.showWorkerData(row)
+  }
 }

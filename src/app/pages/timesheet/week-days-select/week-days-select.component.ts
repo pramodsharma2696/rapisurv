@@ -17,9 +17,11 @@ export class WeekDaysSelectComponent implements OnInit {
   numberofweeks;
   selectedWeek;
   selectedDay;
+  selectedYear;
   timesheetdata;
   weeksoption = []
   selectedWeekInput
+  years: number[];
 
   ngOnInit(): void {
     // getWorkingDays
@@ -29,6 +31,9 @@ export class WeekDaysSelectComponent implements OnInit {
     // })
     this.selectedWeek = this.getCurrentWeek();
     this.selectedDay = this.getTodayDate();
+    const currentYear = new Date().getFullYear();
+    this.selectedYear = currentYear
+    this.years = Array.from({ length: 5 }, (_, i) => currentYear + i);
     console.log("week day id" + this.timesheetid)
 
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
@@ -51,7 +56,7 @@ export class WeekDaysSelectComponent implements OnInit {
     return weeksArray;
   }
 
-   getCurrentWeekNumber() {
+  getCurrentWeekNumber() {
     const now = new Date();
     const januaryFirst = new Date(now.getFullYear(), 0, 1);
     const millisecondsInWeek = 7 * 24 * 60 * 60 * 1000;
@@ -61,9 +66,9 @@ export class WeekDaysSelectComponent implements OnInit {
 
     // Calculate the current week number
     const weekNumber = Math.ceil(difference / millisecondsInWeek);
-    console.log("Week number>>"+weekNumber);
+    console.log("Week number>>" + weekNumber);
     return `Week ${weekNumber}`;
-}
+  }
 
   getCurrentWeek() {
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
