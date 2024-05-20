@@ -91,6 +91,7 @@ export class ManageWorkerComponent implements OnInit, AfterViewInit {
       centered: true,
     });
     activeModal.componentInstance.timesheetid = this.timesheet?.timesheet_id
+    activeModal.componentInstance.timesheetidmain = this.timesheet?.id
     activeModal.componentInstance.fetchWorkerData = this.fetchWorkerData.bind(this)
 
   }
