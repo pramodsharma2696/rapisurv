@@ -21,7 +21,7 @@ export class TimesheetService {
   private apiBase = '';
   private timesheetapiBase = 'http://timesheet2.test/';
   // private timesheetapiBase = 'https://qa-timesheet.rapisurv.com/';
-  
+
 
   constructor(
     private http: HttpClient,
@@ -203,6 +203,11 @@ export class TimesheetService {
   public refreshQRCode(id) {
     console.log(id)
     const url = this.timesheetapiBase + `api/refresh-qr/${id}`;
+    return this.http.get<any>(url);
+  }
+
+  public timesheetcontainlocalworker(id) {
+    const url = this.timesheetapiBase + `api/check-local-worker-exist/${id}`;
     return this.http.get<any>(url);
   }
 

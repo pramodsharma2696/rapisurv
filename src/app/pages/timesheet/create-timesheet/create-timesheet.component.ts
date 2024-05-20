@@ -34,6 +34,7 @@ export class CreateTimesheetComponent implements OnInit {
   break_duration_type;
   assign_admin
 
+  containLocalWorker = false
 
 
   constructor(
@@ -48,21 +49,6 @@ export class CreateTimesheetComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    // initialize form group
-    this.timesheetform = this.fb.group({
-      start_date: [''],
-      end_date: [''],
-      status: [true],
-      localwork: [''],
-      scanning: new FormControl({ value: '', disabled: true }),
-      hours: new FormControl({ value: '', disabled: true }),
-      break: new FormControl({ value: '', disabled: true }),
-      break_duration: new FormControl({ value: '0', disabled: true }),
-      break_duration_type: new FormControl({ value: '', disabled: true }),
-      assign_admin: ['']
-    })
-
     // check if edit or not
     // if edit then set default values
     if (this.isEdit) {
@@ -88,6 +74,13 @@ export class CreateTimesheetComponent implements OnInit {
       this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
 
         this.timesheetdata = res.data
+        this.timesheetService.timesheetcontainlocalworker(this.timesheetdata.timesheet_id).subscribe(res => {
+          console.log("Local worker>>>>")
+          console.log(res)
+          this.containLocalWorker = res.data
+
+        })
+
         let assignadmin = JSON.parse(res.data.assign_admin)
         let assignadminarray = [];
 
@@ -113,6 +106,7 @@ export class CreateTimesheetComponent implements OnInit {
         this.break_duration = this.timesheetdata.break_duration;
         this.break_duration_type = this.timesheetdata.break_duration_type;
 
+        console.log("break>>>>>" + this.break)
 
         this.timesheetform.patchValue({
           start_date: this.start_date,
@@ -126,6 +120,27 @@ export class CreateTimesheetComponent implements OnInit {
           break_duration_type: this.break_duration_type,
           assign_admin: this.assign_admin
         })
+
+        // disable button based on condition
+        if (this.localwork == '0') {
+          this.timesheetform.get('scanning')?.disable()
+          this.timesheetform.get('hours')?.disable()
+          this.timesheetform.get('break')?.disable()
+          this.timesheetform.get('break_duration')?.disable()
+          this.timesheetform.get('break_duration_type')?.disable()
+        } else if (this.scanning == '0') {
+          this.timesheetform.get('hours')?.disable()
+          this.timesheetform.get('break')?.disable()
+          this.timesheetform.get('break_duration')?.disable()
+          this.timesheetform.get('break_duration_type')?.disable()
+        } else if (this.hours == '0') {
+          this.timesheetform.get('break')?.disable()
+          this.timesheetform.get('break_duration')?.disable()
+          this.timesheetform.get('break_duration_type')?.disable()
+        } else if (this.break == '0') {
+          this.timesheetform.get('break_duration')?.disable()
+          this.timesheetform.get('break_duration_type')?.disable()
+        }
 
         this.timesheetService.getProjectById(this.timesheetdata.project_id).subscribe(res => {
           this.projectDetails = res.data
@@ -191,6 +206,12 @@ export class CreateTimesheetComponent implements OnInit {
   checkForEditRoute() {
     const currentUrlSegment = this.route.snapshot.url.join('/');
     this.isEdit = currentUrlSegment.includes('edit');
+  }
+
+  dateRangeValidator(group: FormGroup) {
+    const startDate = group.controls['start_date'].value;
+    const endDate = group.controls['end_date'].value;
+    return endDate && startDate && endDate < startDate ? { dateRange: true } : null;
   }
 
   onSelectWorker(selectedValue) {

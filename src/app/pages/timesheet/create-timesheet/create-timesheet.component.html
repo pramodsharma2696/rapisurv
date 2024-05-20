@@ -74,7 +74,8 @@
       <div class="open_close_btn">
         <label class="form-label close_side"> No</label>
         <label class="mr-2 ml-2">
-          <mat-slide-toggle formControlName="localwork" (change)="toggleLocalWork($event)"></mat-slide-toggle>
+          <mat-slide-toggle formControlName="localwork" (change)="toggleLocalWork($event)"
+            [disabled]="containLocalWorker"></mat-slide-toggle>
         </label>
         <label class="form-label open_side"> Yes</label>
       </div>
