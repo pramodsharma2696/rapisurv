@@ -304,6 +304,7 @@ export class CreateTimesheetComponent implements OnInit {
   // break_duration_type: [''],
   // assign_admin: ['']
   toggleScanning(data) {
+    console.log(this.scanning)
     if (data.checked) {
       this.timesheetform.get('hours')?.enable()
     } else {
