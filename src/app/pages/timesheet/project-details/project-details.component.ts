@@ -74,6 +74,9 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   formatDate(dateA: string): string {
+    if (dateA == null) {
+      return ''
+    }
     let date = new Date(dateA)
     const day: number = date.getDate();
     const month: string = date.toLocaleString('en-us', { month: 'short' });

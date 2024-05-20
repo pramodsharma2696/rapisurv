@@ -244,7 +244,7 @@ export class CreateTimesheetComponent implements OnInit {
         error => {
           console.error('An error occurred:', error);
           // Optionally, you can add error handling logic here, such as displaying an error message to the user.
-          this.toastrService.warning('Please complete the timesheet.', 'Error', {
+          this.toastrService.warning(error.error.message, 'Error', {
             duration: 3000,
           });
         }
@@ -260,7 +260,7 @@ export class CreateTimesheetComponent implements OnInit {
       },
         error => {
           console.error('An error occurred:', error);
-          this.toastrService.warning('Please complete the timesheet.', 'Error', {
+          this.toastrService.warning(error.error.message, 'Error', {
             duration: 3000,
           });
         }
@@ -280,14 +280,21 @@ export class CreateTimesheetComponent implements OnInit {
   }
 
   toggleLocalWork(data) {
+    console.log(data)
     if (data.checked) {
       this.timesheetform.get('scanning')?.enable()
     } else {
+
       this.timesheetform.get('scanning')?.disable()
       this.timesheetform.get('hours')?.disable()
       this.timesheetform.get('break')?.disable()
       this.timesheetform.get('break_duration')?.disable()
       this.timesheetform.get('break_duration_type')?.disable()
+      this.timesheetform.get('scanning')?.setValue('')
+      this.timesheetform.get('hours')?.setValue('')
+      this.timesheetform.get('break')?.setValue('')
+      this.timesheetform.get('break_duration')?.setValue('0')
+      this.timesheetform.get('break_duration_type')?.setValue('')
     }
   }
   // scanning: new FormControl({ value: '', disabled: true }),
@@ -304,6 +311,10 @@ export class CreateTimesheetComponent implements OnInit {
       this.timesheetform.get('break')?.disable()
       this.timesheetform.get('break_duration')?.disable()
       this.timesheetform.get('break_duration_type')?.disable()
+      this.timesheetform.get('hours')?.setValue('')
+      this.timesheetform.get('break')?.setValue('')
+      this.timesheetform.get('break_duration')?.setValue('0')
+      this.timesheetform.get('break_duration_type')?.setValue('')
     }
   }
 
@@ -314,6 +325,9 @@ export class CreateTimesheetComponent implements OnInit {
       this.timesheetform.get('break')?.disable()
       this.timesheetform.get('break_duration')?.disable()
       this.timesheetform.get('break_duration_type')?.disable()
+      this.timesheetform.get('break')?.setValue('')
+      this.timesheetform.get('break_duration')?.setValue('0')
+      this.timesheetform.get('break_duration_type')?.setValue('')
     }
   }
 
@@ -324,7 +338,12 @@ export class CreateTimesheetComponent implements OnInit {
     } else {
       this.timesheetform.get('break_duration')?.disable()
       this.timesheetform.get('break_duration_type')?.disable()
+      this.timesheetform.get('break_duration')?.setValue('0')
+      this.timesheetform.get('break_duration_type')?.setValue('')
     }
   }
 
+  removeAdmin(index) {
+    this.selectedAdmin.splice(index, 1);
+  }
 }

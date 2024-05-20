@@ -173,7 +173,7 @@
         <label for="inputEmail4" class="col-md-4 mb-3" style="font-weight: bold;">Assign Roles</label>
       </div>
 
-      <div class="row" *ngFor="let user of selectedAdmin">
+      <div class="row" *ngFor="let user of selectedAdmin;let i = index">
 
         <div class="col-md-4 mb-3">
           <div class="form-group">
@@ -199,7 +199,7 @@
                     color="primary"></mat-checkbox>
                 </label>
                 <label class="form-label ml-2 admin_name">Manage workers</label>
-                <img src="../../../assets/images/admin_remove.png" class="ml-4" />
+                <img src="../../../assets/images/admin_remove.png" class="ml-4" (click)="removeAdmin(i)"/>
               </div>
             </div>
           </div>
