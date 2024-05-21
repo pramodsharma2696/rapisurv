@@ -11,6 +11,7 @@ import { TimesheetService } from 'src/app/shared/services/public-api';
 export class TimesheetComponent implements OnInit {
   timesheets = []
   showTimesheets = false
+  exsitingProjectIds = []
 
   constructor(
     private modalService: NgbModal,
@@ -29,9 +30,11 @@ export class TimesheetComponent implements OnInit {
     })
 
     this.timesheetService.getTimesheets().subscribe(res => {
+      console.log('timesheets ')
       console.log(res.data)
       this.timesheets = res.data
-      console.log(res.data.length)
+      this.exsitingProjectIds = this.timesheets.map(ts => ts.project_id)
+
       let len = res.data.length;
       if (len > 0) {
         this.showTimesheets = true
@@ -46,5 +49,7 @@ export class TimesheetComponent implements OnInit {
       container: 'nb-layout',
       centered: true,
     });
+
+    activeModal.componentInstance.exsitingProjectIds = this.exsitingProjectIds
   }
 }

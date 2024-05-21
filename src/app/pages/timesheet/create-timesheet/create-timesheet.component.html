@@ -8,8 +8,9 @@
   <div class="col-md-5">
     <div class="row-center center ng-star-inserted mb-3 header_pr_name">
       <div class="edit_qa_btn mr-3" *ngIf="isEdit">
-        <button class="btn btn-block link ml-3" outline status="primary" nbButton size="small" (click)="refershQRCode()">
-           Refresh QR Code
+        <button class="btn btn-block link ml-3" outline status="primary" nbButton size="small"
+          (click)="refershQRCode()">
+          Refresh QR Code
         </button>
       </div>
       <div class="pr_name mr-4">
@@ -73,7 +74,8 @@
       <div class="open_close_btn">
         <label class="form-label close_side"> No</label>
         <label class="mr-2 ml-2">
-          <mat-slide-toggle formControlName="localwork" (change)="toggleLocalWork($event)"></mat-slide-toggle>
+          <mat-slide-toggle formControlName="localwork" (change)="toggleLocalWork($event)"
+            [disabled]="containLocalWorker"></mat-slide-toggle>
         </label>
         <label class="form-label open_side"> Yes</label>
       </div>
@@ -83,7 +85,7 @@
       <div class="open_close_btn">
         <label class="form-label close_side"> No</label>
         <label class="mr-2 ml-2">
-          <mat-slide-toggle  formControlName="scanning" (change)="toggleScanning($event)" ></mat-slide-toggle>
+          <mat-slide-toggle formControlName="scanning" (change)="toggleScanning($event)"></mat-slide-toggle>
         </label>
         <label class="form-label open_side"> Yes</label>
       </div>
@@ -124,7 +126,7 @@
     </div>
 
 
-    <div class="table-layout-div">
+    <div class="table-layout-div" *ngIf="timesheetform.value.scanning">
       <p>Register Scanning Device</p>
       <div class="open_close_btn mb-3" style="display: revert;margin-top: -19px;">
         <span><mat-icon aria-hidden="false" fontIcon="search"></mat-icon></span>
@@ -173,7 +175,7 @@
         <label for="inputEmail4" class="col-md-4 mb-3" style="font-weight: bold;">Assign Roles</label>
       </div>
 
-      <div class="row" *ngFor="let user of selectedAdmin">
+      <div class="row" *ngFor="let user of selectedAdmin;let i = index">
 
         <div class="col-md-4 mb-3">
           <div class="form-group">
@@ -183,7 +185,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-5">
           <div class="form-group">
             <div class="table-layout-div assign_time">
               <div class="assign_role mr-3">
@@ -199,7 +201,7 @@
                     color="primary"></mat-checkbox>
                 </label>
                 <label class="form-label ml-2 admin_name">Manage workers</label>
-                <img src="../../../assets/images/admin_remove.png" class="ml-4" />
+                <img src="../../../assets/images/admin_remove.png" class="ml-4" (click)="removeAdmin(i)" />
               </div>
             </div>
           </div>

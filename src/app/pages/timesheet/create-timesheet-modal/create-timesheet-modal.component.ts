@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TimesheetService } from 'src/app/shared/services/public-api';
@@ -9,6 +9,8 @@ import { TimesheetService } from 'src/app/shared/services/public-api';
   styleUrls: ['./create-timesheet-modal.component.scss']
 })
 export class CreateTimesheetModalComponent implements OnInit {
+  @Input() exsitingProjectIds;
+
   projects;
   selectedProject;
   constructor(
@@ -18,16 +20,15 @@ export class CreateTimesheetModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    console.log(this.exsitingProjectIds)
     this.timesheetService.getAllProject().subscribe(res => {
-      console.log("Projects ----->")
-      console.log(res.data)
-      this.projects = res.data
+      let projectsdata = res.data
+      this.projects = projectsdata.filter(prj => !this.exsitingProjectIds.includes(prj.id))
     })
   }
 
   onSelectProject(selectedValue: any) {
     this.selectedProject = selectedValue;
-    console.log('Selected Project:', this.selectedProject);
   }
 
   closeModal(status) {
@@ -35,14 +36,11 @@ export class CreateTimesheetModalComponent implements OnInit {
   }
 
   gotoTimesheet() {
-    console.log("Inside go to timsheet")
     this.router.navigate([`/app/timesheet/create`, this.selectedProject.id]);
     this.activeModal.close({ data: {}, status: 200 });
   }
 
   getProjectLabel(project) {
-    console.log("label>>>>>")
-    console.log(project)
     return `${project.id} - ${project.Description}`;
   }
 

@@ -7,6 +7,7 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { AttendanceComponent } from '../attendance/attendance.component';
 import { SummaryComponent } from '../summary/summary.component';
 import { ApproveTimesheetComponent } from '../approve-timesheet/approve-timesheet.component';
+import { EnterMyTimeComponent } from '../enter-my-time/enter-my-time.component';
 
 @Component({
   selector: 'app-project-details',
@@ -23,6 +24,7 @@ export class ProjectDetailsComponent implements OnInit {
   @ViewChild(AttendanceComponent) attendanceComponent: AttendanceComponent;
   @ViewChild(SummaryComponent) summaryComponent: SummaryComponent;
   @ViewChild(ApproveTimesheetComponent) approveTimesheetComponent: ApproveTimesheetComponent;
+  @ViewChild(EnterMyTimeComponent) entermytime: EnterMyTimeComponent;
 
 
   constructor(
@@ -74,6 +76,9 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   formatDate(dateA: string): string {
+    if (dateA == null) {
+      return ''
+    }
     let date = new Date(dateA)
     const day: number = date.getDate();
     const month: string = date.toLocaleString('en-us', { month: 'short' });
@@ -102,6 +107,8 @@ export class ProjectDetailsComponent implements OnInit {
       this.summaryComponent.fetchData()
     } else if (tabChangeEvent.index === 1) {
       this.attendanceComponent.fetchMonthly()
+    } else if (tabChangeEvent.index === 2) {
+      this.entermytime.fetchData()
     } else if (tabChangeEvent.index === 4) {
       this.approveTimesheetComponent.fetchData()
     }
