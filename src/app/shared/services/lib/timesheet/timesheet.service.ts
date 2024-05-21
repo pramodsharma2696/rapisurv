@@ -19,8 +19,8 @@ const httpOptions = {
 export class TimesheetService {
   private userdata;
   private apiBase = '';
-  private timesheetapiBase = 'http://timesheet2.test/';
-  // private timesheetapiBase = 'https://qa-timesheet.rapisurv.com/';
+  // private timesheetapiBase = 'http://timesheet2.test/';
+  private timesheetapiBase = 'https://qa-timesheet.rapisurv.com/';
 
 
   constructor(
