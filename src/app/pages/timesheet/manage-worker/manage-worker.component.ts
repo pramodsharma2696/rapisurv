@@ -90,8 +90,8 @@ export class ManageWorkerComponent implements OnInit, AfterViewInit {
       container: 'nb-layout',
       centered: true,
     });
-    activeModal.componentInstance.timesheetid = this.timesheet?.timesheet_id
-    activeModal.componentInstance.timesheetidmain = this.timesheet?.id
+    activeModal.componentInstance.timesheetid = this.timesheetid
+    activeModal.componentInstance.timesheetidmain = this.timesheetid
     activeModal.componentInstance.fetchWorkerData = this.fetchWorkerData.bind(this)
 
   }

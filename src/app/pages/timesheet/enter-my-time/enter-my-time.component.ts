@@ -38,6 +38,8 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
   timesheetdata;
   workersdata;
 
+  isassign_task = false
+  buttonName = ''
   @ViewChild('calendarcomp') calendarcomp: EnterMyTimeCalendarComponent;
 
   dataSource = new MatTableDataSource<Worker>();
@@ -61,8 +63,15 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
       this.calculate_hours = this.timesheetdata.hours == '1';
-      console.log(this.calculate_hours)
+      console.log("Enter Time ts dat")
+      console.log(this.timesheetdata)
+      this.isassign_task = this.timesheetdata.assign_task == '1'
+      if (this.timesheetdata.assign_task == '1') {
+        this.buttonName = 'Distribute Hours'
+      } else {
+        this.buttonName = 'Enter Hours'
 
+      }
       this.displayedColumns = ['worker_id', 'first_name', 'last_name', 'attendance', 'assigned_task', 'total_hours'];
 
 
@@ -110,6 +119,17 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
   }
 
   fetchData() {
+    this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
+      this.timesheetdata = res.data
+      this.calculate_hours = this.timesheetdata.hours == '1';
+      this.isassign_task = this.timesheetdata.assign_task == '1'
+      if (this.timesheetdata.assign_task == '1') {
+        this.buttonName = 'Distribute Hours'
+      } else {
+        this.buttonName = 'Enter Hours'
+
+      }
+    })
     this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
       console.log(res.data)
       this.workersdata = res.data;
@@ -143,6 +163,7 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
     });
     activeModal.componentInstance.worker = worker
     activeModal.componentInstance.date = date
+    activeModal.componentInstance.timesheetid = this.timesheetid
     activeModal.componentInstance.fetchData = this.fetchData.bind(this)
   }
 

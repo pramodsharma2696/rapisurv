@@ -1,6 +1,6 @@
 <div class="mb-5">
 
-    <app-week-days-select (updateDate)="handleUpdateDate($event)"  [timesheetid]="timesheetid"></app-week-days-select>
+    <app-week-days-select (updateDate)="handleUpdateDate($event)" [timesheetid]="timesheetid"></app-week-days-select>
     <div class="row mt-5">
         <div class="col-md-6">
             <div class="assign_check">
@@ -16,8 +16,8 @@
                     </div> -->
 
                     <div class="search_input">
-                        <input type="text" class="form-control" placeholder="Search by worker’s ID or Name" 
-                               style="padding: 4px 30px; float: left;" (keyup)="applyFilter($event)">
+                        <input type="text" class="form-control" placeholder="Search by worker’s ID or Name"
+                            style="padding: 4px 30px; float: left;" (keyup)="applyFilter($event)">
                         <i class="material-icons">search</i>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
             <td mat-cell *matCellDef="let element">
                 <button class="btn pl-0" status="primary" style="color: #12af9b;outline: none;" nbButton size="small"
                     (click)="clickAssignedTask(element, selectedDate)">
-                    Enter Hours </button>
+                    {{buttonName}} </button>
             </td>
         </ng-container>
 
