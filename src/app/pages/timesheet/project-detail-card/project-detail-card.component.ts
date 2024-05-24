@@ -11,6 +11,8 @@ export class ProjectDetailCardComponent implements OnInit {
   @Input() timesheetdata;
   project;
   total_workers
+  users = [];
+  assignedAdmin = []
 
   constructor(
     private router: Router,
@@ -25,6 +27,25 @@ export class ProjectDetailCardComponent implements OnInit {
       console.log("Projects ----->")
       console.log(res.data)
       this.project = res.data
+
+      this.timesheetService.getUsers().subscribe(res => {
+        for (let user of res.data) {
+          user.fullname = `${user.finm} ${user.lamn}`;
+          user.manage_time = false;
+          user.manage_worker = false
+        }
+        this.users = res.data
+
+        this.timesheetdata.assign_admin = JSON.parse(this.timesheetdata.assign_admin)
+        this.assignedAdmin = this.timesheetdata.assign_admin.map(adm => {
+          let userdata = this.users.find(urs => urs.id == adm.admin_id)
+          adm.user = userdata
+          return adm
+        })
+
+        console.log(this.assignedAdmin)
+
+      })
     })
 
     this.timesheetService.getNumberOfWorkerByTimesheetId(this.timesheetdata.timesheet_id).subscribe(res => {
@@ -35,7 +56,7 @@ export class ProjectDetailCardComponent implements OnInit {
 
   }
   formatDate(dateA: string): string {
-    if(dateA == null){
+    if (dateA == null) {
       return ''
     }
     let date = new Date(dateA)

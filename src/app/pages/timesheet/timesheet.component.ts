@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CreateTimesheetModalComponent } from './create-timesheet-modal/create-timesheet-modal.component';
-import { TimesheetService } from 'src/app/shared/services/public-api';
+import { AuthService, TimesheetService } from 'src/app/shared/services/public-api';
 
 @Component({
   selector: 'app-timesheet',
@@ -15,7 +15,9 @@ export class TimesheetComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private timesheetService: TimesheetService
+    private timesheetService: TimesheetService,
+    private authService: AuthService
+
 
   ) {
     console.log("Const timesheet")
@@ -24,7 +26,7 @@ export class TimesheetComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("On init")
-
+    this.authService.setCurrentPage("Timesheet")
     this.timesheetService.getWorkingDays('2024-04-25', '2025-05-02').subscribe(res => {
       console.log(res)
     })

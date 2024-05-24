@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ViewQrCodeModalComponent } from '../view-qr-code-modal/view-qr-code-modal.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TimesheetService } from 'src/app/shared/services/public-api';
+import { AuthService, TimesheetService } from 'src/app/shared/services/public-api';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { AttendanceComponent } from '../attendance/attendance.component';
 import { SummaryComponent } from '../summary/summary.component';
@@ -20,7 +20,8 @@ export class ProjectDetailsComponent implements OnInit {
   timesheetdata;
   project;
   qrlink;
-
+  assignedAdmin = []
+  users = []
   @ViewChild(AttendanceComponent) attendanceComponent: AttendanceComponent;
   @ViewChild(SummaryComponent) summaryComponent: SummaryComponent;
   @ViewChild(ApproveTimesheetComponent) approveTimesheetComponent: ApproveTimesheetComponent;
@@ -31,7 +32,8 @@ export class ProjectDetailsComponent implements OnInit {
     private modalService: NgbModal,
     private route: ActivatedRoute,
     private router: Router,
-    private timesheetService: TimesheetService
+    private timesheetService: TimesheetService,
+    private authService: AuthService
 
   ) { }
 
@@ -41,17 +43,40 @@ export class ProjectDetailsComponent implements OnInit {
       this.timesheetid = params['id'];
     });
     console.log(this.timesheetid)
+
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
       let projectId = res.data.project_id
       this.qrlink = res.data.timesheet_qr
+      console.log('this.timesheetdata.assign_admin')
+      console.log(this.timesheetdata.assign_admin)
+      this.timesheetService.getUsers().subscribe(res => {
+        for (let user of res.data) {
+          user.fullname = `${user.finm} ${user.lamn}`;
+          user.manage_time = false;
+          user.manage_worker = false
+        }
+        this.users = res.data
+
+        this.timesheetdata.assign_admin = JSON.parse(this.timesheetdata.assign_admin)
+        this.assignedAdmin = this.timesheetdata.assign_admin.map(adm => {
+          let userdata = this.users.find(urs => urs.id == adm.admin_id)
+          adm.user = userdata
+          return adm
+        })
+
+        console.log(this.assignedAdmin)
+
+      })
+
+
+
 
       this.timesheetService.getProjectById(projectId).subscribe(res => {
-        console.log("Projects ----->")
-        console.log(res.data)
         this.project = res.data;
       })
     })
+
 
     // this.timesheetService.getTimesheetQR(1146).subscribe(res => {
     //   this.qrlink = res?.data.timesheet_qr
@@ -104,13 +129,24 @@ export class ProjectDetailsComponent implements OnInit {
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     // Fetch data when the tab is changed
     if (tabChangeEvent.index === 0) {
+      this.authService.setCurrentPage("Summary")
       this.summaryComponent.fetchData()
     } else if (tabChangeEvent.index === 1) {
+      this.authService.setCurrentPage("Attendance")
       this.attendanceComponent.fetchMonthly()
     } else if (tabChangeEvent.index === 2) {
+      this.authService.setCurrentPage("Enter Time")
+      this.entermytime.fetchData()
+    } else if (tabChangeEvent.index === 3) {
+      this.authService.setCurrentPage("Manage Worker")
       this.entermytime.fetchData()
     } else if (tabChangeEvent.index === 4) {
+      this.authService.setCurrentPage("Approve Timesheet")
       this.approveTimesheetComponent.fetchData()
     }
+  }
+
+  navigatetotimesheet() {
+    this.router.navigate([`/app/timesheet`]);
   }
 }

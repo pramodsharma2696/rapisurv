@@ -6,6 +6,7 @@ import { EnterAttendanceModalComponent } from '../enter-attendance-modal/enter-a
 import { EnterTimeAssignedTaskModalComponent } from '../enter-time-assigned-task-modal/enter-time-assigned-task-modal.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { EnterMyTimeCalendarComponent } from '../enter-my-time-calendar/enter-my-time-calendar.component';
+import { NbToastrService } from '@nebular/theme';
 
 export interface Worker {
   workerId: number;
@@ -52,6 +53,7 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
   constructor(
     private timesheetService: TimesheetService,
     private modalService: NgbModal,
+    private toastrService: NbToastrService
 
   ) { }
   ngAfterViewInit(): void {
@@ -97,6 +99,7 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
     var year = today.getFullYear();
     return day + '-' + month + '-' + year;
   }
+
   handleUpdateDate(date: Date) {
     this.selectedDate = date;
     this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
@@ -145,26 +148,41 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
   }
 
   clickAttendance(worker, date) {
-    const activeModal = this.modalService.open(EnterAttendanceModalComponent, {
-      size: 'md',
-      container: 'nb-layout',
-      centered: true,
-    });
-    activeModal.componentInstance.worker = worker
-    activeModal.componentInstance.date = date
-    activeModal.componentInstance.fetchData = this.fetchData.bind(this)
+    console.log(worker)
+    if (worker.status == "active") {
+      const activeModal = this.modalService.open(EnterAttendanceModalComponent, {
+        size: 'md',
+        container: 'nb-layout',
+        centered: true,
+      });
+      activeModal.componentInstance.worker = worker
+      activeModal.componentInstance.date = date
+      activeModal.componentInstance.fetchData = this.fetchData.bind(this)
+    } else {
+      this.toastrService.warning('Worker is inactive.', 'Warning', {
+        duration: 3000,
+      });
+    }
   }
 
   clickAssignedTask(worker, date) {
-    const activeModal = this.modalService.open(EnterTimeAssignedTaskModalComponent, {
-      size: 'md',
-      container: 'nb-layout',
-      centered: true,
-    });
-    activeModal.componentInstance.worker = worker
-    activeModal.componentInstance.date = date
-    activeModal.componentInstance.timesheetid = this.timesheetid
-    activeModal.componentInstance.fetchData = this.fetchData.bind(this)
+    console.log(worker)
+    if (worker.status == "active") {
+
+      const activeModal = this.modalService.open(EnterTimeAssignedTaskModalComponent, {
+        size: 'md',
+        container: 'nb-layout',
+        centered: true,
+      });
+      activeModal.componentInstance.worker = worker
+      activeModal.componentInstance.date = date
+      activeModal.componentInstance.timesheetid = this.timesheetid
+      activeModal.componentInstance.fetchData = this.fetchData.bind(this)
+    } else {
+      this.toastrService.warning('Worker is inactive.', 'Warning', {
+        duration: 3000,
+      });
+    }
   }
 
   showCalendarData(row) {
