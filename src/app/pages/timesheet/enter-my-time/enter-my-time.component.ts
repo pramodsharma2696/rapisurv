@@ -6,6 +6,7 @@ import { EnterAttendanceModalComponent } from '../enter-attendance-modal/enter-a
 import { EnterTimeAssignedTaskModalComponent } from '../enter-time-assigned-task-modal/enter-time-assigned-task-modal.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { EnterMyTimeCalendarComponent } from '../enter-my-time-calendar/enter-my-time-calendar.component';
+import { NbToastrService } from '@nebular/theme';
 
 export interface Worker {
   workerId: number;
@@ -38,6 +39,8 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
   timesheetdata;
   workersdata;
 
+  isassign_task = false
+  buttonName = ''
   @ViewChild('calendarcomp') calendarcomp: EnterMyTimeCalendarComponent;
 
   dataSource = new MatTableDataSource<Worker>();
@@ -50,6 +53,7 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
   constructor(
     private timesheetService: TimesheetService,
     private modalService: NgbModal,
+    private toastrService: NbToastrService
 
   ) { }
   ngAfterViewInit(): void {
@@ -61,8 +65,15 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
       this.calculate_hours = this.timesheetdata.hours == '1';
-      console.log(this.calculate_hours)
+      console.log("Enter Time ts dat")
+      console.log(this.timesheetdata)
+      this.isassign_task = this.timesheetdata.assign_task == '1'
+      if (this.timesheetdata.assign_task == '1' && this.calculate_hours) {
+        this.buttonName = 'Distribute Hours'
+      } else {
+        this.buttonName = 'Enter Hours'
 
+      }
       this.displayedColumns = ['worker_id', 'first_name', 'last_name', 'attendance', 'assigned_task', 'total_hours'];
 
 
@@ -88,6 +99,7 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
     var year = today.getFullYear();
     return day + '-' + month + '-' + year;
   }
+
   handleUpdateDate(date: Date) {
     this.selectedDate = date;
     this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
@@ -110,6 +122,17 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
   }
 
   fetchData() {
+    this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
+      this.timesheetdata = res.data
+      this.calculate_hours = this.timesheetdata.hours == '1';
+      this.isassign_task = this.timesheetdata.assign_task == '1'
+      if (this.timesheetdata.assign_task == '1') {
+        this.buttonName = 'Distribute Hours'
+      } else {
+        this.buttonName = 'Enter Hours'
+
+      }
+    })
     this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
       console.log(res.data)
       this.workersdata = res.data;
@@ -125,25 +148,41 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
   }
 
   clickAttendance(worker, date) {
-    const activeModal = this.modalService.open(EnterAttendanceModalComponent, {
-      size: 'md',
-      container: 'nb-layout',
-      centered: true,
-    });
-    activeModal.componentInstance.worker = worker
-    activeModal.componentInstance.date = date
-    activeModal.componentInstance.fetchData = this.fetchData.bind(this)
+    console.log(worker)
+    if (worker.status == "active") {
+      const activeModal = this.modalService.open(EnterAttendanceModalComponent, {
+        size: 'md',
+        container: 'nb-layout',
+        centered: true,
+      });
+      activeModal.componentInstance.worker = worker
+      activeModal.componentInstance.date = date
+      activeModal.componentInstance.fetchData = this.fetchData.bind(this)
+    } else {
+      this.toastrService.warning('Worker is inactive.', 'Warning', {
+        duration: 3000,
+      });
+    }
   }
 
   clickAssignedTask(worker, date) {
-    const activeModal = this.modalService.open(EnterTimeAssignedTaskModalComponent, {
-      size: 'md',
-      container: 'nb-layout',
-      centered: true,
-    });
-    activeModal.componentInstance.worker = worker
-    activeModal.componentInstance.date = date
-    activeModal.componentInstance.fetchData = this.fetchData.bind(this)
+    console.log(worker)
+    if (worker.status == "active") {
+
+      const activeModal = this.modalService.open(EnterTimeAssignedTaskModalComponent, {
+        size: 'md',
+        container: 'nb-layout',
+        centered: true,
+      });
+      activeModal.componentInstance.worker = worker
+      activeModal.componentInstance.date = date
+      activeModal.componentInstance.timesheetid = this.timesheetid
+      activeModal.componentInstance.fetchData = this.fetchData.bind(this)
+    } else {
+      this.toastrService.warning('Worker is inactive.', 'Warning', {
+        duration: 3000,
+      });
+    }
   }
 
   showCalendarData(row) {

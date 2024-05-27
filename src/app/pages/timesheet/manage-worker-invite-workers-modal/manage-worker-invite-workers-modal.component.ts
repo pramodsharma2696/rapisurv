@@ -39,24 +39,31 @@ export class ManageWorkerInviteWorkersModalComponent implements OnInit {
     this.activeModal.close({ data: null, status: 206 });
   }
 
-  addLocalWorker() {
-    if (this.isLocalWorker) {
-      this.activeModal.close({ data: {}, status: 200 });
-
-      const activeModal = this.modalService.open(ManageWorkerAddLocalWorkerModalComponent, {
-        size: 'md',
-        container: 'nb-layout',
-        centered: true,
-      });
-
-      activeModal.componentInstance.timesheetid = this.timesheetid
-      activeModal.componentInstance.fetchWorkerData = this.fetchWorkerData
-    }
-    else {
-      this.toastrService.warning('Add local worker is not enabled.', 'Warning', {
-        duration: 3000,
-      });
-    }
-
+  addLocalWorker(): void {
+    // Fetch the timesheet data to determine if local worker addition is enabled
+    this.timesheetService.getTimesheetById(this.timesheetidmain).subscribe(res => {
+      this.timesheetdata = res.data;
+      this.isLocalWorker = this.timesheetdata.localwork === '1'; // Update isLocalWorker based on timesheet data
+      // Check if local worker addition is enabled
+      if (this.isLocalWorker) {
+        // Close any open modals
+        this.activeModal.close({ data: {}, status: 200 });
+        // Open the modal for adding local worker
+        const activeModal = this.modalService.open(ManageWorkerAddLocalWorkerModalComponent, {
+          size: 'md',
+          container: 'nb-layout',
+          centered: true,
+        });
+        // Pass necessary data to the modal
+        activeModal.componentInstance.timesheetid = this.timesheetdata?.timesheet_id;
+        activeModal.componentInstance.fetchWorkerData = this.fetchWorkerData;
+      } else {
+        // Show a warning if local worker addition is not enabled
+        this.toastrService.warning('Add local worker is not enabled.', 'Warning', {
+          duration: 3000,
+        });
+      }
+    });
   }
+
 }

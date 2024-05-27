@@ -4,6 +4,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ManageWorkerInviteWorkersModalComponent } from '../manage-worker-invite-workers-modal/manage-worker-invite-workers-modal.component';
 import { TimesheetService } from 'src/app/shared/services/public-api';
 import { NbToastrService } from '@nebular/theme';
+import { AngularCsv } from 'angular-csv-ext/dist/Angular-csv';
 
 @Component({
   selector: 'app-manage-worker-add-local-worker-modal',
@@ -20,6 +21,12 @@ export class ManageWorkerAddLocalWorkerModalComponent implements OnInit {
   first_name: string;
   last_name: string;
 
+  workerdemodata = [
+    { firstName: 'John', lastName: 'Doe' },
+    { firstName: 'Jane', lastName: 'Smith' },
+    { firstName: 'Alice', lastName: 'Johnson' }
+  ];
+
   constructor(
     private modalService: NgbModal,
     private activeModal: NgbActiveModal,
@@ -28,6 +35,7 @@ export class ManageWorkerAddLocalWorkerModalComponent implements OnInit {
     private toastrService: NbToastrService
 
   ) { }
+
 
 
   ngOnInit(): void {
@@ -140,6 +148,11 @@ export class ManageWorkerAddLocalWorkerModalComponent implements OnInit {
         });
       }
     )
+  }
+
+  downloadTemp() {
+    new AngularCsv(this.workerdemodata, 'template', { headers: ['firstname', 'lastname'] })
+
   }
 }
 
