@@ -5,6 +5,7 @@ import { ManageWorkerInviteWorkersModalComponent } from '../manage-worker-invite
 import { TimesheetService } from 'src/app/shared/services/public-api';
 import { ManageWorkerAssignWorkerModalComponent } from '../manage-worker-assign-worker-modal/manage-worker-assign-worker-modal.component';
 import { MatPaginator } from '@angular/material/paginator';
+import { AngularCsv } from 'angular-csv-ext/dist/Angular-csv';
 
 // Interface for Worker
 export interface Worker {
@@ -158,5 +159,22 @@ export class ManageWorkerComponent implements OnInit, AfterViewInit {
     });
     activeModal.componentInstance.worker_id = worker_id
     activeModal.componentInstance.updateAssignWork = this.updateAssignWork.bind(this)
+  }
+  getWorkersWithLocal() {
+    return this.workers.filter(worker => worker.worker_id.startsWith('L-'));
+  }
+  exportLocalWorker() {
+    console.log(this.workers)
+    let reqdata = this.getWorkersWithLocal()
+    let requiredData = reqdata.map((worker) => {
+      let data = {
+        worker_id: worker['worker_id'],
+        first_name: worker['first_name'],
+        last_name: worker['last_name'],
+      }
+      return data
+    })
+
+    new AngularCsv(requiredData, 'Local Workers', { headers: ['Worker Id', 'First Name', 'Last Name'] })
   }
 }

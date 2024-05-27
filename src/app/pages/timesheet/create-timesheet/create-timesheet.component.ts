@@ -176,7 +176,8 @@ export class CreateTimesheetComponent implements OnInit {
         break: new FormControl({ value: '', disabled: true }),
         break_duration: new FormControl({ value: '0', disabled: true }),
         break_duration_type: new FormControl({ value: '', disabled: true }),
-        assign_admin: ['']
+        assign_admin: [''],
+        project: this.projectDetails
       })
       // new timesheet create
       this.route.params.subscribe(params => {
@@ -250,6 +251,7 @@ export class CreateTimesheetComponent implements OnInit {
       break_duration: this.timesheetform.value.break_duration ? this.timesheetform.value.break_duration : '0',
       break_duration_type: this.timesheetform.value.break_duration_type,
       assign_admin: assign_admin,
+      project: this.projectDetails
     }
 
     console.log(timesheetData)

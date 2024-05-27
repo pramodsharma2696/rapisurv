@@ -25,6 +25,7 @@ export class SummaryComponent implements OnInit, AfterViewInit {
   @Input() timesheet;
   timesheetdata;
   workers;
+  filter
 
   dataSource = new MatTableDataSource<Worker>();
   displayedColumns: string[] = ['worker_id', 'first_name', 'last_name', 'status', 'planned_hours', 'total_hours', 'approved_hours', 'rejected_hours'];
@@ -59,6 +60,10 @@ export class SummaryComponent implements OnInit, AfterViewInit {
           return worker
         })
         console.log(this.workers)
+        this.workers = this.workers.map((worker) => {
+          worker.filter = worker.status == 'active' ? 'activeworker' : 'notavailable'
+          return worker
+        })
         this.dataSource.data = this.workers;
 
       })
@@ -91,6 +96,13 @@ export class SummaryComponent implements OnInit, AfterViewInit {
       this.dataSource.data = this.workers;
 
     })
+  }
+
+  filterdata() {
+    console.log(this.workers)
+    console.log(this.filter)
+    this.dataSource.filter = this.filter;
+
   }
 
   exportEsv() {

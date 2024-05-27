@@ -68,7 +68,7 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
       console.log("Enter Time ts dat")
       console.log(this.timesheetdata)
       this.isassign_task = this.timesheetdata.assign_task == '1'
-      if (this.timesheetdata.assign_task == '1') {
+      if (this.timesheetdata.assign_task == '1' && this.calculate_hours) {
         this.buttonName = 'Distribute Hours'
       } else {
         this.buttonName = 'Enter Hours'
