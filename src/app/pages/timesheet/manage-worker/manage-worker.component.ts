@@ -6,6 +6,7 @@ import { TimesheetService } from 'src/app/shared/services/public-api';
 import { ManageWorkerAssignWorkerModalComponent } from '../manage-worker-assign-worker-modal/manage-worker-assign-worker-modal.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { AngularCsv } from 'angular-csv-ext/dist/Angular-csv';
+import { NbToastrService } from '@nebular/theme';
 
 // Interface for Worker
 export interface Worker {
@@ -27,7 +28,7 @@ export class ManageWorkerComponent implements OnInit, AfterViewInit {
   timesheetdata;
   workers;
   isAssignwork: boolean;
-
+  istimesheetopen = true
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   dataSource = new MatTableDataSource<Worker>();
@@ -35,7 +36,8 @@ export class ManageWorkerComponent implements OnInit, AfterViewInit {
 
   constructor(
     private modalService: NgbModal,
-    private timesheetService: TimesheetService
+    private timesheetService: TimesheetService,
+    private toastrService: NbToastrService
 
   ) { }
 
@@ -45,6 +47,7 @@ export class ManageWorkerComponent implements OnInit, AfterViewInit {
     console.log("this.timesheetid worker" + this.timesheetid)
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
+      this.istimesheetopen = this.timesheetdata.status == '1' ? true : false
       let id = res?.data.timesheet_id
       this.isAssignwork = res.data.assign_task == '1'
       if (this.isAssignwork) {
@@ -86,15 +89,20 @@ export class ManageWorkerComponent implements OnInit, AfterViewInit {
   }
 
   inviteWorker() {
-    const activeModal = this.modalService.open(ManageWorkerInviteWorkersModalComponent, {
-      size: 'md',
-      container: 'nb-layout',
-      centered: true,
-    });
-    activeModal.componentInstance.timesheetid = this.timesheetid
-    activeModal.componentInstance.timesheetidmain = this.timesheetid
-    activeModal.componentInstance.fetchWorkerData = this.fetchWorkerData.bind(this)
-
+    if (this.istimesheetopen) {
+      const activeModal = this.modalService.open(ManageWorkerInviteWorkersModalComponent, {
+        size: 'md',
+        container: 'nb-layout',
+        centered: true,
+      });
+      activeModal.componentInstance.timesheetid = this.timesheetid
+      activeModal.componentInstance.timesheetidmain = this.timesheetid
+      activeModal.componentInstance.fetchWorkerData = this.fetchWorkerData.bind(this)
+    } else {
+      this.toastrService.warning('Timesheet is closed.', 'Warning', {
+        duration: 3000,
+      });
+    }
   }
 
   updatePlannedHours(worker_id, planned_hours) {
@@ -140,25 +148,38 @@ export class ManageWorkerComponent implements OnInit, AfterViewInit {
   }
 
   onClickAssignWork() {
-    console.log(this.isAssignwork)
-    this.timesheetService.setAssignedTaskStatus(this.timesheetdata.timesheet_id).subscribe(res => {
-      console.log(res)
-    })
-    if (this.isAssignwork) {
-      this.displayedColumns = [...this.displayedColumns, 'work_assignment', 'assign_work']
+    if (this.istimesheetopen) {
+
+      this.timesheetService.setAssignedTaskStatus(this.timesheetdata.timesheet_id).subscribe(res => {
+        console.log(res)
+      })
+      if (this.isAssignwork) {
+        this.displayedColumns = [...this.displayedColumns, 'work_assignment', 'assign_work']
+      } else {
+        this.displayedColumns = ['worker_id', 'first_name', 'last_name', 'status', 'planned_hours']
+      }
     } else {
-      this.displayedColumns = ['worker_id', 'first_name', 'last_name', 'status', 'planned_hours']
+      this.toastrService.warning('Timesheet is closed.', 'Warning', {
+        duration: 3000,
+      });
     }
   }
 
   assignWork(worker_id) {
-    const activeModal = this.modalService.open(ManageWorkerAssignWorkerModalComponent, {
-      size: 'sm',
-      container: 'nb-layout',
-      centered: true,
-    });
-    activeModal.componentInstance.worker_id = worker_id
-    activeModal.componentInstance.updateAssignWork = this.updateAssignWork.bind(this)
+    if (this.istimesheetopen) {
+
+      const activeModal = this.modalService.open(ManageWorkerAssignWorkerModalComponent, {
+        size: 'sm',
+        container: 'nb-layout',
+        centered: true,
+      });
+      activeModal.componentInstance.worker_id = worker_id
+      activeModal.componentInstance.updateAssignWork = this.updateAssignWork.bind(this)
+    } else {
+      this.toastrService.warning('Timesheet is closed.', 'Warning', {
+        duration: 3000,
+      });
+    }
   }
   getWorkersWithLocal() {
     return this.workers.filter(worker => worker.worker_id.startsWith('L-'));
