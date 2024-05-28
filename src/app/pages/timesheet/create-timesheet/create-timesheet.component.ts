@@ -248,7 +248,7 @@ export class CreateTimesheetComponent implements OnInit {
       scanning: this.timesheetform.value.scanning ? '1' : '0',
       hours: this.timesheetform.value.hours ? '1' : '0',
       break: this.timesheetform.value.break ? '1' : '0',
-      break_duration: this.timesheetform.value.break_duration ? this.timesheetform.value.break_duration : '0',
+      break_duration: this.timesheetform.value.break_duration ? this.timesheetform.value.break == '1' ? this.timesheetform.value.break_duration : '0' : '0',
       break_duration_type: this.timesheetform.value.break_duration_type,
       assign_admin: assign_admin,
       project: this.projectDetails
