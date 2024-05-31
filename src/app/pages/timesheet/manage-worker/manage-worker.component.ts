@@ -174,7 +174,9 @@ export class ManageWorkerComponent implements OnInit, AfterViewInit {
         centered: true,
       });
       activeModal.componentInstance.worker_id = worker_id
+      activeModal.componentInstance.timesheetid = this.timesheetid
       activeModal.componentInstance.updateAssignWork = this.updateAssignWork.bind(this)
+
     } else {
       this.toastrService.warning('Timesheet is closed.', 'Warning', {
         duration: 3000,

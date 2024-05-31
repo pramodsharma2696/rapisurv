@@ -24,6 +24,11 @@ export class CreateTimesheetModalComponent implements OnInit {
     this.timesheetService.getAllProject().subscribe(res => {
       let projectsdata = res.data
       this.projects = projectsdata.filter(prj => !this.exsitingProjectIds.includes(prj.id))
+
+      this.projects = this.projects.map((prj) => {
+        prj.full_name = `${prj.id} - ${prj.Description}`
+        return prj
+      })
     })
   }
 

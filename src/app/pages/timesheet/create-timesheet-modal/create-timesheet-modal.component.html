@@ -12,7 +12,7 @@
     </div>
     <div class="col-md-12">
       <div class="form-group">
-        <ng-select class="ng-select-container project_list" bindLabel="Description" dropdownPosition="auto"
+        <ng-select class="ng-select-container project_list" bindLabel="full_name" dropdownPosition="auto"
           [items]="projects" placeholder="Select Project" (change)="onSelectProject($event)">
         </ng-select>
       </div>
@@ -22,7 +22,8 @@
 
   <!--  -->
 
-  <button class="btn btn-block create_btn" style="margin-top: 13px" nbButton size="small" [disabled]="!selectedProject" (click)="gotoTimesheet()">
+  <button class="btn btn-block create_btn" style="margin-top: 13px" nbButton size="small" [disabled]="!selectedProject"
+    (click)="gotoTimesheet()">
     Create Timesheet
   </button>
 

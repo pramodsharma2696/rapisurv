@@ -19,8 +19,8 @@ const httpOptions = {
 export class TimesheetService {
   private userdata;
   private apiBase = '';
-  private timesheetapiBase = 'http://timesheet2.test/';
-  // private timesheetapiBase = 'https://qa-timesheet.rapisurv.com/';
+  // private timesheetapiBase = 'http://timesheet2.test/';
+  private timesheetapiBase = 'https://qa-timesheet.rapisurv.com/';
 
 
   constructor(
@@ -223,4 +223,9 @@ export class TimesheetService {
     return this.http.post<any>(url, { timesheet_id: timesheet_id, worker_id: worker_id, date: date, total_hours: total_hours });
   }
 
+  public getProjectWork(project_id) {
+    const url = this.apiBase + `api/work-plans?project_id=${project_id}`;
+    console.log(url)
+    return this.http.get<any>(url);
+  }
 }
