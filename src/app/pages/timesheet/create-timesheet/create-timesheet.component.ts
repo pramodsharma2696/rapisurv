@@ -30,6 +30,7 @@ export class CreateTimesheetComponent implements OnInit {
   scanning;
   hours;
   break;
+  plannedhours;
   break_duration;
   break_duration_type;
   assign_admin
@@ -60,6 +61,7 @@ export class CreateTimesheetComponent implements OnInit {
         localwork: [''],
         scanning: [''],
         hours: [''],
+        plannedhours: [''],
         break: [''],
         break_duration: ['0'],
         break_duration_type: [''],
@@ -102,6 +104,7 @@ export class CreateTimesheetComponent implements OnInit {
         this.localwork = this.timesheetdata.localwork == '1' ? true : false
         this.scanning = this.timesheetdata.scanning == '1' ? true : false
         this.hours = this.timesheetdata.hours == '1' ? true : false
+        this.plannedhours = this.timesheetdata.planned_hours == '1' ? true : false
         this.break = this.timesheetdata.break == '1' ? true : false
         this.break_duration = this.timesheetdata.break_duration;
         this.break_duration_type = this.timesheetdata.break_duration_type;
@@ -115,6 +118,7 @@ export class CreateTimesheetComponent implements OnInit {
           localwork: this.localwork,
           scanning: this.scanning,
           hours: this.hours,
+          plannedhours: this.plannedhours,
           break: this.break,
           break_duration: this.break_duration,
           break_duration_type: this.break_duration_type,
@@ -173,6 +177,7 @@ export class CreateTimesheetComponent implements OnInit {
         localwork: [''],
         scanning: new FormControl({ value: '', disabled: true }),
         hours: new FormControl({ value: '', disabled: true }),
+        plannedhours: [''],
         break: new FormControl({ value: '', disabled: true }),
         break_duration: new FormControl({ value: '0', disabled: true }),
         break_duration_type: new FormControl({ value: '', disabled: true }),
@@ -247,8 +252,9 @@ export class CreateTimesheetComponent implements OnInit {
       localwork: this.timesheetform.value.localwork ? '1' : '0',
       scanning: this.timesheetform.value.scanning ? '1' : '0',
       hours: this.timesheetform.value.hours ? '1' : '0',
+      planned_hours: this.timesheetform.value.plannedhours ? '1' : '0',
       break: this.timesheetform.value.break ? '1' : '0',
-      break_duration: this.timesheetform.value.break_duration ? this.timesheetform.value.break_duration : '0',
+      break_duration: this.timesheetform.value.break_duration ? this.timesheetform.value.break == '1' ? this.timesheetform.value.break_duration : '0' : '0',
       break_duration_type: this.timesheetform.value.break_duration_type,
       assign_admin: assign_admin,
       project: this.projectDetails

@@ -56,10 +56,10 @@
         <mat-tab label=" Attendance">
             <app-attendance [timesheet]="timesheetdata" [timesheetid]="timesheetid"></app-attendance>
         </mat-tab>
-        <mat-tab label="Enter Time">
+        <mat-tab label="Enter Time" [disabled]="!managetime">
             <app-enter-my-time [timesheet]="timesheetdata" [timesheetid]="timesheetid"></app-enter-my-time>
         </mat-tab>
-        <mat-tab label="Manage Worker">
+        <mat-tab label="Manage Worker" [disabled]="!manageworker">
             <app-manage-worker [timesheet]="timesheetdata" [timesheetid]="timesheetid"></app-manage-worker>
         </mat-tab>
         <mat-tab label="Approve Timesheet">

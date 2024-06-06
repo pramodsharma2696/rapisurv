@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ViewQrCodeModalComponent } from '../view-qr-code-modal/view-qr-code-modal.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService, TimesheetService } from 'src/app/shared/services/public-api';
+import { AuthService, EStorageTarget, STORAGE_KEY_USER_DATA, TimesheetService, WebStorageService } from 'src/app/shared/services/public-api';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { AttendanceComponent } from '../attendance/attendance.component';
 import { SummaryComponent } from '../summary/summary.component';
@@ -22,6 +22,9 @@ export class ProjectDetailsComponent implements OnInit {
   qrlink;
   assignedAdmin = []
   users = []
+  loggedadmin;
+  managetime = false
+  manageworker = false
   @ViewChild(AttendanceComponent) attendanceComponent: AttendanceComponent;
   @ViewChild(SummaryComponent) summaryComponent: SummaryComponent;
   @ViewChild(ApproveTimesheetComponent) approveTimesheetComponent: ApproveTimesheetComponent;
@@ -33,23 +36,37 @@ export class ProjectDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private timesheetService: TimesheetService,
-    private authService: AuthService
-
+    private authService: AuthService,
+    private storageService: WebStorageService
   ) { }
 
 
   ngOnInit(): void {
+    const userData = this.storageService.getItem(STORAGE_KEY_USER_DATA, {
+      target: EStorageTarget.LocalStorage,
+    });
     this.route.params.subscribe(params => {
       this.timesheetid = params['id'];
     });
-    console.log(this.timesheetid)
 
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
       let projectId = res.data.project_id
       this.qrlink = res.data.timesheet_qr
-      console.log('this.timesheetdata.assign_admin')
-      console.log(this.timesheetdata.assign_admin)
+      let assigned_admins = JSON.parse(this.timesheetdata.assign_admin)
+      if (assigned_admins.length > 0) {
+        let admin = assigned_admins.find(item => item.admin_id === userData.id);
+        admin.role = JSON.parse(admin.role)
+        if (admin && admin.role.manage_time) {
+          this.managetime = admin.role.manage_time == '1';
+        }
+
+        if (admin && admin.role.manage_worker) {
+          this.manageworker = admin.role.manage_worker == '1';
+        }
+      }
+
+
       this.timesheetService.getUsers().subscribe(res => {
         for (let user of res.data) {
           user.fullname = `${user.finm} ${user.lamn}`;
@@ -126,6 +143,7 @@ export class ProjectDetailsComponent implements OnInit {
     }
   }
 
+
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     // Fetch data when the tab is changed
     if (tabChangeEvent.index === 0) {
@@ -146,6 +164,7 @@ export class ProjectDetailsComponent implements OnInit {
     }
   }
 
+ 
   navigatetotimesheet() {
     this.router.navigate([`/app/timesheet`]);
   }

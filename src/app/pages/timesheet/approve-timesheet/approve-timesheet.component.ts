@@ -107,89 +107,115 @@ export class ApproveTimesheetComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   approveWorkerAttendance(worker) {
-    console.log(worker)
-    let attendance_id = worker?.attendance.id
-    this.timesheetService.approveWorkerAttendance(attendance_id).subscribe(res => {
-      console.log(res?.data)
-      if (res.type == 'success') {
-        worker['approve'] = '1'
-      }
-    })
+    if (this.timesheetdata.status == '1') {
+
+      let attendance_id = worker?.attendance.id
+      this.timesheetService.approveWorkerAttendance(attendance_id).subscribe(res => {
+        console.log(res?.data)
+        if (res.type == 'success') {
+          worker['approve'] = '1'
+        }
+      })
+    } else {
+      this.toastrService.warning('Timesheet is closed.', 'Warning', {
+        duration: 3000,
+      });
+    }
   }
 
   rejectWorkerAttendance(worker) {
     console.log(worker)
-    let attendance_id = worker?.attendance.id
-    this.timesheetService.rejectWorkerAttendance(attendance_id).subscribe(res => {
-      console.log(res?.data)
-      if (res.type == 'success') {
-        worker['approve'] = '0'
-      }
-    })
+    if (this.timesheetdata.status == '1') {
+      let attendance_id = worker?.attendance.id
+      this.timesheetService.rejectWorkerAttendance(attendance_id).subscribe(res => {
+        console.log(res?.data)
+        if (res.type == 'success') {
+          worker['approve'] = '0'
+        }
+      })
+    } else {
+      this.toastrService.warning('Timesheet is closed.', 'Warning', {
+        duration: 3000,
+      });
+    }
   }
 
   approveAllWorkerAttendance() {
     console.log("Approve all")
-    let timesheet_id = this.timesheetdata.timesheet_id
-    let date = this.selectedDate
-    this.timesheetService.approveAllWorkerAttendance(timesheet_id, date).subscribe(res => {
-      console.log(res?.data)
-      if (res.type == 'success') {
-        this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
-          console.log(res.data)
-          this.workersdata = res.data;
-          this.dataSource.data = this.workersdata.map((worker) => {
-            if (worker?.attendance != null) {
-              worker['total_hours'] = worker.attendance.total_hours;
-              worker['approve'] = worker.attendance.approve
-            } else {
-              worker['total_hours'] = 0
-            }
-            return worker
+    if (this.timesheetdata.status == '1') {
+
+      let timesheet_id = this.timesheetdata.timesheet_id
+      let date = this.selectedDate
+      this.timesheetService.approveAllWorkerAttendance(timesheet_id, date).subscribe(res => {
+        console.log(res?.data)
+        if (res.type == 'success') {
+          this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
+            console.log(res.data)
+            this.workersdata = res.data;
+            this.dataSource.data = this.workersdata.map((worker) => {
+              if (worker?.attendance != null) {
+                worker['total_hours'] = worker.attendance.total_hours;
+                worker['approve'] = worker.attendance.approve
+              } else {
+                worker['total_hours'] = 0
+              }
+              return worker
+            })
           })
-        })
-        this.toastrService.success('All worker attendace approved!.', 'Success', {
-          duration: 3000,
-        });
-      }
-    },
-      err => {
-        this.toastrService.warning('Something went worng. Please try again!', 'Warning', {
-          duration: 3000,
-        });
-      }
-    )
+          this.toastrService.success('All worker attendace approved!.', 'Success', {
+            duration: 3000,
+          });
+        }
+      },
+        err => {
+          this.toastrService.warning('Something went worng. Please try again!', 'Warning', {
+            duration: 3000,
+          });
+        }
+      )
+    } else {
+      this.toastrService.warning('Timesheet is closed.', 'Warning', {
+        duration: 3000,
+      });
+    }
   }
 
   rejectAllWorkerAttendance() {
     console.log("reject all")
-    let timesheet_id = this.timesheetdata.timesheet_id
-    let date = this.selectedDate
-    this.timesheetService.rejectAllWorkerAttendance(timesheet_id, date).subscribe(res => {
-      console.log(res?.data)
-      if (res.type == 'success') {
-        this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
-          console.log(res.data)
-          this.workersdata = res.data;
-          this.dataSource.data = this.workersdata.map((worker) => {
-            if (worker?.attendance != null) {
-              worker['total_hours'] = worker.attendance.total_hours;
-              worker['approve'] = worker.attendance.approve
-            } else {
-              worker['total_hours'] = 0
-            }
-            return worker
+    if (this.timesheetdata.status == '1') {
+
+      let timesheet_id = this.timesheetdata.timesheet_id
+      let date = this.selectedDate
+      this.timesheetService.rejectAllWorkerAttendance(timesheet_id, date).subscribe(res => {
+        console.log(res?.data)
+        if (res.type == 'success') {
+          this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
+            console.log(res.data)
+            this.workersdata = res.data;
+            this.dataSource.data = this.workersdata.map((worker) => {
+              if (worker?.attendance != null) {
+                worker['total_hours'] = worker.attendance.total_hours;
+                worker['approve'] = worker.attendance.approve
+              } else {
+                worker['total_hours'] = 0
+              }
+              return worker
+            })
           })
+          this.toastrService.success('All worker attendace rejected!', 'Success', {
+            duration: 3000,
+          });
+        }
+      },
+        err => {
+          this.toastrService.warning('All worker attendace approved!.', 'Something went worng. Please try again!', {
+            duration: 3000,
+          });
         })
-        this.toastrService.success('All worker attendace rejected!', 'Success', {
-          duration: 3000,
-        });
-      }
-    },
-      err => {
-        this.toastrService.warning('All worker attendace approved!.', 'Something went worng. Please try again!', {
-          duration: 3000,
-        });
-      })
+    } else {
+      this.toastrService.warning('Timesheet is closed.', 'Warning', {
+        duration: 3000,
+      });
+    }
   }
 }

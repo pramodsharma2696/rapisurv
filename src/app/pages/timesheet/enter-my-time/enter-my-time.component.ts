@@ -148,38 +148,52 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
   }
 
   clickAttendance(worker, date) {
-    console.log(worker)
-    if (worker.status == "active") {
-      const activeModal = this.modalService.open(EnterAttendanceModalComponent, {
-        size: 'md',
-        container: 'nb-layout',
-        centered: true,
-      });
-      activeModal.componentInstance.worker = worker
-      activeModal.componentInstance.date = date
-      activeModal.componentInstance.fetchData = this.fetchData.bind(this)
+    console.log(this.timesheetdata)
+    if (this.timesheetdata.status == '1') {
+      if (worker.status == "active") {
+        const activeModal = this.modalService.open(EnterAttendanceModalComponent, {
+          size: 'md',
+          container: 'nb-layout',
+          centered: true,
+        });
+        activeModal.componentInstance.worker = worker
+        activeModal.componentInstance.date = date
+        activeModal.componentInstance.fetchData = this.fetchData.bind(this)
+      } else {
+        this.toastrService.warning('Worker is inactive.', 'Warning', {
+          duration: 3000,
+        });
+      }
     } else {
-      this.toastrService.warning('Worker is inactive.', 'Warning', {
+      this.toastrService.warning('Timesheet is closed.', 'Warning', {
         duration: 3000,
       });
     }
+
   }
 
   clickAssignedTask(worker, date) {
     console.log(worker)
-    if (worker.status == "active") {
+    if (this.timesheetdata.status == '1') {
 
-      const activeModal = this.modalService.open(EnterTimeAssignedTaskModalComponent, {
-        size: 'md',
-        container: 'nb-layout',
-        centered: true,
-      });
-      activeModal.componentInstance.worker = worker
-      activeModal.componentInstance.date = date
-      activeModal.componentInstance.timesheetid = this.timesheetid
-      activeModal.componentInstance.fetchData = this.fetchData.bind(this)
+      if (worker.status == "active") {
+
+        const activeModal = this.modalService.open(EnterTimeAssignedTaskModalComponent, {
+          size: 'md',
+          container: 'nb-layout',
+          centered: true,
+        });
+        activeModal.componentInstance.worker = worker
+        activeModal.componentInstance.date = date
+        activeModal.componentInstance.timesheetid = this.timesheetid
+        activeModal.componentInstance.fetchData = this.fetchData.bind(this)
+      } else {
+        this.toastrService.warning('Worker is inactive.', 'Warning', {
+          duration: 3000,
+        });
+      }
     } else {
-      this.toastrService.warning('Worker is inactive.', 'Warning', {
+      this.toastrService.warning('Timesheet is closed.', 'Warning', {
         duration: 3000,
       });
     }

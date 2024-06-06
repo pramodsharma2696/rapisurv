@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TimesheetService } from 'src/app/shared/services/public-api';
+import { addDays, startOfISOWeek, format, addWeeks } from 'date-fns';
 
 @Component({
   selector: 'app-week-days-select',
@@ -75,17 +76,19 @@ export class WeekDaysSelectComponent implements OnInit {
     const today = new Date();
     const dayIndex = today.getDay(); // 0 for Sunday, 1 for Monday, etc.
     const currentDate = today.getDate();
-    const currentMonth = today.getMonth() + 1;
+    const currentMonth = today.getMonth();
     const currentYear = today.getFullYear();
     const currentWeek = [];
 
     // Calculate the starting date of the current week (Monday)
-    const startOfWeek = new Date(currentYear, currentMonth - 1, currentDate - dayIndex + (dayIndex === 0 ? -6 : 1));
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(currentDate - (dayIndex === 0 ? 6 : dayIndex - 1));
 
     // Iterate through the days of the week and construct the array
     for (let i = 0; i < 7; i++) {
-      const date = new Date(startOfWeek.getFullYear(), startOfWeek.getMonth(), startOfWeek.getDate() + i);
-      const dayOfWeek = daysOfWeek[date.getDay()];
+      const date = new Date(startOfWeek);
+      date.setDate(startOfWeek.getDate() + i);
+      const dayOfWeek = daysOfWeek[i];
       const formattedDate = `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}`;
       currentWeek.push({ day: dayOfWeek, date: formattedDate });
     }
@@ -102,26 +105,27 @@ export class WeekDaysSelectComponent implements OnInit {
     return day + '-' + month + '-' + year;
   }
   getDatesOfWeek(weekNumber: number, year: number) {
-    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const januaryFirst = new Date(year, 0, 1);
-    const firstMondayOffset = (1 - januaryFirst.getDay() + 7) % 7; // Offset to the first Monday
-    const firstMonday = new Date(januaryFirst.getFullYear(), 0, 1 + firstMondayOffset);
-
-    // Calculate the start date of the week (Monday)
-    const startDate = new Date(firstMonday.getTime() + (weekNumber - 1) * 7 * 24 * 60 * 60 * 1000);
-    console.log(startDate);
-
+    console.log(year)
+    const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     const datesOfWeek = [];
 
+    // Get the start of the first ISO week of the given year
+    const firstISOWeekStart = startOfISOWeek(new Date(this.selectedYear, 0, 4));
+
+    // Calculate the start date of the given week number
+    const startDate = addWeeks(firstISOWeekStart, weekNumber - 1);
+
     for (let i = 0; i < 7; i++) {
-      const currentDate = new Date(startDate.getTime() + i * 24 * 60 * 60 * 1000);
-      const formattedDate = `${String(currentDate.getDate()).padStart(2, '0')}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${currentDate.getFullYear()}`;
-      const dayOfWeek = daysOfWeek[currentDate.getDay()];
+      const currentDate = addDays(startDate, i);
+      const formattedDate = format(currentDate, 'dd-MM-yyyy');
+      const dayOfWeek = daysOfWeek[i];
       datesOfWeek.push({ day: dayOfWeek, date: formattedDate });
     }
 
     return datesOfWeek;
   }
+
+
 
   onSelectWeek() {
     console.log(this.selectedWeekInput)

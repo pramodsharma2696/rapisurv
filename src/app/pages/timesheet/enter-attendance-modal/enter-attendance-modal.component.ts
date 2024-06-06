@@ -19,7 +19,7 @@ export class EnterAttendanceModalComponent implements OnInit {
   out_time_2;
   in_time_3;
   out_time_3;
-
+  is_approved = false
   attendance_id;
 
   constructor(
@@ -34,6 +34,8 @@ export class EnterAttendanceModalComponent implements OnInit {
     console.log(this.worker);
     if (this.worker.attendance != null) {
       this.attendance_id = this.worker.attendance.id
+      this.is_approved = this.worker.attendance.approve == '1';
+      console.log(this.is_approved)
       let attendance = JSON.parse(this.worker.attendance.attendance)
       attendance.forEach((item, index) => {
         this[`in_time_${index + 1}`] = this.convertToHHMM(item.in_time);
@@ -72,33 +74,44 @@ export class EnterAttendanceModalComponent implements OnInit {
   }
 
   submitAttendance() {
-    let attendanceData = {
-      worker_id: this.worker.id,
-      timesheet_id: this.worker.timesheet_id,
-      date: this.date,
-      in_time1: this.in_time_1 ? this.convertTo12HourFormat(this.in_time_1) : null,
-      out_time1: this.out_time_1 ? this.convertTo12HourFormat(this.out_time_1) : null,
-      in_time2: this.in_time_2 ? this.convertTo12HourFormat(this.in_time_2) : null,
-      out_time2: this.out_time_2 ? this.convertTo12HourFormat(this.out_time_2) : null,
-      in_time3: this.in_time_3 ? this.convertTo12HourFormat(this.in_time_3) : null,
-      out_time3: this.out_time_3 ? this.convertTo12HourFormat(this.out_time_3) : null
-    }
+    if (this.is_approved) {
+      this.toastrService.warning("Attendance is approved. You can't change the time.", 'Warning', {
+        duration: 3000,
+      });
+    } else {
+      let attendanceData = {
+        worker_id: this.worker.id,
+        timesheet_id: this.worker.timesheet_id,
+        date: this.date,
+        in_time1: this.in_time_1 ? this.convertTo12HourFormat(this.in_time_1) : null,
+        out_time1: this.out_time_1 ? this.convertTo12HourFormat(this.out_time_1) : null,
+        in_time2: this.in_time_2 ? this.convertTo12HourFormat(this.in_time_2) : null,
+        out_time2: this.out_time_2 ? this.convertTo12HourFormat(this.out_time_2) : null,
+        in_time3: this.in_time_3 ? this.convertTo12HourFormat(this.in_time_3) : null,
+        out_time3: this.out_time_3 ? this.convertTo12HourFormat(this.out_time_3) : null
+      }
 
-    console.log(attendanceData)
-    console.log(this.worker)
-    if (this.attendance_id != null) {
-      attendanceData['attendance_id'] = this.attendance_id
-    }
-    this.timesheetService.createWorkerAttendance(attendanceData).subscribe(res => {
-      console.log(res.data)
-      if (res.type == 'success') {
-        this.fetchData()
-        this.toastrService.success('Worker attendance updated!', 'Success', {
+      console.log(attendanceData)
+      console.log(this.worker)
+      if (this.attendance_id != null) {
+        attendanceData['attendance_id'] = this.attendance_id
+      }
+      this.timesheetService.createWorkerAttendance(attendanceData).subscribe(res => {
+        console.log(res.data)
+        if (res.type == 'success') {
+          this.fetchData()
+          this.toastrService.success('Worker attendance updated!', 'Success', {
+            duration: 3000,
+          });
+        }
+        this.activeModal.close({});
+
+      }, error => {
+        console.error('An error occurred:', error);
+        this.toastrService.warning(error.error.message, 'Error', {
           duration: 3000,
         });
-      }
-      this.activeModal.close({});
-
-    })
+      })
+    }
   }
 }

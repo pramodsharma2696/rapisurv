@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NbToastrService } from '@nebular/theme';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { TimesheetService } from 'src/app/shared/services/public-api';
 
 @Component({
   selector: 'app-manage-worker-assign-worker-modal',
@@ -11,17 +12,47 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class ManageWorkerAssignWorkerModalComponent implements OnInit {
 
   @Input() worker_id;
+  @Input() timesheetid;
   @Input() updateAssignWork;
   assign_work;
-  works = ['Clearing', 'Demolition', 'Excavation', 'Roofing']
+  timesheetdata
+  works = []
+  worknotavailable = false
   constructor(
     private activeModal: NgbActiveModal,
     private router: Router,
+    private timesheetService: TimesheetService,
     private toastrService: NbToastrService
   ) { }
 
   ngOnInit(): void {
     console.log(this.worker_id)
+    this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
+      this.timesheetdata = res.data
+      let project_id = this.timesheetdata.project_id;
+      this.timesheetService.getProjectWork(project_id).subscribe(res => {
+        console.log(res)
+        let workdata = res.data[0];
+        if (workdata != null) {
+          this.works = this.extractwork(workdata.data)
+        } else {
+          this.worknotavailable = true
+        }
+      })
+    })
+  }
+
+  extractwork(data) {
+    let valuesArray = [];
+    data.forEach(element => {
+      element.Values.forEach(value => {
+        for (let key in value) {
+          valuesArray.push(value[key]);
+        }
+      });
+    });
+
+    return valuesArray;
   }
 
   closeModal(status) {
