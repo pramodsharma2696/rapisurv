@@ -101,6 +101,9 @@ export class ManageWorkerAddLocalWorkerModalComponent implements OnInit {
         console.log(res)
         if (res.type == 'success') {
           this.activeModal.close({});
+          this.toastrService.success('Local worker successfully added.', 'Success', {
+            duration: 3000,
+          })
           this.fetchWorkerData()
         }
       },
@@ -138,6 +141,9 @@ export class ManageWorkerAddLocalWorkerModalComponent implements OnInit {
       console.log(res)
       if (res.type == 'success') {
         this.activeModal.close({});
+        this.toastrService.success('Local workers successfully added.', 'Success', {
+          duration: 3000,
+        })
         this.fetchWorkerData()
       }
     },

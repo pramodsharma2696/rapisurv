@@ -22,6 +22,7 @@ export class EnterTimeAssignedTaskModalComponent implements OnInit {
   total_hours_input;
   timesheetdata
   isAssigedTaskCalHrs = false
+  is_approved = false;
   constructor(
     private fb: FormBuilder,
     private timesheetService: TimesheetService,
@@ -33,16 +34,16 @@ export class EnterTimeAssignedTaskModalComponent implements OnInit {
 
   ngOnInit(): void {
     // console.log('this.worker enetr tijkj')
+    console.log('this.worker')
     console.log(this.worker)
     // console.log(this.date)
     // console.log(this.worker.work_assignment)
     // // console.log(typeof this.worker.attendance.assigned_task_hours)
+    this.is_approved = this.worker.attendance.approve == '1';
 
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
-      console.log(this.timesheetdata)
       this.isAssigedTaskCalHrs = this.timesheetdata.assign_task == '1' && this.timesheetdata.hours == '1'
-      console.log(this.isAssigedTaskCalHrs)
     })
     if (this.worker.attendance != null && this.worker.attendance.assigned_task_hours != null) {
       this.work_assigned_data = JSON.parse(this.worker.attendance.assigned_task_hours)
@@ -69,38 +70,44 @@ export class EnterTimeAssignedTaskModalComponent implements OnInit {
   onSubmit() {
     console.log(this.taskForm.value);
     // You can handle form submission logic here
-    let assignedtaskhourData = {
-      worker_id: this.worker.id,
-      timesheet_id: this.worker.timesheet_id,
-      date: this.date,
-      assign_task_hours: this.taskForm.value
-    }
-    console.log(assignedtaskhourData.assign_task_hours)
-    let total = 0;
-    for (let key in assignedtaskhourData.assign_task_hours) {
-      // Add the value of each property to the sum
-      if (assignedtaskhourData.assign_task_hours[key]) {
-        total += assignedtaskhourData.assign_task_hours[key];
-      }
-    }
-    console.log(total)
-    console.log(this.worker.total_hours)
-    if (this.isAssigedTaskCalHrs && total > this.worker.total_hours) {
-      this.toastrService.warning('Quantity distributed cannot be greater than the calculated hours!', 'Warning', {
+    if (this.is_approved) {
+      this.toastrService.warning("Attendance is approved. You can't change the hours.", 'Warning', {
         duration: 3000,
       });
     } else {
-      this.timesheetService.createWorkerAssignTaskHour(assignedtaskhourData).subscribe(res => {
-        console.log(res.data)
-        if (res.type == 'success') {
-          this.fetchData()
-          this.toastrService.success('Worker hours updated!', 'Success', {
-            duration: 3000,
-          });
+      let assignedtaskhourData = {
+        worker_id: this.worker.id,
+        timesheet_id: this.worker.timesheet_id,
+        date: this.date,
+        assign_task_hours: this.taskForm.value
+      }
+      console.log(assignedtaskhourData.assign_task_hours)
+      let total = 0;
+      for (let key in assignedtaskhourData.assign_task_hours) {
+        // Add the value of each property to the sum
+        if (assignedtaskhourData.assign_task_hours[key]) {
+          total += assignedtaskhourData.assign_task_hours[key];
         }
-        this.activeModal.close({});
+      }
+      console.log(total)
+      console.log(this.worker.total_hours)
+      if (this.isAssigedTaskCalHrs && total > this.worker.total_hours) {
+        this.toastrService.warning('Quantity distributed cannot be greater than the calculated hours!', 'Warning', {
+          duration: 3000,
+        });
+      } else {
+        this.timesheetService.createWorkerAssignTaskHour(assignedtaskhourData).subscribe(res => {
+          console.log(res.data)
+          if (res.type == 'success') {
+            this.fetchData()
+            this.toastrService.success('Worker hours updated!', 'Success', {
+              duration: 3000,
+            });
+          }
+          this.activeModal.close({});
 
-      })
+        })
+      }
     }
   }
 
@@ -111,45 +118,49 @@ export class EnterTimeAssignedTaskModalComponent implements OnInit {
   }
 
   submitTotalHours() {
-    if (this.total_hours_input != undefined) {
-      // else {
-      if (this.isAssigedTaskCalHrs) {
-        this.toastrService.warning('Calculated hours will be posted without assigned task.', 'Warning', {
-          duration: 3000,
-        });
-      }
-      this.timesheetService.addAttendanceTotalHours(this.worker.timesheet_id, this.worker.id, this.date, this.total_hours_input).subscribe(res => {
-        console.log(res.data)
-        if (res.type == 'success') {
-          this.fetchData()
-          if (this.isAssigedTaskCalHrs) {
-            this.toastrService.warning('Calculated hours will be posted without assigned task.', 'Warning', {
-              duration: 3000,
-            });
-          } else {
-            this.toastrService.success('Worker hours updated!', 'Success', {
-              duration: 3000,
-            });
-          }
-        }
-        this.activeModal.close({});
-
-      }, error => {
-        console.error('An error occurred:', error);
-        this.toastrService.warning('Unable to add work hours', 'Error', {
-          duration: 3000,
-        });
-        this.activeModal.close({});
-
-      })
-      // }
-    } else {
-      this.toastrService.warning('Enter total hours.', 'Warning', {
+    if (this.is_approved) {
+      this.toastrService.warning("Attendance is approved. You can't change the hours.", 'Warning', {
         duration: 3000,
-      })
-    }
+      });
+    } else {
+      if (this.total_hours_input != undefined) {
+        // else {
+        if (this.isAssigedTaskCalHrs) {
+          this.toastrService.warning('Calculated hours will be posted without assigned task.', 'Warning', {
+            duration: 3000,
+          });
+        }
+        this.timesheetService.addAttendanceTotalHours(this.worker.timesheet_id, this.worker.id, this.date, this.total_hours_input).subscribe(res => {
+          console.log(res.data)
+          if (res.type == 'success') {
+            this.fetchData()
+            if (this.isAssigedTaskCalHrs) {
+              this.toastrService.warning('Calculated hours will be posted without assigned task.', 'Warning', {
+                duration: 3000,
+              });
+            } else {
+              this.toastrService.success('Worker hours updated!', 'Success', {
+                duration: 3000,
+              });
+            }
+          }
+          this.activeModal.close({});
 
-    console.log(this.total_hours_input)
+        }, error => {
+          console.error('An error occurred:', error);
+          this.toastrService.warning('Unable to add work hours', 'Error', {
+            duration: 3000,
+          });
+          this.activeModal.close({});
+
+        })
+        // }
+      } else {
+        this.toastrService.warning('Enter total hours.', 'Warning', {
+          duration: 3000,
+        })
+      }
+    }
   }
 
 }
