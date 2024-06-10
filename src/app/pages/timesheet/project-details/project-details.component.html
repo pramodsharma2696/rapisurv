@@ -62,7 +62,7 @@
         <mat-tab label="Manage Worker" [disabled]="!manageworker">
             <app-manage-worker [timesheet]="timesheetdata" [timesheetid]="timesheetid"></app-manage-worker>
         </mat-tab>
-        <mat-tab label="Approve Timesheet">
+        <mat-tab label="Approve Timesheet" [disabled]="!manage_approval">
             <app-approve-timesheet [timesheet]="timesheetdata" [timesheetid]="timesheetid"></app-approve-timesheet>
         </mat-tab>
     </mat-tab-group>
