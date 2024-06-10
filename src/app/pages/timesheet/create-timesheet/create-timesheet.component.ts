@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NbToastrService } from '@nebular/theme';
 import { ProjectService, TimesheetService } from 'src/app/shared/services/public-api';
 
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-timesheet',
@@ -298,6 +299,13 @@ export class CreateTimesheetComponent implements OnInit {
 
     // console.log(this.selectedAdmin)
     // console.log(timesheetData)
+  }
+
+  onCancel() {
+    if (this.isEdit)
+      this.router.navigate([`/app/timesheet/${this.timesheetid}`])
+    else
+      this.router.navigate([`/app/timesheet`]);
   }
 
   toggleManageTime(user: any) {
