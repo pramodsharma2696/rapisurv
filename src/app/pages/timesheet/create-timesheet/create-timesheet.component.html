@@ -215,6 +215,14 @@
                 <label class="form-label ml-2 admin_name">Manage workers</label>
                 <img src="../../../assets/images/admin_remove.png" class="ml-4" (click)="removeAdmin(i)" />
               </div>
+              <div class="assign_role ml-2">
+                <label class="mr-2">
+                  <mat-checkbox [checked]="user?.manage_approval" (change)="toggleManageApproval(user)"
+                    color="primary"></mat-checkbox>
+                </label>
+                <label class="form-label ml-2 admin_name">Manage Approval</label>
+                <img src="../../../assets/images/admin_remove.png" class="ml-4" (click)="removeAdmin(i)" />
+              </div>
             </div>
           </div>
         </div>

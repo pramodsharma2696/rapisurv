@@ -92,7 +92,8 @@ export class CreateTimesheetComponent implements OnInit {
           let admin = {
             admin_id: adm.admin_id,
             manage_time: adm.role.manage_time == '1' ? true : false,
-            manage_worker: adm.role.manage_worker == '1' ? true : false
+            manage_worker: adm.role.manage_worker == '1' ? true : false,
+            manage_approval: adm.role.manage_approval == '1' ? true : false
           }
           assignadminarray.push(admin)
         }
@@ -156,11 +157,12 @@ export class CreateTimesheetComponent implements OnInit {
             user.fullname = `${user.finm} ${user.lamn}`;
             user.manage_time = false;
             user.manage_worker = false
-
+            user.manage_approval = false;
             let isAdmin = this.assign_admin.find(admin => admin.admin_id === user.id)
             if (isAdmin) {
               user.manage_time = isAdmin.manage_time;
               user.manage_worker = isAdmin.manage_worker
+              user.manage_approval = isAdmin?.manage_approval
               this.selectedAdmin = [...this.selectedAdmin, user]
 
             }
@@ -204,6 +206,8 @@ export class CreateTimesheetComponent implements OnInit {
           user.fullname = `${user.finm} ${user.lamn}`;
           user.manage_time = false;
           user.manage_worker = false
+          user.manage_approval = false
+
         }
         this.users = res.data
       })
@@ -240,6 +244,7 @@ export class CreateTimesheetComponent implements OnInit {
       return {
         manage_time: admin.manage_time ? "1" : "0",
         manage_worker: admin.manage_worker ? "1" : "0",
+        manage_approval: admin.manage_approval ? "1" : "0",
         admin_id: admin.id
       }
     })
@@ -314,6 +319,11 @@ export class CreateTimesheetComponent implements OnInit {
 
   toggleManageWorkers(user: any) {
     user.manage_worker = !user.manage_worker;
+  }
+
+
+  toggleManageApproval(user: any) {
+    user.manage_approval = !user.manage_approval;
   }
 
   toggleLocalWork(data) {
