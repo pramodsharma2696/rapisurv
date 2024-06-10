@@ -80,6 +80,18 @@
         <label class="form-label open_side"> Yes</label>
       </div>
     </div>
+
+    <div class="table-layout-div">
+      <p>Check Planned Hours</p>
+      <div class="open_close_btn">
+        <label class="form-label close_side"> No</label>
+        <label class="mr-2 ml-2">
+          <mat-slide-toggle formControlName="plannedhours"></mat-slide-toggle>
+        </label>
+        <label class="form-label open_side"> Yes</label>
+      </div>
+    </div>
+
     <div class="table-layout-div">
       <p>Enable Scanning</p>
       <div class="open_close_btn">
@@ -101,16 +113,6 @@
       </div>
     </div>
 
-    <div class="table-layout-div">
-      <p>Planned Hours</p>
-      <div class="open_close_btn">
-        <label class="form-label close_side"> No</label>
-        <label class="mr-2 ml-2">
-          <mat-slide-toggle formControlName="plannedhours" ></mat-slide-toggle>
-        </label>
-        <label class="form-label open_side"> Yes</label>
-      </div>
-    </div>
 
     <div class="table-layout-div">
       <p>Enable Break</p>
@@ -190,7 +192,7 @@
         <div class="col-md-4 mb-3">
           <div class="form-group">
             <div class="admin_img mb-3">
-              <img src="../../../assets/images/admin_pic.png" />
+              <img src="../../../assets/icons/profile-icon-gray.svg" />
               <label class="form-label ml-2 admin_name">{{user.finm}} {{user.lamn}}</label>
             </div>
           </div>
