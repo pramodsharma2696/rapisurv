@@ -56,7 +56,14 @@ export class EnterMyTimeCalendarComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-
+    this.calendarOptions = {
+      initialView: 'dayGridMonth',
+      events: [],
+      plugins: [dayGridPlugin],
+      eventColor: 'transparent',
+      eventTextColor: 'black',
+      firstDay: 1
+    };
   }
 
   getCurrentYearAndMonth() {

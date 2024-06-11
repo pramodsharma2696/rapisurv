@@ -48,6 +48,7 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['worker_id', 'first_name', 'last_name', 'attendance', 'assigned_task', 'total_hours'];;
   selectedDate;
+  selectedRowIndex: number = -1; // Add this line
 
   calculate_hours: boolean = false
   constructor(
@@ -199,8 +200,13 @@ export class EnterMyTimeComponent implements OnInit, AfterViewInit {
     }
   }
 
+  isRowSelected(row): boolean {
+    return row.worker_id === this.selectedRowIndex;
+  }
+
   showCalendarData(row) {
     console.log(row)
+    this.selectedRowIndex = row.worker_id; // Add this line
     this.calendarcomp.showWorkerData(row)
   }
 }

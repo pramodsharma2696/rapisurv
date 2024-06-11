@@ -88,18 +88,18 @@ export class AttendanceComponent implements OnInit {
       currentWeek.push({ day: dayOfWeek, date: formattedDate });
     }
 
-    console.log(currentWeek);
+    // console.log(currentWeek);
     return currentWeek;
   }
 
   onSelectWeek() {
-    console.log(this.selectedWeekInput)
+    // console.log(this.selectedWeekInput)
     let data = this.getDatesOfWeek(this.selectedWeekInput, this.selectedYear);
     this.selectedWeek = data
     this.attendanceWeeklyTableComponent.setStartAndEndData(this.selectedWeek[0]['date'], this.selectedWeek[6]['date'])
     this.attendanceWeeklyTableComponent.fetchData()
 
-    console.log(data)
+    // console.log(data)
   }
 
   getDatesOfWeek(weekNumber: number, year: number) {

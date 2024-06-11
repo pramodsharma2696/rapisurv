@@ -100,7 +100,7 @@ export class EnterAttendanceModalComponent implements OnInit {
         console.log(res.data)
         if (res.type == 'success') {
           this.fetchData()
-          this.toastrService.success('Worker attendance updated!', 'Success', {
+          this.toastrService.success('Calculated hours posted without assigned task!', 'Success', {
             duration: 3000,
           });
         }

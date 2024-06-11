@@ -63,7 +63,7 @@ export class ApproveTimesheetComponent implements OnInit {
 
   fetchData() {
     this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
-      console.log(res.data)
+      // console.log(res.data)
       this.workersdata = res.data;
       this.dataSource.data = this.workersdata.map((worker) => {
         if (worker?.attendance != null) {
@@ -88,7 +88,7 @@ export class ApproveTimesheetComponent implements OnInit {
   handleUpdateDate(date: Date) {
     this.selectedDate = date;
     this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
-      console.log(res.data)
+      // console.log(res.data)
       this.workersdata = res.data;
       this.dataSource.data = this.workersdata.map((worker) => {
         if (worker?.attendance != null) {
@@ -111,7 +111,7 @@ export class ApproveTimesheetComponent implements OnInit {
 
       let attendance_id = worker?.attendance.id
       this.timesheetService.approveWorkerAttendance(attendance_id).subscribe(res => {
-        console.log(res?.data)
+        // console.log(res?.data)
         if (res.type == 'success') {
           worker['approve'] = '1'
         }
@@ -124,11 +124,11 @@ export class ApproveTimesheetComponent implements OnInit {
   }
 
   rejectWorkerAttendance(worker) {
-    console.log(worker)
+    // console.log(worker)
     if (this.timesheetdata.status == '1') {
       let attendance_id = worker?.attendance.id
       this.timesheetService.rejectWorkerAttendance(attendance_id).subscribe(res => {
-        console.log(res?.data)
+        // console.log(res?.data)
         if (res.type == 'success') {
           worker['approve'] = '0'
         }
@@ -141,16 +141,16 @@ export class ApproveTimesheetComponent implements OnInit {
   }
 
   approveAllWorkerAttendance() {
-    console.log("Approve all")
+    // console.log("Approve all")
     if (this.timesheetdata.status == '1') {
 
       let timesheet_id = this.timesheetdata.timesheet_id
       let date = this.selectedDate
       this.timesheetService.approveAllWorkerAttendance(timesheet_id, date).subscribe(res => {
-        console.log(res?.data)
+        // console.log(res?.data)
         if (res.type == 'success') {
           this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
-            console.log(res.data)
+            // console.log(res.data)
             this.workersdata = res.data;
             this.dataSource.data = this.workersdata.map((worker) => {
               if (worker?.attendance != null) {
@@ -181,16 +181,16 @@ export class ApproveTimesheetComponent implements OnInit {
   }
 
   rejectAllWorkerAttendance() {
-    console.log("reject all")
+    // console.log("reject all")
     if (this.timesheetdata.status == '1') {
 
       let timesheet_id = this.timesheetdata.timesheet_id
       let date = this.selectedDate
       this.timesheetService.rejectAllWorkerAttendance(timesheet_id, date).subscribe(res => {
-        console.log(res?.data)
+        // console.log(res?.data)
         if (res.type == 'success') {
           this.timesheetService.getLocalWorkerAttendanceByDate(this.timesheetdata.timesheet_id, this.selectedDate).subscribe(res => {
-            console.log(res.data)
+            // console.log(res.data)
             this.workersdata = res.data;
             this.dataSource.data = this.workersdata.map((worker) => {
               if (worker?.attendance != null) {
