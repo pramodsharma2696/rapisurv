@@ -57,7 +57,9 @@ export class ProjectDetailsComponent implements OnInit {
       let assigned_admins = JSON.parse(this.timesheetdata.assign_admin)
       if (assigned_admins.length > 0) {
         let admin = assigned_admins.find(item => item.admin_id === userData.id);
-        admin.role = JSON.parse(admin.role)
+      
+        if (admin != undefined)
+          admin.role = JSON.parse(admin.role)
         if (admin && admin.role.manage_time) {
           this.managetime = admin.role.manage_time == '1';
         }
@@ -69,7 +71,7 @@ export class ProjectDetailsComponent implements OnInit {
         if (admin && admin.role.manage_approval) {
           this.manage_approval = admin.role.manage_approval == '1';
         }
-        
+
       }
 
 
@@ -171,7 +173,7 @@ export class ProjectDetailsComponent implements OnInit {
     }
   }
 
- 
+
   navigatetotimesheet() {
     this.router.navigate([`/app/timesheet`]);
   }
