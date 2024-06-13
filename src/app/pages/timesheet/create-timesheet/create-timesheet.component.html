@@ -80,6 +80,18 @@
         <label class="form-label open_side"> Yes</label>
       </div>
     </div>
+
+    <div class="table-layout-div">
+      <p>Check Planned Hours</p>
+      <div class="open_close_btn">
+        <label class="form-label close_side"> No</label>
+        <label class="mr-2 ml-2">
+          <mat-slide-toggle formControlName="plannedhours"></mat-slide-toggle>
+        </label>
+        <label class="form-label open_side"> Yes</label>
+      </div>
+    </div>
+
     <div class="table-layout-div">
       <p>Enable Scanning</p>
       <div class="open_close_btn">
@@ -101,16 +113,6 @@
       </div>
     </div>
 
-    <div class="table-layout-div">
-      <p>Planned Hours</p>
-      <div class="open_close_btn">
-        <label class="form-label close_side"> No</label>
-        <label class="mr-2 ml-2">
-          <mat-slide-toggle formControlName="plannedhours" ></mat-slide-toggle>
-        </label>
-        <label class="form-label open_side"> Yes</label>
-      </div>
-    </div>
 
     <div class="table-layout-div">
       <p>Enable Break</p>
@@ -190,7 +192,7 @@
         <div class="col-md-4 mb-3">
           <div class="form-group">
             <div class="admin_img mb-3">
-              <img src="../../../assets/images/admin_pic.png" />
+              <img src="../../../assets/icons/profile-icon-gray.svg" />
               <label class="form-label ml-2 admin_name">{{user.finm}} {{user.lamn}}</label>
             </div>
           </div>
@@ -211,6 +213,13 @@
                     color="primary"></mat-checkbox>
                 </label>
                 <label class="form-label ml-2 admin_name">Manage workers</label>
+              </div>
+              <div class="assign_role ml-2">
+                <label class="mr-2">
+                  <mat-checkbox [checked]="user?.manage_approval" (change)="toggleManageApproval(user)"
+                    color="primary"></mat-checkbox>
+                </label>
+                <label class="form-label ml-2 admin_name">Manage Approval</label>
                 <img src="../../../assets/images/admin_remove.png" class="ml-4" (click)="removeAdmin(i)" />
               </div>
             </div>
@@ -223,6 +232,12 @@
       <button type="submit" class="btn btn-block create_btn" style="margin-top: 13px" outline status="primary" nbButton
         size="small">
         Save Timesheet
+      </button>
+
+      <button class="btn btn-block create_btn ml-2"
+        style="margin-top: 13px; background-color: white; color: #12af9b; border: 1px solid #12af9b; width: 100px;" outline
+        status="primary" nbButton size="small" (click)="onCancel()">
+        Cancel
       </button>
     </div>
   </div>

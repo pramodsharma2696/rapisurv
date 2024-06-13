@@ -39,7 +39,7 @@ export class EnterTimeAssignedTaskModalComponent implements OnInit {
     // console.log(this.date)
     // console.log(this.worker.work_assignment)
     // // console.log(typeof this.worker.attendance.assigned_task_hours)
-    this.is_approved = this.worker.attendance.approve == '1';
+    this.is_approved = this.worker?.attendance?.approve == '1';
 
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data

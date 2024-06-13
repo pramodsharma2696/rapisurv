@@ -39,6 +39,14 @@ export class EnterMyTimeCalendarComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.calendarOptions = {
+      initialView: 'dayGridMonth',
+      events: [],
+      plugins: [dayGridPlugin],
+      eventColor: 'transparent',
+      eventTextColor: 'black',
+      firstDay: 1
+    };
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
       setTimeout(() => {
@@ -48,7 +56,14 @@ export class EnterMyTimeCalendarComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-
+    this.calendarOptions = {
+      initialView: 'dayGridMonth',
+      events: [],
+      plugins: [dayGridPlugin],
+      eventColor: 'transparent',
+      eventTextColor: 'black',
+      firstDay: 1
+    };
   }
 
   getCurrentYearAndMonth() {
@@ -62,6 +77,16 @@ export class EnterMyTimeCalendarComponent implements OnInit, AfterViewInit {
     return { year, month };
   }
 
+  initCalendaer() {
+    this.calendarOptions = {
+      initialView: 'dayGridMonth',
+      events: [],
+      plugins: [dayGridPlugin],
+      eventColor: 'transparent',
+      eventTextColor: 'black',
+      firstDay: 1
+    };
+  }
 
   showWorkerData(worker) {
     this.timesheetService.getWorkerCalendarDataByMonth(worker.id, this.timesheetdata.timesheet_id, this.month, this.year).subscribe(res => {

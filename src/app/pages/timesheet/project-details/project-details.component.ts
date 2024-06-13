@@ -25,6 +25,7 @@ export class ProjectDetailsComponent implements OnInit {
   loggedadmin;
   managetime = false
   manageworker = false
+  manage_approval = false
   @ViewChild(AttendanceComponent) attendanceComponent: AttendanceComponent;
   @ViewChild(SummaryComponent) summaryComponent: SummaryComponent;
   @ViewChild(ApproveTimesheetComponent) approveTimesheetComponent: ApproveTimesheetComponent;
@@ -56,7 +57,9 @@ export class ProjectDetailsComponent implements OnInit {
       let assigned_admins = JSON.parse(this.timesheetdata.assign_admin)
       if (assigned_admins.length > 0) {
         let admin = assigned_admins.find(item => item.admin_id === userData.id);
-        admin.role = JSON.parse(admin.role)
+      
+        if (admin != undefined)
+          admin.role = JSON.parse(admin.role)
         if (admin && admin.role.manage_time) {
           this.managetime = admin.role.manage_time == '1';
         }
@@ -64,6 +67,11 @@ export class ProjectDetailsComponent implements OnInit {
         if (admin && admin.role.manage_worker) {
           this.manageworker = admin.role.manage_worker == '1';
         }
+
+        if (admin && admin.role.manage_approval) {
+          this.manage_approval = admin.role.manage_approval == '1';
+        }
+
       }
 
 
@@ -72,6 +80,7 @@ export class ProjectDetailsComponent implements OnInit {
           user.fullname = `${user.finm} ${user.lamn}`;
           user.manage_time = false;
           user.manage_worker = false
+          user.manage_approval = false
         }
         this.users = res.data
 
@@ -164,7 +173,7 @@ export class ProjectDetailsComponent implements OnInit {
     }
   }
 
- 
+
   navigatetotimesheet() {
     this.router.navigate([`/app/timesheet`]);
   }

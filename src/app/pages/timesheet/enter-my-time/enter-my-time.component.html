@@ -74,7 +74,7 @@
 
         <!-- Define the table rows -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="showCalendarData(row)"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="showCalendarData(row)"  [ngClass]="{'selected-row': isRowSelected(row)}"></tr>
     </table>
     <mat-paginator [pageSize]="10"></mat-paginator>
 </div>
