@@ -39,7 +39,7 @@ import { EnterAttendanceModalComponent } from './enter-attendance-modal/enter-at
 import { EnterTimeAssignedTaskModalComponent } from './enter-time-assigned-task-modal/enter-time-assigned-task-modal.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { EnterMyTimeCalendarComponent } from './enter-my-time-calendar/enter-my-time-calendar.component';
-
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -70,7 +70,6 @@ import { EnterMyTimeCalendarComponent } from './enter-my-time-calendar/enter-my-
     MatRadioModule,
     MatCheckboxModule,
     MatIconModule,
-    MatIconModule,
     NgSelectModule,
     MatTabsModule,
     MatCardModule,
@@ -82,7 +81,8 @@ import { EnterMyTimeCalendarComponent } from './enter-my-time-calendar/enter-my-
     TimesheetRoutingModule,
     MatPaginatorModule,
     MatDatepickerModule,
-    FullCalendarModule
+    FullCalendarModule,
+    MatTooltipModule
   ]
 })
 export class TimesheetModule { }

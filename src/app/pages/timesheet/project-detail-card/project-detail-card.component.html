@@ -14,11 +14,13 @@
     <div class="pr_assign">
       <div class="emp_img mb-3" *ngIf="assignedAdmin.length > 0">
         <div *ngFor="let item of assignedAdmin">
-          <img 
+          <!-- <img 
             src="../../../assets/icons/profile-icon-gray.svg" 
             [title]="item?.user?.fullname || 'No Name Available'" 
             alt="Admin Picture" 
-          />
+          /> -->
+          <mat-icon [matTooltip]="item?.user?.fullname || 'No Name Available'">person</mat-icon>
+
         </div>
       </div>
       <div *ngIf="assignedAdmin.length === 0">

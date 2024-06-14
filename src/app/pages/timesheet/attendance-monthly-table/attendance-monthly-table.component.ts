@@ -87,13 +87,10 @@ export class AttendanceMonthlyTableComponent implements OnInit {
 
   fetchData() {
     this.displayedColumns = ['worker_id', 'first_name', 'last_name', ...this.getDatesInRange(this.start_date, this.end_date)]
-    console.log(this.displayedColumns)
-
-    this.timesheetService.getAllWorkerAttendance(this.timesheetdata.timesheet_id, this.start_date, this.end_date).subscribe(res => {
-
-      let data = res.map((item) => {
+    this.timesheetService.getAllWorkerAttendacedata(this.timesheetdata.timesheet_id, this.start_date, this.end_date).subscribe(res => {
+      let data = res.data.map((item) => {
         return {
-          ...item.worker, attendance: item.attendance.data.attendances
+          ...item.worker, attendance: item.attendance
         }
       })
       this.dataSource.data = data
@@ -123,7 +120,7 @@ export class AttendanceMonthlyTableComponent implements OnInit {
       }
       return data
     })
-   
+
     new AngularCsv(requiredData, 'Attendance', { headers: headers })
   }
 }
