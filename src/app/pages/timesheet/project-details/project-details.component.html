@@ -28,8 +28,7 @@
             <div class="pr_assign edit_timesheet">
                 <div class="emp_img mb-3">
                     <div *ngFor="let item of assignedAdmin">
-                        <img src="../../../assets/icons/profile-icon-gray.svg"
-                            [title]="item?.user?.fullname || 'No Name Available'" />
+                        <mat-icon [matTooltip]="item?.user?.fullname || 'No Name Available'">person</mat-icon>
                     </div>
                 </div>
                 <div class="edit_qa_btn ml-3">
