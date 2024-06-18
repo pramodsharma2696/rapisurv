@@ -35,25 +35,25 @@
     <!-- Worker ID Column -->
     <ng-container matColumnDef="worker_id">
         <th mat-header-cell *matHeaderCellDef> Worker ID</th>
-        <td mat-cell *matCellDef="let element"> {{element.worker_id}} </td>
+        <td mat-cell *matCellDef="let element" style="width: 10%;"> {{element.worker_id}} </td>
     </ng-container>
 
     <!-- First Name Column -->
     <ng-container matColumnDef="first_name">
         <th mat-header-cell *matHeaderCellDef> First Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.first_name}} </td>
+        <td mat-cell *matCellDef="let element" style="width: 10%;"> {{element.first_name}} </td>
     </ng-container>
 
     <!-- Last Name Column -->
     <ng-container matColumnDef="last_name">
         <th mat-header-cell *matHeaderCellDef> Last Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.last_name}}</td>
+        <td mat-cell *matCellDef="let element" style="width: 10%;"> {{element.last_name}}</td>
     </ng-container>
 
     <!-- Status Column -->
     <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef> Status </th>
-        <td mat-cell *matCellDef="let element">
+        <td mat-cell *matCellDef="let element" style="width: 10%;">
             <mat-select class="select_status" [(ngModel)]="element.status"
                 (selectionChange)="updateStatus(element.id,element.status)" [disabled]="!istimesheetopen">
                 <mat-option class="active_colum" value="active">Active</mat-option>
@@ -65,7 +65,7 @@
     <!-- Planned Hours Column -->
     <ng-container matColumnDef="planned_hours">
         <th mat-header-cell *matHeaderCellDef> Planned Hours </th>
-        <td mat-cell *matCellDef="let element">
+        <td mat-cell *matCellDef="let element" style="width: 10%;">
             <input matInput type="number" class="planned_hours" [(ngModel)]="element.planned_hours"
                 (blur)="updatePlannedHours(element.id, element.planned_hours)" [disabled]="!istimesheetopen">
         </td>
@@ -74,13 +74,17 @@
     <!-- Planned Hours Column -->
     <ng-container matColumnDef="work_assignment">
         <th mat-header-cell *matHeaderCellDef> Work Assignment </th>
-        <td mat-cell *matCellDef="let element">
+        <td mat-cell *matCellDef="let element" style="width: 35%;">
             <span class="assign_work" *ngFor="let item of element.work_assignment">{{ item }}</span>
 
             <!-- <span class="assign_work">Clearing</span>
             <span class="assign_work">Clearing</span>
             <span class="assign_work">Demolition</span>
-            <span class="assign_work">Farming</span> -->
+            <span class="assign_work">Farming</span> 
+            <span class="assign_work">Clearing</span>
+            <span class="assign_work">Clearing</span>
+            <span class="assign_work">Clearing</span> -->
+            
         </td>
     </ng-container>
 
