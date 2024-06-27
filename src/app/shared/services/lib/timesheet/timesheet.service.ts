@@ -233,4 +233,23 @@ export class TimesheetService {
     console.log(url)
     return this.http.get<any>(url);
   }
+
+  public getAllUniversalWorker(timesheet_id) {
+    const url = this.timesheetapiBase + `api/get-all-universal-worker/${timesheet_id}`;
+    return this.http.get<any>(url);
+  }
+
+  public inviteWorker(worker_id, timesheet_id) {
+    const url = this.timesheetapiBase + 'api/invite-universal-worker';
+    return this.http.post<any>(url, { worker_id: worker_id, timesheet_id: timesheet_id });
+  }
+
+  public getAllPendingInvite(timesheet_id) {
+    const url = this.timesheetapiBase + `api/pending-invites-worker/${timesheet_id}`;
+    return this.http.get<any>(url);
+  }
+  public deleteInvite(id) {
+    const url = this.timesheetapiBase + `api/delete-pending-invite/${id}`;
+    return this.http.delete<any>(url);
+  }
 }
