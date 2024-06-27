@@ -1,21 +1,57 @@
 <div class="modal-body">
   <div class="invite_workers">
     <h6>Invite Workers</h6>
-    <button  class="btn btn-block create_btn " outline status="primary" nbButton
-      size="small" (click)="addLocalWorker()">
+    <button class="btn btn-block create_btn " outline status="primary" nbButton size="small" (click)="addLocalWorker()">
       <i class="material-icons mr-2">person_add_alt</i> Add Local Worker
     </button>
   </div>
   <div class="mt-3 mb-3" style="float: left; width: 100%;">
-    <span><mat-icon aria-hidden="false" fontIcon="search"></mat-icon></span>
-    <input type="text" class="form-control" placeholder="Enter Worker’s ID"
-      style="padding: 4px 37px; width: 100%; float: left;" required />
-  </div>
-  <div class="invites_pending">
-    <p>Pending Invites</p>
+    <!-- <span><mat-icon aria-hidden="false" fontIcon="search"></mat-icon></span> -->
+    <!-- <input type="text" class="form-control" placeholder="Enter Worker’s ID"
+      style="padding: 4px 37px; width: 100%; float: left;" required /> -->
+    <ng-select class="ng-select-container project_list" bindLabel="fullname" dropdownPosition="auto"
+      [items]="uni_worker_data" placeholder="Select universal worker" [multiple]="true" [hideSelected]="true"
+      [(ngModel)]="selected_worker">
+    </ng-select>
   </div>
 
-  <div class="row">
+  <div class="ml-2 mt-3 mb-20">
+    <div *ngFor="let worker of selected_worker ;let i = index">
+      <div class="row">
+        <div class="col-md-12 mb-2">
+          <!-- <img src="../../../assets/images/admin_pic.png" /> -->
+          <label class="form-label admin_name">{{ worker.worker_id }} - {{ worker.firstname }} {{
+            worker.lastname }}</label>
+          <!-- <img src="../../../assets/images/admin_remove.png"
+                    class="ml-4 remove_image float-right" (click)="removeWorker(i)" /> -->
+
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-block create_btn ml-10 mr-10" outline status="primary" nbButton size="small"
+      (click)="inviteWorkers()">
+      Invite Workers
+    </button>
+  </div>
+  <div class="invites_pending mt-10">
+    <p style="font-size: medium; font-weight: 600; margin-top: 20px;">Pending Invites</p>
+  </div>
+
+  <p *ngIf="pending_invites.length == 0">No Pending Invites</p>
+
+  <div *ngFor="let worker of pending_invites ;let i = index">
+    <div class="row">
+      <div class="col-md-12 mb-2">
+        <!-- <img src="../../../assets/images/admin_pic.png" /> -->
+        <label class="form-label admin_name">{{ worker.worker_id }} - {{ worker.first_name }} {{
+          worker.last_name }}</label>
+        <img src="../../../assets/images/admin_remove.png" class="ml-4 float-right"
+          (click)="removeInvite(worker)" />
+
+      </div>
+    </div>
+  </div>
+  <!-- <div class="row">
     <div class="col-md-12 mb-3">
       <div class="form-group">
         <div class="admin_img mb-3">
@@ -26,6 +62,6 @@
       </div>
     </div>
 
-  </div>
+  </div> -->
 
 </div>

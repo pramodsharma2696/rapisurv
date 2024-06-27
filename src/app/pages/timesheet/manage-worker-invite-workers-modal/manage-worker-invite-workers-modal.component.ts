@@ -17,6 +17,9 @@ export class ManageWorkerInviteWorkersModalComponent implements OnInit {
   @Input() timesheetidmain
   timesheetdata
   isLocalWorker = true
+  selected_worker = []
+  uni_worker_data = []
+  pending_invites = []
   constructor(
     private modalService: NgbModal,
     private activeModal: NgbActiveModal,
@@ -30,13 +33,33 @@ export class ManageWorkerInviteWorkersModalComponent implements OnInit {
     this.timesheetService.getTimesheetById(this.timesheetidmain).subscribe(res => {
       this.timesheetdata = res.data
       this.isLocalWorker = this.timesheetdata.localwork == '1' ? true : false
-      console.log(this.timesheetdata)
-      console.log(this.isLocalWorker)
+      this.timesheetService.getAllPendingInvite(this.timesheetdata.timesheet_id).subscribe(res => {
+        this.pending_invites = res.data
+      }, err => {
+        console.log(err)
+      })
+      this.timesheetService.getAllUniversalWorker(this.timesheetdata.timesheet_id).subscribe(res => {
+        const data = res.data;
+        this.uni_worker_data = data.map((worker) => {
+          worker.fullname = `${worker.worker_id} - ${worker.firstname} ${worker.lastname}`;
+          return worker;
+        })
+      }, err => {
+        console.log(err)
+      })
     })
+
+
+
+
   }
 
   closeModal(status) {
     this.activeModal.close({ data: null, status: 206 });
+  }
+
+  removeWorker(index) {
+    this.selected_worker.splice(index, 1);
   }
 
   addLocalWorker(): void {
@@ -66,4 +89,52 @@ export class ManageWorkerInviteWorkersModalComponent implements OnInit {
     });
   }
 
+  inviteWorkers() {
+    try {
+      console.log(this.selected_worker)
+      this.selected_worker.forEach((worker) => {
+        this.timesheetService.inviteWorker(worker.worker_id, this.timesheetdata.timesheet_id).subscribe(res => {
+          console.log(res)
+        })
+      })
+
+      this.activeModal.close({});
+      this.toastrService.success('Invitation Successfully Sent.', 'Success', {
+        duration: 3000,
+      })
+    } catch {
+      this.activeModal.close({});
+      this.toastrService.warning('Invitation Failed.', 'Error', {
+        duration: 3000,
+      })
+    }
+
+  }
+
+  removeInvite(worker) {
+    console.log(worker);
+    this.timesheetService.deleteInvite(worker.id).subscribe(res => {
+      console.log(res)
+      if (res.type == 'success') {
+        this.toastrService.success('Invitation Successfully removed.', 'Success', {
+          duration: 3000,
+        })
+        this.timesheetService.getAllPendingInvite(this.timesheetdata.timesheet_id).subscribe(res => {
+          this.pending_invites = res.data
+        }, err => {
+          console.log(err)
+        })
+        this.timesheetService.getAllUniversalWorker(this.timesheetdata.timesheet_id).subscribe(res => {
+          const data = res.data;
+          this.uni_worker_data = data.map((worker) => {
+            worker.fullname = `${worker.worker_id} - ${worker.firstname} ${worker.lastname}`;
+            return worker;
+          })
+        }, err => {
+          console.log(err)
+        })
+      }
+    })
+
+  }
 }

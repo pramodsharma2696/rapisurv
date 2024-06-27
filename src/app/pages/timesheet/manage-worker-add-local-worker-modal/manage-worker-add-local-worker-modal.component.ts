@@ -53,7 +53,7 @@ export class ManageWorkerAddLocalWorkerModalComponent implements OnInit {
     this.activeModal.close({ data: {}, status: 200 });
 
     const activeModal = this.modalService.open(ManageWorkerInviteWorkersModalComponent, {
-      size: 'sm',
+      size: 'md',
       container: 'nb-layout',
       centered: true,
     });
