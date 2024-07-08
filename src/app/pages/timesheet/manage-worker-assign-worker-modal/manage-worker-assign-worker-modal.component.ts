@@ -14,6 +14,8 @@ export class ManageWorkerAssignWorkerModalComponent implements OnInit {
   @Input() worker_id;
   @Input() timesheetid;
   @Input() updateAssignWork;
+  @Input() worker;
+
   assign_work;
   timesheetdata
   works = []
@@ -26,7 +28,10 @@ export class ManageWorkerAssignWorkerModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.worker_id)
+    if (this.worker.work_assignment != null) {
+      this.assign_work = [...this.worker.work_assignment]
+    }
+
     this.timesheetService.getTimesheetById(this.timesheetid).subscribe(res => {
       this.timesheetdata = res.data
       let project_id = this.timesheetdata.project_id;

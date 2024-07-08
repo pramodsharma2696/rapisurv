@@ -1,13 +1,11 @@
 <div class="modal-body">
-    
-    <div class="assign_role">
-        <h6>Project: 132 – Library of Historical Arts Building</h6>
-        <img [src]="qrlink" style=" width: 40%; margin: 49px 141px;" />
+    <div id="assignRole" class="assign_role">
+        <h6>Project: {{project?.id}} – {{project?.Description}}</h6>
+        <img [src]="qrlink" style="width: 40%; margin: 49px 141px;" alt="QR Code" />
     </div>
     <div class="edit_qa_btn ml-3">
-        <button class="btn btn-block create_btn " outline status="primary" nbButton size="small">
-        <mat-icon aria-hidden="false" class="filter mr-1" fontIcon="create icon"></mat-icon> Print QR Code
+        <button class="btn btn-block create_btn " outline status="primary" nbButton size="small " (click)="printAssignRole()">
+            <mat-icon aria-hidden="false" class="filter mr-1" fontIcon="create icon"></mat-icon> Print QR Code
         </button>
     </div>
-
 </div>

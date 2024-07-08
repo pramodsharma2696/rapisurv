@@ -91,7 +91,7 @@
     <ng-container matColumnDef="assign_work">
         <th mat-header-cell *matHeaderCellDef> </th>
         <td mat-cell *matCellDef="let element">
-            <button class="btn assign_work_btn" status="primary" nbButton size="small" (click)="assignWork(element.id)">
+            <button class="btn assign_work_btn" status="primary" nbButton size="small" (click)="assignWork(element.id, element)">
                 Assign Work </button>
         </td>
     </ng-container>

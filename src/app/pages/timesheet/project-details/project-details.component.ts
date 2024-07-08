@@ -119,6 +119,7 @@ export class ProjectDetailsComponent implements OnInit {
       // data: this.qrlink
     });
     activeModal.componentInstance.qrlink = this.qrlink
+    activeModal.componentInstance.project = this.project
   }
 
   editTimesheet() {

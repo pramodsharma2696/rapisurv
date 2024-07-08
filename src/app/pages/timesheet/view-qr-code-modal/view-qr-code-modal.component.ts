@@ -9,6 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ViewQrCodeModalComponent implements OnInit {
   @Input() qrlink: any;
+  @Input() project: any;
 
   constructor(
     private activeModal: NgbActiveModal,
@@ -16,10 +17,27 @@ export class ViewQrCodeModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.qrlink); 
+    console.log(this.qrlink);
+    console.log(this.project)
   }
 
   closeModal(status) {
     this.activeModal.close({ data: null, status: 206 });
+  }
+
+  printAssignRole() {
+    const printContent = document.getElementById('assignRole').innerHTML;
+    const printWindow = window.open('', '', 'height=600,width=800');
+
+    printWindow.document.write('</head><body>');
+    printWindow.document.write(printContent);
+    printWindow.document.write('</body></html>');
+
+    printWindow.document.close();
+    printWindow.print();
+
+    printWindow.onafterprint = function () {
+      printWindow.close();
+    };
   }
 }

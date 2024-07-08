@@ -165,7 +165,7 @@ export class ManageWorkerComponent implements OnInit, AfterViewInit {
     }
   }
 
-  assignWork(worker_id) {
+  assignWork(worker_id,element) {
     if (this.istimesheetopen) {
 
       const activeModal = this.modalService.open(ManageWorkerAssignWorkerModalComponent, {
@@ -175,6 +175,7 @@ export class ManageWorkerComponent implements OnInit, AfterViewInit {
       });
       activeModal.componentInstance.worker_id = worker_id
       activeModal.componentInstance.timesheetid = this.timesheetid
+      activeModal.componentInstance.worker = element
       activeModal.componentInstance.updateAssignWork = this.updateAssignWork.bind(this)
 
     } else {
