@@ -22,9 +22,9 @@ export class ManageWorkerAddLocalWorkerModalComponent implements OnInit {
   last_name: string;
 
   workerdemodata = [
-    { firstName: 'John', lastName: 'Doe' },
-    { firstName: 'Jane', lastName: 'Smith' },
-    { firstName: 'Alice', lastName: 'Johnson' }
+    { workerId: "L-1000", firstName: 'John', lastName: 'Doe' },
+    { workerId: "L-1001", firstName: 'Jane', lastName: 'Smith' },
+    { workerId: "", firstName: 'Alice', lastName: 'Johnson' }
   ];
 
   constructor(
@@ -149,15 +149,23 @@ export class ManageWorkerAddLocalWorkerModalComponent implements OnInit {
     },
       error => {
         console.error('An error occurred:', error);
-        this.toastrService.warning('Unable to add worker.', 'Error', {
-          duration: 3000,
-        });
+        console.log(error.error.message)
+        if (error?.error?.message) {
+          this.toastrService.warning(error.error.message, 'Error', {
+            duration: 5000,
+          });
+        } else {
+          this.toastrService.warning('Unable to add worker.', 'Error', {
+            duration: 3000,
+          });
+
+        }
       }
     )
   }
 
   downloadTemp() {
-    new AngularCsv(this.workerdemodata, 'template', { headers: ['firstname', 'lastname'] })
+    new AngularCsv(this.workerdemodata, 'template', { headers: ['workerid', 'firstname', 'lastname'] })
 
   }
 }
